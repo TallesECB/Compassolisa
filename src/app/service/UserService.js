@@ -9,6 +9,22 @@ class UserService {
       return error;
     }
   }
+  async find() {
+    try {
+      const result = await UserRepository.find();
+      return result;
+    } catch (error) {
+      return error;
+    }
+  }
+  async findById(id) {
+    try {
+      const result = await UserRepository.findById(id);
+      return result;
+    } catch (error) {
+      return error;
+    }
+  }
 }
 
 module.exports = new UserService();

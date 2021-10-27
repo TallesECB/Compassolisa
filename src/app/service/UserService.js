@@ -10,41 +10,41 @@ class UserService {
     const result = await UserRepository.create(payload);
     return result;
   }
-  async find(payloadFind) {
-    const result = await UserRepository.find(payloadFind);
+  async getAll(payloadFind) {
+    const result = await UserRepository.getAll(payloadFind);
     return result;
   }
-  async findById(id) {
+  async getById(id) {
     if(mongoose.Types.ObjectId.isValid(id)) {
-      const result = await UserRepository.findById(id);
+      const result = await UserRepository.getById(id);
       if(result) {
         return result;
       } else {
-        throw new idNotFound('User');
+        throw new idNotFound(`User - ${id}`);
       } 
     } else {
       throw new invalidObjectId(id);
     }
   }
-  async findByIdAndUpdate(id, payload) {
+  async update(id, payload) {
     if(mongoose.Types.ObjectId.isValid(id)) {
-      if(await UserRepository.findById(id)) {
-        const result = await UserRepository.findByIdAndUpdate(id, payload);
+      if(await UserRepository.getById(id)) {
+        const result = await UserRepository.update(id, payload);
         return result;
       } else {
-        throw new idNotFound('User');
+        throw new idNotFound(`User - ${id}`);
       }
     } else {
       throw new invalidObjectId(id);
     }
   }
-  async findByIdAndRemove(id) {
+  async remove(id) {
     if(mongoose.Types.ObjectId.isValid(id)) {
-      if(await UserRepository.findById(id)) {
-        const result = await UserRepository.findByIdAndRemove(id);
+      if(await UserRepository.getById(id)) {
+        const result = await UserRepository.remove(id);
         return result;
       } else {
-        throw new idNotFound('User');
+        throw new idNotFound(`User - ${id}`);
       }
     } else {
       throw new invalidObjectId(id);

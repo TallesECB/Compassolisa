@@ -1,6 +1,6 @@
 const Joi = require('joi');
 const moment = require('moment')
-const userMenorIdade = require('../../errors/userMenorIdade')
+const underAge = require('../../errors/underAge')
 
 module.exports = async (req, res, next) => {  
     
@@ -29,7 +29,7 @@ module.exports = async (req, res, next) => {
     
             return next();
         } else {
-            throw new userMenorIdade(req.body.nome)
+            throw new underAge(req.body.nome)
         }
     } catch (error) {
         return res.status(400).json(error.message);

@@ -2,56 +2,55 @@ const CarRepository = require('../repository/CarRepository');
 
 const idNotFound = require('../errors/idNotFound');
 const invalidObjectId = require('../errors/invalidObjectId')
-const notAcessory = require('../errors/notAcessory');
+const withoutAccessory = require('../errors/withoutAccessory');
 
 const mongoose = require('mongoose');
 
 class CarService {
   async create(payload) {
     if(payload.acessorios.length == 0 || payload.acessorios.descricao == "") {
-      throw new notAcessory(payload.modelo)
+      throw new withoutAccessory(payload.modelo)
     } else {
       const result = await CarRepository.create(payload);
       return result;
     }
-    
   }
-  async find(payloadFind) {
-    const result = await CarRepository.find(payloadFind);
+  async getAll(payloadFind) {
+    const result = await CarRepository.getAll(payloadFind);
     return result;
   }
-  async findById(id) {
+  async getById(id) {
     if(mongoose.Types.ObjectId.isValid(id)) {
-      const result = await CarRepository.findById(id);
+      const result = await CarRepository.getById(id);
       if(result) {
         return result;
       } else {
-        throw new idNotFound('Car');
+        throw new idNotFound(`Car - ${id}`);
       } 
     } else {
       throw new invalidObjectId(id);
     }
    
   }
-  async findByIdAndUpdate(id, payload) {
+  async update(id, payload) {
     if(mongoose.Types.ObjectId.isValid(id)) {
-      if(await CarRepository.findById(id)) {
-        const result = await CarRepository.findByIdAndUpdate(id, payload);
+      if(await CarRepository.getById(id)) {
+        const result = await CarRepository.update(id, payload);
         return result;
       } else {
-        throw new idNotFound('Car');
+        throw new idNotFound(`Car - ${id}`);
       }
     } else {
       throw new invalidObjectId(id);
     }
   }
-  async findByIdAndRemove(id) { 
+  async remove(id) { 
     if(mongoose.Types.ObjectId.isValid(id)) {
-      if(await CarRepository.findById(id)) {
-        const result = await CarRepository.findByIdAndRemove(id);
+      if(await CarRepository.getById(id)) {
+        const result = await CarRepository.remove(id);
         return result;
       } else {
-        throw new idNotFound('Car');
+        throw new idNotFound(`Car - ${id}`);
       }
     } else {
       throw new invalidObjectId(id);

@@ -5,37 +5,37 @@ class UserController  {
       const result = await UserService.create(req.body);
       return res.status(201).json(result)
   }
-  async find(req, res) {
+  async getAll(req, res) { //falta por a paginação
     const payloadFind = req.query;
-    const result = await UserService.find(payloadFind);
+    const result = await UserService.getAll(payloadFind);
     if(result.length > 0) {
       return res.status(200).json(result);
     } else {
       return res.status(404).json(`Não foi encontrado User através desta query`);
     }
   }
-  async findById(req, res) {
+  async getById(req, res) {
     try {
       const id = req.params.idPeople
-      const result = await UserService.findById(id);
+      const result = await UserService.getById(id);
       return res.status(200).json(result);
     } catch(erro) {
       res.status(erro.statusCode).json(erro.message).end()
     }
   }
-  async findByIdAndUpdate(req, res) {
+  async update(req, res) {
     try {
       const id = req.params.idPeople
-      const result = await UserService.findByIdAndUpdate(id, req.body)
+      const result = await UserService.update(id, req.body)
       return res.status(200).json(result);
     } catch(erro) {
       res.status(erro.statusCode).json(erro.message).end()
     }
   }
-  async findByIdAndRemove(req, res) {
+  async remove(req, res) {
     try {
       const id = req.params.idPeople;
-      await UserService.findByIdAndRemove(id);
+      await UserService.remove(id);
       return res.status(204).end()
     } catch(erro) {
       res.status(erro.statusCode).json(erro.message).end()

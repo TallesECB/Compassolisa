@@ -3,10 +3,10 @@ const createValidation = require('../app/validation/car/create');
 
 module.exports = (server, routes, prefix = '/api/v1/car') => {
   routes.post('/', createValidation, CarController.create);
-  routes.get('/', CarController.find);
-  routes.get('/:idCar', CarController.findById);
-  routes.put('/:idCar', CarController.findByIdAndUpdate);
-  routes.delete('/:idCar', CarController.findByIdAndRemove);
+  routes.get('/', CarController.getAll);
+  routes.get('/:idCar', CarController.getById);
+  routes.put('/:idCar', CarController.update);
+  routes.delete('/:idCar', CarController.remove);
 
   server.use(prefix, routes);
 }

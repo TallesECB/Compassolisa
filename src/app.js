@@ -1,5 +1,6 @@
 const express = require('express');
 const router = require('./routes');
+
 require('./infra/database/mongo');
 
 class App {
@@ -16,7 +17,7 @@ class App {
   routes() {
     router(this.server)
   }
- 
+
 }
 
 module.exports = new App().server;

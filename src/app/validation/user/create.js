@@ -1,23 +1,38 @@
 const Joi = require('joi');
+const moment = require('moment')
+const userMenorIdade = require('../../errors/userMenorIdade')
 
 module.exports = async (req, res, next) => {  
     
     try {
+        const minAge = 18
+        let isValidDate = false
+        
         const schema = Joi.object({
             nome: Joi.string().required(),
-            cpf: Joi.string().required(),
-            data_nascimento: Joi.string().required(),
-            email: Joi.string().required(),
-            senha: Joi.string().required(),
+            cpf: Joi.string().regex(/^\d{3}\.\d{3}\.\d{3}\-\d{2}$/).required(), 
+            data_nascimento: Joi.date().required(),  
+            email: Joi.string().email().required(), 
+            senha: Joi.string().regex(/^[a-zA-Z0-9]{8,30}$/).required(),
             habilitado: Joi.string().required()
         });
         
-        const { error } = await schema.validate(req.body, { abortEarl: true });
+        const years = moment().diff(moment(req.body.data_nascimento, 'YYYY-MM-DD'), 'years', true)
+        if(years >= minAge) {
+            isValidDate = true
+        }
+       
+        if(isValidDate) {
+            const { error } = await schema.validate(req.body, { abortEarl: true });
     
-        if (error) throw error
-
-        return next();
+            if (error) throw error
+    
+            return next();
+        } else {
+            throw new userMenorIdade(req.body.nome)
+        }
     } catch (error) {
-        return res.status(400).json(error);
+        return res.status(400).json(error.message);
     }
+
 }

@@ -1,16 +1,20 @@
 const UserService = require('../service/UserService');
 
 class UserController  {
-  async create(req, res, ) {
+  async create(req, res) {
+    try {
       const result = await UserService.create(req.body);
       return res.status(201).json(result)
+    } catch(erro) {
+      return res.status(erro.statusCode).json(erro.message).end()
+    }
   }
   async getAll(req, res) { 
-    const result = await UserService.getAll(req.query);
-    if(result) {
+    try {
+      const result = await UserService.getAll(req.query);
       return res.status(200).json(result);
-    } else {
-      return res.status(404).json(`Não foi encontrado User através desta query`);
+    } catch(erro) {
+      return res.status(erro.statusCode).json(erro.message).end()
     }
   }
   async getById(req, res) {
@@ -19,7 +23,7 @@ class UserController  {
       const result = await UserService.getById(id);
       return res.status(200).json(result);
     } catch(erro) {
-      res.status(erro.statusCode).json(erro.message).end()
+      return res.status(erro.statusCode).json(erro.message).end()
     }
   }
   async update(req, res) {
@@ -28,7 +32,7 @@ class UserController  {
       const result = await UserService.update(id, req.body)
       return res.status(200).json(result);
     } catch(erro) {
-      res.status(erro.statusCode).json(erro.message).end()
+      return res.status(erro.statusCode).json(erro.message).end()
     }
   }
   async remove(req, res) {
@@ -37,7 +41,7 @@ class UserController  {
       await UserService.remove(id);
       return res.status(204).end()
     } catch(erro) {
-      res.status(erro.statusCode).json(erro.message).end()
+      return res.status(erro.statusCode).json(erro.message).end()
     }
   }
 }

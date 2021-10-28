@@ -2,11 +2,14 @@ const mongoose = require('mongoose');
 
 const UserSchema = mongoose.Schema({
   nome: String,
-  cpf: { //verificar se esse unique aqui dentro está correto
+  cpf: { 
     type: String,
     unique: true
   },
-  data_nascimento: Date,
+  data_nascimento: {
+    type: String,
+    required: true
+  },
   email: {
     type: String,
     unique: true,

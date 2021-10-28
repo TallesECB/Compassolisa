@@ -1,4 +1,3 @@
-const { object } = require('joi');
 const CarService = require('../service/CarService');
 
 class CarController  {
@@ -7,7 +6,7 @@ class CarController  {
       const result = await CarService.create(req.body);
       return res.status(201).json(result);
     } catch(erro) {
-      res.status(erro.statusCode).json(erro.message).end()
+      return res.status(erro.statusCode).json(erro.message).end()
     }
   }
   async getAll(req, res) { 
@@ -24,7 +23,7 @@ class CarController  {
       const result = await CarService.getById(id);
       return res.status(200).json(result);
     } catch(erro) {
-      res.status(erro.statusCode).json(erro.message).end()
+      return res.status(erro.statusCode).json(erro.message).end()
     }
   }
   async update(req, res) {
@@ -33,7 +32,7 @@ class CarController  {
       const result = await CarService.update(id, req.body)
       return res.status(200).json(result);
     } catch(erro) {
-      res.status(erro.statusCode).json(erro.message).end()
+      return res.status(erro.statusCode).json(erro.message).end()
     }
   }
   async remove(req, res) {
@@ -42,7 +41,7 @@ class CarController  {
       await CarService.remove(id);
       return res.status(204).end()
     } catch(erro) {
-      res.status(erro.statusCode).json(erro.message).end()
+      return res.status(erro.statusCode).json(erro.message).end()
     }
   }
 }

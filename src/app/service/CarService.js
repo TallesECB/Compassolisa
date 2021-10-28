@@ -8,19 +8,18 @@ const mongoose = require('mongoose');
 
 class CarService {
   async create(payload) {
-    if(payload.acessorios.length == 0 || payload.acessorios.descricao == "") {
+    if(payload.acessorios.length === 0 || payload.acessorios.descricao === "") {
       throw new withoutAccessory(payload.modelo)
-    } else {
-      const result = await CarRepository.create(payload);
-      return result;
-    }
+    } 
+    const result = await CarRepository.create(payload);
+    return result;
   }
-  async getAll({offset, limit, ...payloadFind}) {
+  async getAll({offset, limit, ...payloadFind}) { 
     const result = await CarRepository.getAll(payloadFind, offset, limit);
     return result;
   }
   async getById(id) {
-    if(mongoose.Types.ObjectId.isValid(id)) {
+    if(mongoose.Types.ObjectId.isValid(id)) { //retirar e utilizar no joi //24 caracteres letra e numeros a valid
       const result = await CarRepository.getById(id);
       if(result) {
         return result;

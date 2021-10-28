@@ -2,13 +2,28 @@ const UserRepository = require('../repository/UserRepository');
 
 const idNotFound = require('../errors/idNotFound');
 const invalidObjectId = require('../errors/invalidObjectId')
+const underAge = require('../errors/underAge')
 
 const mongoose = require('mongoose');
+const moment = require('moment')
 
 class UserService {
   async create(payload) {
-    const result = await UserRepository.create(payload);
-    return result;
+    const minAge = 18
+    let isValidDate = false
+    
+    const years = moment().diff(moment(payload.data_nascimento, 'DD/MM/YYYY'), 'years', true)
+
+    if(years >= minAge) {
+      isValidDate = true
+    }
+   
+    if(isValidDate) {
+      const result = await UserRepository.create(payload);
+      return result;
+    } else {
+      throw new underAge(payload.nome)
+    }
   }
   async getAll({offset, limit, ...payloadFind}) {
     const result = await UserRepository.getAll(payloadFind, offset, limit);
@@ -29,8 +44,21 @@ class UserService {
   async update(id, payload) {
     if(mongoose.Types.ObjectId.isValid(id)) {
       if(await UserRepository.getById(id)) {
-        const result = await UserRepository.update(id, payload);
-        return result;
+        const minAge = 18
+        let isValidDate = false
+        
+        const years = moment().diff(moment(payload.data_nascimento, 'DD-MM-YYYY'), 'years', true)
+    
+        if(years >= minAge) {
+          isValidDate = true
+        }
+       
+        if(isValidDate) {
+          const result = await UserRepository.create(payload);
+          return result;
+        } else {
+          throw new underAge(payload.nome)
+        }
       } else {
         throw new idNotFound(`User - ${id}`);
       }

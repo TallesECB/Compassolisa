@@ -4,8 +4,19 @@ class UserRepository  {
   async create(payload) {
     return UserSchema.create(payload);
   }
-  async getAll(payloadFind) {
-    return UserSchema.find(payloadFind);
+  async getAll(payloadFind, offset, limit) {
+    offset = parseInt(offset)
+    limit = parseInt(limit)
+    const total = await UserSchema.find(payloadFind).countDocuments();
+    const users = await UserSchema.find(payloadFind).skip(offset).limit(limit);
+    const arrayReturn = {
+      total,
+      users,
+      offset,
+      limit
+    }
+    
+    return arrayReturn
   }
   async getById(id) {
     return UserSchema.findById(id);

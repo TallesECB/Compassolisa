@@ -5,10 +5,9 @@ class UserController  {
       const result = await UserService.create(req.body);
       return res.status(201).json(result)
   }
-  async getAll(req, res) { //falta por a paginação
-    const payloadFind = req.query;    
-    const result = await UserService.getAll(payloadFind);
-    if(result.length > 0) {
+  async getAll(req, res) { 
+    const result = await UserService.getAll(req.query);
+    if(result) {
       return res.status(200).json(result);
     } else {
       return res.status(404).json(`Não foi encontrado User através desta query`);

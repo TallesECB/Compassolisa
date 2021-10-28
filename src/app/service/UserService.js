@@ -10,8 +10,8 @@ class UserService {
     const result = await UserRepository.create(payload);
     return result;
   }
-  async getAll(payloadFind) {
-    const result = await UserRepository.getAll(payloadFind);
+  async getAll({offset, limit, ...payloadFind}) {
+    const result = await UserRepository.getAll(payloadFind, offset, limit);
     return result;
   }
   async getById(id) {

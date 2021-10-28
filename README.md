@@ -97,7 +97,7 @@ Start the server
 #### Update Car
 
 ``` localhost:3000
-  POST /api/v1/car/${idCar}
+  PUT /api/v1/car/${idCar}
 ```
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
@@ -168,7 +168,7 @@ Start the server
 #### Update People
 
 ``` localhost:3000
-  POST /api/v1/people/${idPeople}
+  PUT /api/v1/people/${idPeople}
 ```
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |

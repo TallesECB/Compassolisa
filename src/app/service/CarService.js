@@ -15,8 +15,8 @@ class CarService {
       return result;
     }
   }
-  async getAll(payloadFind) {
-    const result = await CarRepository.getAll(payloadFind);
+  async getAll({offset, limit, ...payloadFind}) {
+    const result = await CarRepository.getAll(payloadFind, offset, limit);
     return result;
   }
   async getById(id) {

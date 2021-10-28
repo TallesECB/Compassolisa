@@ -1,3 +1,4 @@
+const { object } = require('joi');
 const CarService = require('../service/CarService');
 
 class CarController  {
@@ -9,10 +10,9 @@ class CarController  {
       res.status(erro.statusCode).json(erro.message).end()
     }
   }
-  async getAll(req, res) { //necessário ajeitar a paginação
-    const payloadFind = req.query;
-    const result = await CarService.getAll(payloadFind);
-    if(result.length > 0) {
+  async getAll(req, res) { 
+    const result = await CarService.getAll(req.query);
+    if(result) {
       return res.status(200).json(result);
     } else {
       return res.status(404).json(`Não foi encontrado Carro através desta query`);

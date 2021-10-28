@@ -23,7 +23,7 @@ module.exports = async (req, res, next) => {
         }
        
         if(isValidDate) {
-            const { error } = await schema.validate(req.body, { abortEarl: true });
+            const { error } = await schema.validate(req.body, { abortEarly: false });
     
             if (error) throw error
     

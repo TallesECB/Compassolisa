@@ -6,7 +6,7 @@ class UserController  {
       return res.status(201).json(result)
   }
   async getAll(req, res) { //falta por a paginação
-    const payloadFind = req.query;
+    const payloadFind = req.query;    
     const result = await UserService.getAll(payloadFind);
     if(result.length > 0) {
       return res.status(200).json(result);

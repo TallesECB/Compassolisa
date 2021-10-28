@@ -7,12 +7,19 @@ const UserSchema = mongoose.Schema({
     unique: true
   },
   data_nascimento: Date,
-  email: String,
-  senha: String,
+  email: {
+    type: String,
+    unique: true,
+    message: 'Email já consta em nosso banco de dados, favor vericar.'
+  },
+  senha: {
+    type: String,
+    select: false
+  },
   habilitado: {
-      type: String,
-      enum: ['sim', 'nao'],
-      message: '{VALUE} is not supported'
+    type: String,
+    enum: ['sim', 'nao'],
+    message: '{VALUE} is not supported'
   }
 })
 

@@ -14,7 +14,7 @@ class UserService {
     const years = moment().diff(moment(payload.data_nascimento, 'DD/MM/YYYY'), 'years', true)
 
     if(!years >= minAge) {
-      throw new underAge(payload.nome)
+      throw new underAge(payload.nome);
     }
     
     const result = await UserRepository.create(payload);

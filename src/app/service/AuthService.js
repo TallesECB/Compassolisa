@@ -9,7 +9,7 @@ class AuthService {
     const user = await AuthRepository.login(credentials);
 
     if(!user) {
-      throw new authInvalid()
+      throw new authInvalid();
     }
 
     user.senha = undefined;

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
-const mongoosePaginate = require('mongoose-paginate');
-const uniqueValidator = require('mongoose-unique-validator');
+
+const mongoosePaginateV2 = require('mongoose-paginate-v2')
 
 const UserSchema = mongoose.Schema({
   nome: String,
@@ -25,8 +25,7 @@ const UserSchema = mongoose.Schema({
   }
 })
 
-UserSchema.plugin(mongoosePaginate);
-UserSchema.plugin(uniqueValidator);
+UserSchema.plugin(mongoosePaginateV2);
 
 const modelUser = mongoose.model('User', UserSchema);
 

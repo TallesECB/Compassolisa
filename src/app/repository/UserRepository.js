@@ -7,12 +7,11 @@ class UserRepository  {
   }
   async getAll(payloadFind, offset, limit) {
     if(!offset){
-      offset = 1;
+      offset = 0;
     }
     if(!limit) {
       limit = 10;
     }
-
     offset = parseInt(offset);
     limit = parseInt(limit);
 
@@ -20,19 +19,17 @@ class UserRepository  {
       throw new limitMaxPagination(limit);
     }
 
-    const total = await UserSchema.find(payloadFind).countDocuments();
-    const usuarios = await UserSchema.find(payloadFind).skip(offset).limit(limit);
-    const offsets = total - offset;
+    const paginate = await UserSchema.paginate({payloadFind}, {offset, limit});
 
-    const arrayReturn = {
-      usuarios,
-      total,
-      limit,
-      offset,
-      offsets
-    };
-    
-    return arrayReturn;
+    const result = {
+      usuarios: paginate.docs,
+      total: paginate.totalDocs,
+      limit: paginate.limit,
+      offset: paginate.offset,
+      offsets: parseInt(paginate.totalDocs) - parseInt(paginate.offset)
+    }
+
+    return result;
   }
   async getById(id) {
     return UserSchema.findById(id);

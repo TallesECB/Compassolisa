@@ -12,7 +12,6 @@ class CarRepository  {
     if(!limit) {
       limit = 10;
     }
-
     offset = parseInt(offset);
     limit = parseInt(limit);
 
@@ -20,19 +19,17 @@ class CarRepository  {
       throw new limitMaxPagination(limit);
     }
 
-    const total = await CarSchema.find(payloadFind).countDocuments();
-    const veiculos = await CarSchema.find(payloadFind).skip(offset).limit(limit);
-    const offsets = total - offset;
+    const paginate = await CarSchema.paginate({payloadFind}, {offset, limit});
 
-    const arrayReturn = {
-      veiculos,
-      total,
-      limit,
-      offset,
-      offsets
-    };
-    
-    return arrayReturn;
+    const result = {
+      veiculos: paginate.docs,
+      total: paginate.totalDocs,
+      limit: paginate.limit,
+      offset: paginate.offset,
+      offsets: parseInt(paginate.totalDocs) - parseInt(paginate.offset)
+    }
+
+    return result;
   }
   async getById(id) {
     return CarSchema.findById(id);

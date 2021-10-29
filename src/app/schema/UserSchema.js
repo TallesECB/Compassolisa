@@ -5,7 +5,8 @@ const UserSchema = mongoose.Schema({
   nome: String,
   cpf: { 
     type: String,
-    unique: true
+    unique: true,
+    message: 'CPF já consta em nosso banco de dados, favor vericar.'
   },
   data_nascimento: {
     type: String,

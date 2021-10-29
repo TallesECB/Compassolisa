@@ -9,7 +9,7 @@ const mongoose = require('mongoose');
 class CarService {
   async create(payload) {
     if(payload.acessorios.length === 0 || payload.acessorios.descricao === "") {
-      throw new withoutAccessory(payload.modelo)
+      throw new withoutAccessory(payload.modelo);
     } 
     const result = await CarRepository.create(payload);
     return result;

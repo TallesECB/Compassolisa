@@ -1,11 +1,11 @@
 const UserRepository = require('../repository/UserRepository');
 
 const idNotFound = require('../errors/idNotFound');
-const invalidObjectId = require('../errors/invalidObjectId')
-const underAge = require('../errors/underAge')
+const invalidObjectId = require('../errors/invalidObjectId');
+const underAge = require('../errors/underAge');
 
 const mongoose = require('mongoose');
-const moment = require('moment')
+const moment = require('moment');
 
 class UserService {
   async create(payload) {

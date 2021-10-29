@@ -15,7 +15,7 @@ class App {
   }
 
   routes() {
-    router(this.server)
+    router(this.server);
   }
 
 }

@@ -6,7 +6,7 @@ const authInvalid = require('../errors/authInvalid')
 class AuthService {
   async login(credentials) {
     
-    const user = await AuthRepository.login(credentials)
+    const user = await AuthRepository.login(credentials);
 
     if(!user) {
       throw new authInvalid()
@@ -14,17 +14,17 @@ class AuthService {
 
     user.senha = undefined;
     
-    const habilitado = user.habilitado
-    const email = user.email
+    const habilitado = user.habilitado;
+    const email = user.email;
 
 
     const token = jwt.sign({email, habilitado}, authConfig.secret,  {
       expiresIn: 86400,
     });
     
-    const result = { token }
+    const result = { token };
     
-    return result
+    return result;
   }
 }
 

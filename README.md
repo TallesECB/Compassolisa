@@ -21,12 +21,16 @@ This is an API of a luxury and semi-luxury car rental system
 
 **Dependencies:** 
 
-    @joi/date: v.2.1.0
+    @joi/date: v.2.1.0,
     express: v.4.17.1,
     joi: v.17.4.2,
     jsonwebtoken: v.8.5.1,
     moment": v.2.29.1,
-    mongoose": v.6.0.11
+    mongoose": v.6.0.11,
+    mongoose-paginate-v2: v.1.4.2,
+    mongoose-unique-validator: v.3.0.0",
+    swagger-ui-express: v.4.1.6
+
 ## Run Locally
 
 Clone the project

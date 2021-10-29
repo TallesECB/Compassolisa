@@ -89,7 +89,7 @@ Start the server
 | `cor`      | `string` | **Required**. Cor -> Car |
 | `ano`      | `number` | **Required**. Ano -> Car |
 | `acessorios [ { descricao: "" } ]`      | `array - object: string` | **Required**. Acessorios - Descricao -> Car |
-| `quantidadedePassageiros`      | `number` | **Required**. Quantidade de Passageiros -> Car |
+| `quantidadePassageiros`      | `number` | **Required**. Quantidade de Passageiros -> Car |
 
 
 
@@ -109,7 +109,7 @@ Start the server
 | `cor`      | `string` | **Required**. Cor -> Car |
 | `ano`      | `number` | **Required**. Ano -> Car |
 | `acessorios [ { descricao: "" } ]`      | `array - object: string` | **Required**. Acessorios - Descricao -> Car |
-| `quantidadedePassageiros`      | `number` | **Required**. Quantidade de Passageiros -> Car |
+| `quantidadePassageiros`      | `number` | **Required**. Quantidade de Passageiros -> Car |
 
 
 

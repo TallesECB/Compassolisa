@@ -32,7 +32,7 @@ class UserController  {
       const result = await UserService.update(id, req.body);
       return res.status(200).json(result);
     } catch(erro) {
-      return res.status(erro.statusCode || 400 ).json(erro.message).end();
+      return res.status(erro.statusCode || 400).json(erro.message).end();
     }
   }
   async remove(req, res) {

@@ -19,7 +19,7 @@ class UserRepository  {
       throw new limitMaxPagination(limit);
     }
 
-    const paginate = await UserSchema.paginate({payloadFind}, {offset, limit});
+    const paginate = await UserSchema.paginate(payloadFind, {offset, limit});
 
     const result = {
       usuarios: paginate.docs,

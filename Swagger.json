@@ -1,0 +1,594 @@
+{
+  "openapi": "3.0.1",
+
+  "info": {
+    "title": "API locação de carros",
+    "description": "API para realizar locação de carros",
+    "version": "0.0.1",
+    "termsOfService": "https://github.com/TallesECB",
+    "contact":  {
+      "name": "Suporte Dev Talles ECB",
+      "email": "teduardo13@hotmail.com",
+      "url": "https://github.com/TallesECB/Compassolisa"
+    }
+  },
+  "servers": [
+    {
+        "url": "http://localhost:3000/",
+        "description": "API de teste"
+    }
+  ],
+  "paths": {
+    "/api/v1/car": {
+      "get": {
+        "summary": "Pegar todos os Carros - ou filtrar",
+        "tags": ["Carros"],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "modelo",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filtrar um Carro pelo Modelo"
+          },
+          {
+            "in": "query",
+            "name": "cor",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filtrar Carros pela Cor"
+          },
+          {
+            "in": "query",
+            "name": "ano",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Filtrar Carros pelo Ano"
+          },
+          {
+            "in": "query",
+            "name": "descricao",
+            "schema": {
+              "type": "string"
+            },
+              "description": "Filtrar Carros pela Descrição dos acessórios"
+          },
+          {
+            "in": "query",
+            "name": "quantidadePassageiros",
+            "schema": {
+              "type": "number"
+            },
+            "description": "Filtrar Carros pelo número de quantidade de passageiros"
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Número de deslocamento - Opcional Padrão é 0"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Limite de retorno dos Carros - Opcional Padrão é 1000"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Cars"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "limitMaxPagination",
+            "content": {
+              "application/json": {
+                "example": "O limite máximo da paginação é 1000, favor verificar"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Registrar um novo Carro",
+        "tags": ["Carros"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Car"
+              }
+            }
+          }
+        },
+        "description": "Registrando um novo Carro",
+        "responses": {
+          "201": {
+            "description": "Successo",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Car"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Campo Inválido ou whithoutAccessory",
+            "content": {
+              "application/json": {
+                "example": "Favor verifique os campos informados, e os que são requiridos!"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/car/{idCar}": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "put",
+          "schema": {
+            "type": "string"
+          },
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "Pegar um Carro por ID",
+        "tags": ["Carros"],
+        "responses": {
+          "200": {
+            "description": "Sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Car"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "idNotFound",
+            "content": {
+              "application/json": {
+                "example": "Carro não encontrado"
+              }
+            }
+          },
+          "400": {
+            "description": "invalidObjectID",
+            "content": {
+              "application/json": {
+                "example": "O ID Inserido possui um formato inválido"
+              }
+            }
+          }
+        }
+      }, 
+      "put": {
+        "summary": "Atualizar um Carro",
+        "tags": ["Carros"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Car"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successo",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/People"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "idNotFound",
+            "content": {
+              "application/json": {
+                "example": "Carro não encontrado"
+              }
+            }
+          },
+          "400": {
+            "description": "Campo ou valor inválido ou invalidObjectId",
+            "content": {
+              "application/json": {
+                "example": "Campo ou valor inválido ou o ID de busca está inválido"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Deletar um Carro",
+        "tags": ["Carros"],
+        "responses": {
+          "204": {
+            "description": "Successo"
+          },
+          "404": {
+            "description": "idNotFound",
+            "content": {
+              "application/json": {
+                "example": "Carro não encontrado"
+              }
+            }
+          },
+          "400": {
+            "description": "invalidObjectID",
+            "content": {
+              "application/json": {
+                "example": "O formato do ID inserido está inválido"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/people": {
+      "get": {
+        "summary": "Pegar todos os Usuários ou Filtrar",
+        "tags": ["Pessoas"],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "filtrar por nome",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Nome - Usuário"
+          },
+          {
+            "in": "query",
+            "name": "filtrar por cpf",
+            "schema": {
+              "type": "string"
+            },
+            "description": "CPF - Usuário"
+          },
+          {
+            "in": "query",
+            "name": "filtrar por data_nascimento",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Data de Nascimento - Usuário"
+          },
+          {
+            "in": "query",
+            "name": "filtrar por email",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Email - Usuário"
+          },
+          {
+            "in": "query",
+            "name": "filtrar por habilitado",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Se o Usuário possui habilitação"
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Número de deslocamento - Opcional Padrão é 0"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Limite de retorno dos Usuários - Opcional Padrão é 1000"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successo",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Peoples"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "limitMaxPagination",
+            "content": {
+              "application/json": {
+                "example": "O limite máximo da paginação é 1000, favor verificar"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Registrar um novo Usuário",
+        "tags": ["Pessoas"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/People"
+              }
+            }
+          }
+        },
+        "description": "Registrando um novo Usuário",
+        "responses": {
+          "201": {
+            "description": "Successo",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/People"
+                }
+              }
+            }
+          }
+        },
+        "400": {
+          "description": "Campo Inválido ou ungerAge",
+          "content": {
+            "application/json": {
+              "example": "Campo inválido ou campo requirido não informado ou Usuário menor de idade!"
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/people/{idPeople}": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "put",
+          "schema": {
+            "type": "string"
+          },
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "Pegar um Usuário por ID",
+        "tags": ["Pessoas"],
+        "responses": {
+          "200": {
+            "description": "Successo",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/People"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "idNotFound",
+            "content": {
+              "application/json": {
+                "example": "Usuário não encontrado"
+              }
+            }
+          },
+          "400": {
+            "description": "invalidObjectId",
+            "content": {
+              "application/json": {
+                "example": "O formato do ID inserido está inválido, favor verificar"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Atualizar um Usuário",
+        "tags": ["Pessoas"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/People"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successo",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/People"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "idNotFound",
+            "content": {
+              "application/json": {
+                "example": "Usuário não encontrado"
+              }
+            }
+          },
+          "400": {
+            "description": "Campo ou Valor inválido ou invalidObjectID",
+            "content": {
+              "application/json": {
+                "example": "Campo ou Valor estão inválidos ou o ID inserido está inválido"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Deletar um Usuário",
+        "tags": ["Pessoas"],
+        "responses": {
+          "204": {
+            "description": "Successo"
+          },
+          "404": {
+            "description": "idNotFound",
+            "content": {
+              "application/json": {
+                "example": "Usuário não encontrado"
+              }
+            }
+          },
+          "400": {
+            "description": "invalidObjectId",
+            "content": {
+              "application/json": {
+                "example": "ID inválido, favor verificar"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/authenticate": {
+      "post": {
+        "summary": "Autenticação de Usuários",
+        "tags": ["Autenticação"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string"
+                  },
+                  "senha": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "Autenticação",
+        "responses": {
+          "201": {
+            "description": "Successo",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "authInvalid",
+            "content": {
+              "application/json": {
+                "example": "Senha ou Email incorreto"
+              }
+            }
+          } 
+        }
+      }
+    }        
+  },
+  "components": {
+    "schemas": {
+      "People": {
+        "type": "object",
+        "properties": {
+          "nome": {
+            "type": "string"
+          },
+          "cpf": {
+            "type": "string"
+          },
+          "data_nascimento": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "senha": {
+            "type": "string"
+          },
+          "habilitado": {
+            "type": "string",
+            "enum": [
+              "sim",
+              "não"
+            ]
+          }
+        }
+      },
+      "Peoples": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/People"
+        }
+      },
+      "Car": {
+        "type": "object",
+        "properties": {
+          "modelo": {
+            "type": "string"
+          },
+          "cor": {
+            "type": "string"
+          },
+          "ano": {
+            "type": "number"
+          },
+          "acessorios": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "descricao": {
+                  "type": "string"
+                }
+              }
+            }  
+          },
+          "quantidadePassageiros": {
+            "type": "number"
+          }
+        }
+      },
+      "Cars": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Car"
+        }
+      }
+    }
+  }
+}

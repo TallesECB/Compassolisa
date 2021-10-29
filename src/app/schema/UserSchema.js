@@ -22,6 +22,10 @@ const UserSchema = mongoose.Schema({
   habilitado: {
     type: String,
     enum: ['sim', 'nao']
+  },
+  __v: {
+    type: Number,
+    select: false
   }
 })
 

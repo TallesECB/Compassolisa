@@ -8,7 +8,11 @@ const CarSchema = mongoose.Schema({
   acessorios: [{
     descricao: String, _id: false
   }],
-  quantidadedePassageiros: Number
+  quantidadePassageiros: Number,
+  __v: {
+    type: Number,
+    select: false
+  }
 })
 
 CarSchema.plugin(mongoosePaginateV2);

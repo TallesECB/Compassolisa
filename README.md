@@ -195,6 +195,18 @@ Start the server
 | :-------- | :------- | :-------------------------------- |
 | `id`      | `objectId` | **Required**. Id of People to fetch for Delete |
 
+
+#### Authenticate People
+
+``` localhost:3000
+  POST /api/v1/authenticate/
+```
+| Body | Type  | Description                       |
+| :--------  | :------- | :-------------------------------- |
+| `email`      | `string.email` | **Required**. Email de autenticação ->People |
+| `senha`      | `string` | **Required**. Senha de autenticação -> People |
+
+
 ## Authors
 
 - [@TallesECB](https://github.com/TallesECB)

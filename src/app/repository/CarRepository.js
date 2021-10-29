@@ -19,7 +19,7 @@ class CarRepository  {
       throw new limitMaxPagination(limit);
     }
 
-    const paginate = await CarSchema.paginate({payloadFind}, {offset, limit});
+    const paginate = await CarSchema.paginate(payloadFind, {offset, limit});
 
     const result = {
       veiculos: paginate.docs,

@@ -19,41 +19,40 @@ class CarService {
     return result;
   }
   async getById(id) {
-    if(mongoose.Types.ObjectId.isValid(id)) { //retirar e utilizar no joi //24 caracteres letra e numeros a valid
-      const result = await CarRepository.getById(id);
-      if(result) {
-        return result;
-      } else {
-        throw new idNotFound(`Car - ${id}`);
-      } 
-    } else {
+    if(!mongoose.Types.ObjectId.isValid(id)) { 
       throw new invalidObjectId(id);
     }
+
+    const result = await CarRepository.getById(id);
+
+    if(!result) {
+      throw new idNotFound(`Car - ${id}`);
+    } 
+
+    return result;
    
   }
   async update(id, payload) {
-    if(mongoose.Types.ObjectId.isValid(id)) {
-      if(await CarRepository.getById(id)) {
-        const result = await CarRepository.update(id, payload);
-        return result;
-      } else {
-        throw new idNotFound(`Car - ${id}`);
-      }
-    } else {
+    if(!mongoose.Types.ObjectId.isValid(id)) {
       throw new invalidObjectId(id);
     }
+    if(!await CarRepository.getById(id)) {
+      throw new idNotFound(`Car - ${id}`);
+    }
+
+    const result = await CarRepository.update(id, payload);
+    return result;
   }
   async remove(id) { 
-    if(mongoose.Types.ObjectId.isValid(id)) {
-      if(await CarRepository.getById(id)) {
-        const result = await CarRepository.remove(id);
-        return result;
-      } else {
-        throw new idNotFound(`Car - ${id}`);
-      }
-    } else {
+    if(!mongoose.Types.ObjectId.isValid(id)) {
       throw new invalidObjectId(id);
     }
+    if(!await CarRepository.getById(id)) {
+      throw new idNotFound(`Car - ${id}`);
+    } 
+
+    const result = await CarRepository.remove(id);
+    return result;
   }
 }
 

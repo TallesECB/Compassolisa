@@ -10,73 +10,61 @@ const moment = require('moment')
 class UserService {
   async create(payload) {
     const minAge = 18
-    let isValidDate = false
     
     const years = moment().diff(moment(payload.data_nascimento, 'DD/MM/YYYY'), 'years', true)
 
-    if(years >= minAge) {
-      isValidDate = true
-    }
-   
-    if(isValidDate) {
-      const result = await UserRepository.create(payload);
-      return result;
-    } else {
+    if(!years >= minAge) {
       throw new underAge(payload.nome)
     }
+    
+    const result = await UserRepository.create(payload);
+    return result;
   }
   async getAll({offset, limit, ...payloadFind}) {
     const result = await UserRepository.getAll(payloadFind, offset, limit);
     return result;
   }
   async getById(id) {
-    if(mongoose.Types.ObjectId.isValid(id)) {
-      const result = await UserRepository.getById(id);
-      if(result) {
-        return result;
-      } else {
-        throw new idNotFound(`User - ${id}`);
-      } 
-    } else {
+    if(!mongoose.Types.ObjectId.isValid(id)) {
       throw new invalidObjectId(id);
     }
+
+    const result = await UserRepository.getById(id);
+
+    if(!result) {
+      throw new idNotFound(`User - ${id}`);
+    } 
+
+    return result
   }
   async update(id, payload) {
-    if(mongoose.Types.ObjectId.isValid(id)) {
-      if(await UserRepository.getById(id)) {
-        const minAge = 18
-        let isValidDate = false
-        
-        const years = moment().diff(moment(payload.data_nascimento, 'DD-MM-YYYY'), 'years', true)
-    
-        if(years >= minAge) {
-          isValidDate = true
-        }
-       
-        if(isValidDate) {
-          const result = await UserRepository.create(payload);
-          return result;
-        } else {
-          throw new underAge(payload.nome)
-        }
-      } else {
-        throw new idNotFound(`User - ${id}`);
-      }
-    } else {
+    if(!mongoose.Types.ObjectId.isValid(id)) {
       throw new invalidObjectId(id);
     }
+    if(!await UserRepository.getById(id)) {
+      throw new idNotFound(`User - ${id}`);
+    }
+
+    const minAge = 18
+    const years = moment().diff(moment(payload.data_nascimento, 'DD-MM-YYYY'), 'years', true)
+
+    if(!years >= minAge) {
+      throw new underAge(payload.nome)
+    } 
+
+    const result = await UserRepository.create(payload);
+    return result;
   }
   async remove(id) {
-    if(mongoose.Types.ObjectId.isValid(id)) {
-      if(await UserRepository.getById(id)) {
-        const result = await UserRepository.remove(id);
-        return result;
-      } else {
-        throw new idNotFound(`User - ${id}`);
-      }
-    } else {
+    if(!mongoose.Types.ObjectId.isValid(id)) {
       throw new invalidObjectId(id);
     }
+    if(!await UserRepository.getById(id)) {
+      throw new idNotFound(`User - ${id}`);
+    } 
+
+    const result = await UserRepository.remove(id);
+    return result;
   }
 }
 

@@ -10,11 +10,11 @@ class CarController  {
     }
   }
   async getAll(req, res) { 
-    const result = await CarService.getAll(req.query);
-    if(result) {
+    try {
+      const result = await CarService.getAll(req.query);
       return res.status(200).json(result);
-    } else {
-      return res.status(404).json(`Não foi encontrado Carro através desta query`);
+    } catch(erro) {
+      return res.status(erro.statusCode).json(erro.message).end()
     }
   }
   async getById(req, res) {

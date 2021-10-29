@@ -5,7 +5,7 @@ module.exports = async (req, res, next) => {
         const schema = Joi.object({
             modelo: Joi.string().required(),
             cor: Joi.string().required(),
-            ano: Joi.number().min('1950').max('2022').required(),
+            ano: Joi.number().min(1950).max(2022).required(),
             acessorios: Joi.array().items({descricao:Joi.string().required()}).required().unique(),
             quantidadedePassageiros: Joi.number().required()
         });

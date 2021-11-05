@@ -46,12 +46,12 @@ class CarService {
         //const result = await CarRepository.removeAcessory(idAcessory);
         //return result;
 
-        console.log('this is for delete')
+        console.log('this is for delete');
       }
       if(object._id == idAcessory && object.descricao != payload.descricao ) {
         //const result = await CarRepository.updateAcessory(idAcessory, payload);
         //return result;
-        console.log('this is for update')
+        console.log('this is for update');
       }
     })
 

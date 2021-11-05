@@ -1,10 +1,10 @@
-const UserSchema = require('../schema/UserSchema');
+const RentalSchema = require('../schema/RentalSchema');
 const limitPagination = require('../errors/limitPagination');
 const offsetPagination = require('../errors/offsetPagination');
 
-class UserRepository  {
+class RentalRepository  {
   async create(payload) {
-    return UserSchema.create(payload);
+    return RentalSchema.create(payload);
   }
   async getAll(payloadFind, offset, limit) {
     if(!offset){
@@ -24,17 +24,17 @@ class UserRepository  {
       throw new offsetPagination(offset);
     }
 
-    return await UserSchema.paginate(payloadFind, {offset, limit});
+    return await RentalSchema.paginate(payloadFind, {offset, limit});
   }
   async getById(id) {
-    return UserSchema.findById(id);
+    return RentalSchema.findById(id);
   }
   async update(id, payload) {
-    return UserSchema.findByIdAndUpdate(id, payload, {new: true});
+    return RentalSchema.findByIdAndUpdate(id, payload, {new: true});
   }
   async remove(id) {
-    return UserSchema.findByIdAndRemove(id);
+    return RentalSchema.findByIdAndRemove(id);
   }
 }
 
-module.exports = new UserRepository();
+module.exports = new RentalRepository();

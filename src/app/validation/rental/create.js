@@ -3,12 +3,19 @@ const Joi = require('joi').extend(require('@joi/date'));
 module.exports = async (req, res, next) => {  
     try {
         const schema = Joi.object({
+            id: Joi.string().trim().required(),
             nome: Joi.string().trim().required(),
-            cpf: Joi.string().regex(/^\d{3}\.\d{3}\.\d{3}\-\d{2}$/).min(14).max(14).required(), 
-            data_nascimento: Joi.date().format('DD/MM/YYYY').required(),  
-            email: Joi.string().email().required(), 
-            senha: Joi.string().regex(/^[a-zA-Z0-9]{8,30}$/).required(),
-            habilitado: Joi.string().valid('sim','não').required()
+            cnpj: Joi.string().required(), 
+            atividades: Joi.string().trim().required(),
+            endereco: Joi.array().items(
+                {cep:Joi.string().trim().required()},
+                //{logradouro:Joi.string().trim().required()}, //utilizar a api de cep 
+                //{complemento:Joi.string().trim()},
+                //{bairro:Joi.string().trim().required()},
+                {number:Joi.string().trim().required()},
+                //{localidade:Joi.string().trim().required()},
+                //{uf:Joi.string().trim().required()}
+            ).required().unique(),
         });
         
         const { error } = await schema.validate(req.body, { abortEarly: false });

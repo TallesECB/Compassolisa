@@ -1,22 +1,36 @@
 const UserRepository = require('../repository/UserRepository');
 
 const idNotFound = require('../errors/idNotFound');
-const invalidObjectId = require('../errors/invalidObjectId');
 const underAge = require('../errors/underAge');
+const emailUnique = require('../errors/emailUnique');
+const cpfUnique = require('../errors/cpfUnique');
 
-const mongoose = require('mongoose');
 const moment = require('moment');
 
 class UserService {
   async create(payload) {
     const minAge = 18
-    
     const years = moment().diff(moment(payload.data_nascimento, 'DD/MM/YYYY'), 'years', true)
-
-    if(!years >= minAge) {
+    if(years < minAge) {
       throw new underAge(payload.nome);
     }
-    
+  
+    const validationCpf = {
+      cpf: payload.cpf
+    }
+    const validCpf = await UserRepository.getAll(validationCpf)
+    if(validCpf.docs.length > 0) {
+      throw new cpfUnique(validationCpf.cpf)
+    } 
+
+    const validationEmail = {
+      email: payload.email
+    }
+    const validEmail = await UserRepository.getAll(validationEmail)
+    if(validEmail.docs.length > 0) {
+      throw new emailUnique(validationEmail.email)
+    }     
+
     const result = await UserRepository.create(payload);
     return result;
   }
@@ -25,22 +39,13 @@ class UserService {
     return result;
   }
   async getById(id) {
-    if(!mongoose.Types.ObjectId.isValid(id)) {
-      throw new invalidObjectId(id);
-    }
-
     const result = await UserRepository.getById(id);
-
     if(!result) {
       throw new idNotFound(`User - ${id}`);
     } 
-
     return result
   }
   async update(id, payload) {
-    if(!mongoose.Types.ObjectId.isValid(id)) {
-      throw new invalidObjectId(id);
-    }
     if(!await UserRepository.getById(id)) {
       throw new idNotFound(`User - ${id}`);
     }
@@ -52,13 +57,34 @@ class UserService {
       throw new underAge(payload.nome)
     } 
 
-    const result = await UserRepository.create(payload);
+    const validationCpf = {
+      cpf: payload.cpf
+    }
+    const validCpf = await UserRepository.getAll(validationCpf)
+    if(validCpf.docs.length > 0 ) {
+      for(let i = 0; i < validCpf.docs.length; i++) {
+        if(validCpf.docs[i].id != id) {
+          throw new cpfUnique(validationCpf.cpf)
+        } 
+      }
+    }         
+
+    const validationEmail = {
+      email: payload.email
+    }
+    const validEmail = await UserRepository.getAll(validationEmail)
+    if(validEmail.docs.length > 0 ) {
+      for(let i = 0; i < validEmail.docs.length; i++) {
+        if(validEmail.docs[i].id != id) {
+          throw new emailUnique(validationEmail.email)
+        } 
+      }
+    }     
+
+    const result = await UserRepository.update(id, payload);
     return result;
   }
   async remove(id) {
-    if(!mongoose.Types.ObjectId.isValid(id)) {
-      throw new invalidObjectId(id);
-    }
     if(!await UserRepository.getById(id)) {
       throw new idNotFound(`User - ${id}`);
     } 

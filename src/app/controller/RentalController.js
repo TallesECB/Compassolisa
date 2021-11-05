@@ -1,10 +1,10 @@
-const UserService = require('../service/UserService');
-const { paginateSerialize, serialize} = require('../serialize/userSerialize')
+const RentalService = require('../service/RentalService');
+const { paginateSerialize, serialize} = require('../serialize/rentalSerialize')
 
-class UserController  {
+class RentalController  {
   async create(req, res) {
     try {
-      const result = await UserService.create(req.body);
+      const result = await RentalService.create(req.body);
       return res.status(201).json(serialize(result));
     } catch(erro) {
       const err = {
@@ -16,7 +16,7 @@ class UserController  {
   }
   async getAll(req, res) { 
     try {
-      const result = await UserService.getAll(req.query); 
+      const result = await RentalService.getAll(req.query); 
       return res.status(200).json(paginateSerialize(result)).end();
     } catch(erro) {
       const err = {
@@ -29,7 +29,7 @@ class UserController  {
   async getById(req, res) {
     try {
       const id = req.params.id;
-      const result = await UserService.getById(id);
+      const result = await RentalService.getById(id);
       return res.status(200).json(serialize(result));
     } catch(erro) {
       const err = {
@@ -42,7 +42,7 @@ class UserController  {
   async update(req, res) {
     try {
       const id = req.params.id;
-      const result = await UserService.update(id, req.body);
+      const result = await RentalService.update(id, req.body);
       return res.status(200).json(serialize(result)).end();
     } catch(erro) {
       const err = {
@@ -55,7 +55,7 @@ class UserController  {
   async remove(req, res) {
     try {
       const id = req.params.id;
-      await UserService.remove(id);
+      await RentalService.remove(id);
       return res.status(204).end();
     } catch(erro) {
       const err = {
@@ -67,4 +67,4 @@ class UserController  {
   }
 }
 
-module.exports = new UserController();
+module.exports = new RentalController();

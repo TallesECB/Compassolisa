@@ -1,5 +1,6 @@
 const CarSchema = require('../schema/CarSchema');
-const limitMaxPagination = require('../errors/limitMaxPagination')
+const limitPagination = require('../errors/limitPagination')
+const offsetPagination = require('../errors/offsetPagination');
 
 class CarRepository  {
   async create(payload) {
@@ -7,28 +8,23 @@ class CarRepository  {
   }
   async getAll(payloadFind, offset, limit) {
     if(!offset){
-      offset = 0;
+      offset = 1;
     }
     if(!limit) {
       limit = 10;
     }
-    offset = parseInt(offset);
+    offset = parseInt(offset)-1;
     limit = parseInt(limit);
 
     if(limit > 1000) {
-      throw new limitMaxPagination(limit);
+      throw new limitPagination(limit);
     }
 
-    const paginate = await CarSchema.paginate(payloadFind, {offset, limit});
-
-    const result = {
-      veiculos: paginate.docs,
-      total: paginate.totalDocs,
-      limit: paginate.limit,
-      offset: paginate.offset,
-      offsets: parseInt(paginate.totalDocs) - parseInt(paginate.offset)
+    if(offset < 0) {
+      throw new offsetPagination(offset);
     }
 
+    const result = await CarSchema.paginate(payloadFind, {offset, limit});
     return result;
   }
   async getById(id) {
@@ -36,6 +32,10 @@ class CarRepository  {
   }
   async update(id, payload) {
     return CarSchema.findByIdAndUpdate(id, payload, {new: true});
+  }
+  async updateAcessory(idAcessory, payload) {
+    const result = await CarSchema.findOneAndUpdate({_id: idAcessory}, payload,{returnOriginal: false, new: true});
+    return result
   }
   async remove(id) {
     return CarSchema.findByIdAndRemove(id);

@@ -1,10 +1,8 @@
 const CarRepository = require('../repository/CarRepository');
 
 const idNotFound = require('../errors/idNotFound');
-const invalidObjectId = require('../errors/invalidObjectId')
 const withoutAccessory = require('../errors/withoutAccessory');
 
-const mongoose = require('mongoose');
 
 class CarService {
   async create(payload) {
@@ -15,38 +13,55 @@ class CarService {
     return result;
   }
   async getAll({offset, limit, ...payloadFind}) { 
+    if(payloadFind.descricao) {
+      payloadFind['acessorios.descricao'] = payloadFind.descricao
+      delete payloadFind.descricao
+    }
     const result = await CarRepository.getAll(payloadFind, offset, limit);
     return result;
   }
-  async getById(id) {
-    if(!mongoose.Types.ObjectId.isValid(id)) { 
-      throw new invalidObjectId(id);
-    }
-
+  async getById(id) {   
     const result = await CarRepository.getById(id);
-
     if(!result) {
       throw new idNotFound(`Car - ${id}`);
     } 
-
     return result;
-   
   }
   async update(id, payload) {
-    if(!mongoose.Types.ObjectId.isValid(id)) {
-      throw new invalidObjectId(id);
-    }
     if(!await CarRepository.getById(id)) {
       throw new idNotFound(`Car - ${id}`);
     }
-
     const result = await CarRepository.update(id, payload);
     return result;
   }
-  async remove(id) { 
-    if(!mongoose.Types.ObjectId.isValid(id)) {
-      throw new invalidObjectId(id);
+  async updateAcessory(idCar, idAcessory, payload) {
+    if(!await CarRepository.getById(idCar)) {
+      throw new idNotFound(`Car - ${idCar}`);
     }
+    
+    const Cars = await CarRepository.getById(idCar)
+
+    Cars.acessorios.forEach(object => {
+      if(object._id == idAcessory && object.descricao == payload.descricao) {
+        //const result = await CarRepository.removeAcessory(idAcessory);
+        //return result;
+
+        console.log('this is for delete')
+      }
+      if(object._id == idAcessory && object.descricao != payload.descricao ) {
+        //const result = await CarRepository.updateAcessory(idAcessory, payload);
+        //return result;
+        console.log('this is for update')
+      }
+    })
+
+    const result = await CarRepository.updateAcessory(idAcessory, payload);
+    return result;
+
+    //throw new idNotFound(`Acessory - ${idAcessory}`);
+  
+  }
+  async remove(id) { 
     if(!await CarRepository.getById(id)) {
       throw new idNotFound(`Car - ${id}`);
     } 

@@ -1,10 +1,12 @@
 class authInvalid extends Error {
     constructor() {
-        const mensagem = `Email ou senha inválida, favor verificar!`;
-        super(mensagem);
+        super();
         this.name = 'authInvalid';
         this.idErro = 4;
         this.statusCode = 400;
+        
+        this.description = 'Bad Request'
+        this.name = `Email or PassWord -> Invalid!`;
     }   
 }
 

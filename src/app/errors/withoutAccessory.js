@@ -1,10 +1,12 @@
 class withoutAccessory extends Error {
     constructor(car) {
-        const mensagem = `${car} -> é necessário ter pelo menos uma descricao/acessorio`;
-        super(mensagem);
+        super();
         this.name = 'withoutAccessory';
         this.idErro = 3;
         this.statusCode = 400;
+
+        this.description = 'Bad Request'
+        this.name = `Car ${car} -> It is necessary to have at least one Accessory - Description!`;
     }   
 }
 

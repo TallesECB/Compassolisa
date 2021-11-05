@@ -35,31 +35,32 @@ class CarService {
     return result;
   }
   async updateAcessory(idCar, idAcessory, payload) {
+    let findAcessory = false
     if(!await CarRepository.getById(idCar)) {
       throw new idNotFound(`Car - ${idCar}`);
     }
     
     const Cars = await CarRepository.getById(idCar)
 
-    Cars.acessorios.forEach(object => {
-      if(object._id == idAcessory && object.descricao == payload.descricao) {
-        //const result = await CarRepository.removeAcessory(idAcessory);
-        //return result;
 
-        console.log('this is for delete');
+
+    Cars.acessorios.forEach((object,i) => {
+      if(object._id == idAcessory && object.descricao === payload.descricao) {
+        Cars.acessorios[i].remove()
+        findAcessory = true
       }
-      if(object._id == idAcessory && object.descricao != payload.descricao ) {
-        //const result = await CarRepository.updateAcessory(idAcessory, payload);
-        //return result;
-        console.log('this is for update');
+      if(object._id == idAcessory && object.descricao !== payload.descricao) {
+        object.descricao = payload.descricao
+        findAcessory = true
       }
+
     })
 
-    const result = await CarRepository.updateAcessory(idAcessory, payload);
-    return result;
-
-    //throw new idNotFound(`Acessory - ${idAcessory}`);
-  
+    if(!findAcessory) {
+      throw new idNotFound(`Acessory - ${idAcessory}`);
+    }
+    const result = await CarRepository.updateAcessory(idAcessory, Cars.acessorios);
+    return result
   }
   async remove(id) { 
     if(!await CarRepository.getById(id)) {

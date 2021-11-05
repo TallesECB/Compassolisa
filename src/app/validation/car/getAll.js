@@ -3,6 +3,8 @@ const Joi = require('joi');
 module.exports = async (req, res, next) => {  
     try {
         const schema = Joi.object({
+            offset: Joi.string(),
+            limit: Joi.string(),
             modelo: Joi.string().trim(),
             cor: Joi.string().trim(),
             ano: Joi.number().min(1950).max(2022),

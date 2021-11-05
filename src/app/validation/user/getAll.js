@@ -3,6 +3,8 @@ const Joi = require('joi').extend(require('@joi/date'));
 module.exports = async (req, res, next) => {  
     try {
         const schema = Joi.object({
+            offset: Joi.string(),
+            limit: Joi.string(),
             nome: Joi.string().trim(),
             cpf: Joi.string().regex(/^\d{3}\.\d{3}\.\d{3}\-\d{2}$/).min(14).max(14), 
             data_nascimento: Joi.date().format('DD/MM/YYYY'),  

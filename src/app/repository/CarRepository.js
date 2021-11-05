@@ -34,7 +34,7 @@ class CarRepository  {
     return CarSchema.findByIdAndUpdate(id, payload, {new: true});
   }
   async updateAcessory(idAcessory, payload) {
-    const result = await CarSchema.findOneAndUpdate({_id: idAcessory}, payload,{returnOriginal: false, new: true});
+    const result = await CarSchema.findOneAndUpdate({'acessorios._id': idAcessory}, {acessorios: payload}, {returnOriginal: false});
     return result
   }
   async remove(id) {

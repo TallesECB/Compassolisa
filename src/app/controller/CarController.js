@@ -64,6 +64,7 @@ class CarController  {
         description: erro.description,
         name: erro.name
       };
+      console.log(erro)
       return res.status(404).json(err).end();
     }
   }

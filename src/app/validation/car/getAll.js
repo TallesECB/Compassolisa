@@ -8,7 +8,7 @@ module.exports = async (req, res, next) => {
             modelo: Joi.string().trim(),
             cor: Joi.string().trim(),
             ano: Joi.number().min(1950).max(2022),
-            descricao:Joi.string().trim().lowercase(),
+            descricao: Joi.string().trim().lowercase(),
             quantidadePassageiros: Joi.number()
         });
 

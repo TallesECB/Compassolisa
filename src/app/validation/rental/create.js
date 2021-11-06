@@ -3,18 +3,16 @@ const Joi = require('joi').extend(require('@joi/date'));
 module.exports = async (req, res, next) => {  
     try {
         const schema = Joi.object({
-            id: Joi.string().trim().required(),
-            nome: Joi.string().trim().required(),
-            cnpj: Joi.string().required(), 
+            nome: Joi.string().trim().min(4).required(),
+            cnpj: Joi.string().required().regex(/^\d{2}\.\d{3}\.\d{3}\/\d{4}\-\d{2}$/), 
             atividades: Joi.string().trim().required(),
             endereco: Joi.array().items(
-                {cep:Joi.string().trim().required()},
-                //{logradouro:Joi.string().trim().required()}, //utilizar a api de cep 
-                //{complemento:Joi.string().trim()},
-                //{bairro:Joi.string().trim().required()},
-                {number:Joi.string().trim().required()},
-                //{localidade:Joi.string().trim().required()},
-                //{uf:Joi.string().trim().required()}
+                {
+                    cep:Joi.string().regex(/[0-9]{5}-[0-9]{3}$/).trim().required(),
+                    complemento:Joi.string().trim(),
+                    number:Joi.string().trim().required(),
+                    isFilial: Joi.boolean().required()
+                },
             ).required().unique(),
         });
         

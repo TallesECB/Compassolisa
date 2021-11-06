@@ -2,10 +2,6 @@ const mongoose = require('mongoose');
 const mongoosePaginateV2 = require('mongoose-paginate-v2')
 
 const RentalSchema = mongoose.Schema({
-  id: {
-    type: String,
-    required: true
-  },
   nome: {
     type: String,
     required: true,
@@ -30,6 +26,10 @@ const RentalSchema = mongoose.Schema({
     complemento: {
         type: String,
         required: false
+    },
+    isFilial: {
+      type: Boolean,
+      required: true
     },
     bairro: {
         type: String,

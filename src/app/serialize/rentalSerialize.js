@@ -4,7 +4,7 @@ const serialize = ({id, nome, cnpj, atividades, endereco}) => {
 
 const paginateSerialize = ({docs, limit, totalDocs, pagingCounter, totalPages}) => {
     return {
-        usuarios: docs.map(serialize),
+        rentals: docs.map(serialize),
         limit,
         total: totalDocs,
         offset: pagingCounter,

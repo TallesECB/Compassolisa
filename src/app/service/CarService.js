@@ -42,8 +42,6 @@ class CarService {
     
     const Cars = await CarRepository.getById(idCar)
 
-
-
     Cars.acessorios.forEach((object,i) => {
       if(object._id == idAcessory && object.descricao === payload.descricao) {
         Cars.acessorios[i].remove()
@@ -53,9 +51,10 @@ class CarService {
         object.descricao = payload.descricao
         findAcessory = true
       }
-
     })
 
+    //fazer uma logica para percorrer todos os acessorios do carro e validar se alguma das descrições são iguais, para retornar o acessorios é unique
+    
     if(!findAcessory) {
       throw new idNotFound(`Acessory - ${idAcessory}`);
     }

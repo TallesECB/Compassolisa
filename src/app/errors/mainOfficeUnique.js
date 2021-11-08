@@ -1,7 +1,6 @@
 class mainOfficeUnique extends Error {
     constructor(cnpj) {
         super();
-        this.idErro = 8;
         this.statusCode = 400;
 
         this.description = 'Conflict';

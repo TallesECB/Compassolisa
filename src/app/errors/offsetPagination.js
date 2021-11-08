@@ -1,8 +1,6 @@
 class offsetPagination extends Error {
     constructor(offset) {
         super();
-        this.name = 'offsetPagination';
-        this.idErro = 1;
         this.statusCode = 400;
         
         this.description = 'Bad Request'

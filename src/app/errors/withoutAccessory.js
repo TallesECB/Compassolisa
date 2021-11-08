@@ -1,8 +1,6 @@
 class withoutAccessory extends Error {
     constructor(car) {
         super();
-        this.name = 'withoutAccessory';
-        this.idErro = 3;
         this.statusCode = 400;
 
         this.description = 'Bad Request'

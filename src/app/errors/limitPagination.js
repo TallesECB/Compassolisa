@@ -1,8 +1,6 @@
 class limitPagination extends Error {
     constructor(limit) {
         super();
-        this.name = 'limitPagination';
-        this.idErro = 5;
         this.statusCode = 400;
         
         this.description = 'Bad Request'

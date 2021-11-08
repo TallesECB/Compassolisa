@@ -1,8 +1,6 @@
 class underAge extends Error {
     constructor(user) {
         super();
-        this.name = 'underAge';
-        this.idErro = 2;
         this.statusCode = 400;
         
         this.description = 'Bad Request'

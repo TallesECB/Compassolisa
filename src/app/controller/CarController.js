@@ -6,13 +6,13 @@ class CarController  {
   async create(req, res) {
     try {
       const result = await CarService.create(req.body);
-      return res.status(201).send(serialize(result)).end();
+      return res.status(201).send(serialize(result))
     } catch(erro) {
       const err = {
         description: erro.description,
         name: erro.name
       };
-      return res.status(erro.statusCode).json(err).end();
+      return res.status(erro.statusCode).json(err)
     }
   }
   async getAll(req, res) { 
@@ -24,20 +24,20 @@ class CarController  {
         description: erro.description,
         name: erro.name
       };
-      return res.status(erro.statusCode).json(err).end();
+      return res.status(erro.statusCode).json(err)
     }
   }
   async getById(req, res) {
     try {
       const id = req.params.id;
       const result = await CarService.getById(id);
-      return res.status(200).json(serialize(result)).end();
+      return res.status(200).json(serialize(result))
     } catch(erro) {
       const err = {
         description: erro.description,
         name: erro.name
       };
-      return res.status(erro.statusCode).json(err).end();
+      return res.status(erro.statusCode).json(err)
     }
   }
   async update(req, res) {
@@ -50,7 +50,7 @@ class CarController  {
         description: erro.description,
         name: erro.name
       };
-      return res.status(erro.statusCode).json(err).end();
+      return res.status(erro.statusCode).json(err)
     }
   }
   async updateAcessory(req, res) {
@@ -58,27 +58,27 @@ class CarController  {
       const idCar = req.params.id;
       const idAcessory = req.params.idAcessory;
       const result = await CarService.updateAcessory(idCar, idAcessory, req.body);
-      return res.status(200).json(serialize(result)).end();
+      return res.status(200).json(serialize(result))
     } catch(erro) {
       const err = {
         description: erro.description,
         name: erro.name
       };
       console.log(erro)
-      return res.status(404).json(err).end();
+      return res.status(404).json(err)
     }
   }
   async remove(req, res) {
     try {
       const id = req.params.id;
       await CarService.remove(id);
-      return res.status(204).end();
+      return res.status(204)
     } catch(erro) {
       const err = {
         description: erro.description,
         name: erro.name
       };
-      return res.status(erro.statusCode).json(err).end();
+      return res.status(erro.statusCode).json(err)
     }
   }
 }

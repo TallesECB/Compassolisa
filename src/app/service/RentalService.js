@@ -4,6 +4,8 @@ const RentalRepository = require('../repository/RentalRepository');
 const CnpjUnique = require('../errors/CnpjUnique');
 const MainOfficeUnique = require('../errors/MainOfficeUnique');
 const IdNotFound = require('../errors/IdNotFound');
+const CepInvalid = require('../errors/CepInvalid');
+const HaveOneMatrix = require('../errors/HaveOneMatrix');
 
 class RentalService {
   async create(payload) {
@@ -11,12 +13,14 @@ class RentalService {
 
     await Promise.all(
       payload.endereco.map(async (object, i) => {
-        const payloadAxios = await axios.get(`https://viacep.com.br/ws/${object.cep}/json/`);
-
-        payload.endereco[i].logradouro = payloadAxios.data.logradouro;
-        payload.endereco[i].bairro = payloadAxios.data.bairro;
-        payload.endereco[i].localidade = payloadAxios.data.localidade;
-        payload.endereco[i].uf = payloadAxios.data.uf;
+        const resultCep = await axios.get(`https://viacep.com.br/ws/${object.cep}/json/`);
+        if (resultCep.data.erro === true) {
+          throw new CepInvalid(object.cep);
+        }
+        payload.endereco[i].logradouro = resultCep.data.logradouro;
+        payload.endereco[i].bairro = resultCep.data.bairro;
+        payload.endereco[i].localidade = resultCep.data.localidade;
+        payload.endereco[i].uf = resultCep.data.uf;
 
         if (payload.endereco[i].isFilial === false) {
           isFilial += 1;
@@ -35,6 +39,9 @@ class RentalService {
     }
     if (isFilial > 1) {
       throw new MainOfficeUnique(payload.cnpj);
+    }
+    if (isFilial === 0) {
+      throw new HaveOneMatrix(payload.cnpj);
     }
 
     const result = await RentalRepository.create(payload);
@@ -90,12 +97,14 @@ class RentalService {
 
     await Promise.all(
       payload.endereco.map(async (object, i) => {
-        const payloadAxios = await axios.get(`https://viacep.com.br/ws/${object.cep}/json/`);
-
-        payload.endereco[i].logradouro = payloadAxios.data.logradouro;
-        payload.endereco[i].bairro = payloadAxios.data.bairro;
-        payload.endereco[i].localidade = payloadAxios.data.localidade;
-        payload.endereco[i].uf = payloadAxios.data.uf;
+        const resultCep = await axios.get(`https://viacep.com.br/ws/${object.cep}/json/`);
+        if (resultCep.data.erro === true) {
+          throw new CepInvalid(object.cep);
+        }
+        payload.endereco[i].logradouro = resultCep.data.logradouro;
+        payload.endereco[i].bairro = resultCep.data.bairro;
+        payload.endereco[i].localidade = resultCep.data.localidade;
+        payload.endereco[i].uf = resultCep.data.uf;
 
         if (payload.endereco[i].isFilial === false) {
           isFilial += 1;
@@ -121,9 +130,9 @@ class RentalService {
       throw new MainOfficeUnique(payload.cnpj);
     }
 
-    /* if(isFilial === 0) {
-      throw new HaveOneOfficeUnique(payload.cnpj);
-    } */
+    if (isFilial === 0) {
+      throw new HaveOneMatrix(payload.cnpj);
+    }
 
     const result = await RentalRepository.update(id, payload);
     return result;

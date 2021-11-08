@@ -1,42 +1,31 @@
 const CarSchema = require('../schema/CarSchema');
-const limitPagination = require('../errors/limitPagination')
-const offsetPagination = require('../errors/offsetPagination');
 
-class CarRepository  {
+class CarRepository {
   async create(payload) {
     return CarSchema.create(payload);
   }
-  async getAll(payloadFind, offset, limit) {
-    if(!offset){
-      offset = 1;
-    }
-    if(!limit) {
-      limit = 10;
-    }
-    offset = parseInt(offset)-1;
-    limit = parseInt(limit);
 
-    if(limit > 1000) {
-      throw new limitPagination(limit);
-    }
-
-    if(offset < 0) {
-      throw new offsetPagination(offset);
-    }
-
-    const result = await CarSchema.paginate(payloadFind, {offset, limit});
-    return result;
+  async getAll(payloadFind, offset = 1, limit = 100) {
+    return CarSchema.paginate(payloadFind, { offset, limit });
   }
+
   async getById(id) {
     return CarSchema.findById(id);
   }
+
   async update(id, payload) {
-    return CarSchema.findByIdAndUpdate(id, payload, {new: true});
+    return CarSchema.findByIdAndUpdate(id, payload, { new: true });
   }
+
   async updateAcessory(idAcessory, payload) {
-    const result = await CarSchema.findOneAndUpdate({'acessorios._id': idAcessory}, {acessorios: payload}, {returnOriginal: false});
-    return result
+    const result = await CarSchema.findOneAndUpdate(
+      { 'acessorios._id': idAcessory },
+      { acessorios: payload },
+      { returnOriginal: false }
+    );
+    return result;
   }
+
   async remove(id) {
     return CarSchema.findByIdAndRemove(id);
   }

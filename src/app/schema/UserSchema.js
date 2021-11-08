@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
-const mongoosePaginateV2 = require('mongoose-paginate-v2')
+const mongoosePaginateV2 = require('mongoose-paginate-v2');
 
 const UserSchema = mongoose.Schema({
   nome: {
     type: String,
     required: true
   },
-  cpf: { 
+  cpf: {
     type: String,
     required: true
   },
@@ -28,7 +28,7 @@ const UserSchema = mongoose.Schema({
     required: true,
     enum: ['sim', 'nao']
   }
-})
+});
 
 UserSchema.plugin(mongoosePaginateV2);
 

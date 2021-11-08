@@ -1,11 +1,11 @@
-class cnpjUnique extends Error {
-    constructor(cnpj) {
-        super();
-        this.statusCode = 400;
+class CnpjUnique extends Error {
+  constructor(cnpj) {
+    super();
+    this.statusCode = 409;
 
-        this.description = 'Conflict'
-        this.name = `CNPJ - ${cnpj} -> Already in Use!`;
-    }   
+    this.description = 'Conflict';
+    this.name = `CNPJ - ${cnpj} -> Already in Use!`;
+  }
 }
 
-module.exports = cnpjUnique;
+module.exports = CnpjUnique;

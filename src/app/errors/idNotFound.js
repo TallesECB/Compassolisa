@@ -1,11 +1,11 @@
-class idNotFound extends Error {
-    constructor(id) {
-        super();
-        this.statusCode = 404;
-        
-        this.description = 'Not Found'
-        this.name = `ID ${id} -> Not Found!`;
-    }   
+class IdNotFound extends Error {
+  constructor(id) {
+    super();
+    this.statusCode = 404;
+
+    this.description = 'Not Found';
+    this.name = `ID ${id} -> Not Found!`;
+  }
 }
 
-module.exports = idNotFound;
+module.exports = IdNotFound;

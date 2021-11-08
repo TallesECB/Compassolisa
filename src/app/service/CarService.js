@@ -1,70 +1,74 @@
 const CarRepository = require('../repository/CarRepository');
 
-const idNotFound = require('../errors/idNotFound');
-const withoutAccessory = require('../errors/withoutAccessory');
-
+const IdNotFound = require('../errors/IdNotFound');
+const WithoutAccessory = require('../errors/WithoutAccessory');
 
 class CarService {
   async create(payload) {
-    if(payload.acessorios.length === 0 || payload.acessorios.descricao === "") {
-      throw new withoutAccessory(payload.modelo);
-    } 
+    if (payload.acessorios.length === 0 || payload.acessorios.descricao === '') {
+      throw new WithoutAccessory(payload.modelo);
+    }
     const result = await CarRepository.create(payload);
     return result;
   }
-  async getAll({offset, limit, ...payloadFind}) { 
-    if(payloadFind.descricao) {
-      payloadFind['acessorios.descricao'] = payloadFind.descricao
-      delete payloadFind.descricao
+
+  async getAll({ offset, limit, ...payloadFind }) {
+    if (payloadFind.descricao) {
+      payloadFind['acessorios.descricao'] = payloadFind.descricao;
+      delete payloadFind.descricao;
     }
     const result = await CarRepository.getAll(payloadFind, offset, limit);
     return result;
   }
-  async getById(id) {   
+
+  async getById(id) {
     const result = await CarRepository.getById(id);
-    if(!result) {
-      throw new idNotFound(`Car - ${id}`);
-    } 
+    if (!result) {
+      throw new IdNotFound(`Car - ${id}`);
+    }
     return result;
   }
+
   async update(id, payload) {
-    if(!await CarRepository.getById(id)) {
-      throw new idNotFound(`Car - ${id}`);
+    if (!(await CarRepository.getById(id))) {
+      throw new IdNotFound(`Car - ${id}`);
     }
     const result = await CarRepository.update(id, payload);
     return result;
   }
+
   async updateAcessory(idCar, idAcessory, payload) {
-    let findAcessory = false
-    if(!await CarRepository.getById(idCar)) {
-      throw new idNotFound(`Car - ${idCar}`);
+    let findAcessory = false;
+    if (!(await CarRepository.getById(idCar))) {
+      throw new IdNotFound(`Car - ${idCar}`);
     }
-    
-    const Cars = await CarRepository.getById(idCar)
 
-    Cars.acessorios.forEach((object,i) => {
-      if(object._id == idAcessory && object.descricao === payload.descricao) {
-        Cars.acessorios[i].remove()
-        findAcessory = true
-      }
-      if(object._id == idAcessory && object.descricao !== payload.descricao) {
-        object.descricao = payload.descricao
-        findAcessory = true
-      }
-    })
+    const Cars = await CarRepository.getById(idCar);
 
-    //fazer uma logica para percorrer todos os acessorios do carro e validar se alguma das descrições são iguais, para retornar o acessorios é unique
-    
-    if(!findAcessory) {
-      throw new idNotFound(`Acessory - ${idAcessory}`);
+    Cars.acessorios.forEach((object, i) => {
+      if (object._id === idAcessory && object.descricao === payload.descricao) {
+        Cars.acessorios[i].remove();
+        findAcessory = true;
+      }
+      if (object._id === idAcessory && object.descricao !== payload.descricao) {
+        object.descricao = payload.descricao;
+        findAcessory = true;
+      }
+    });
+
+    // fazer uma logica para percorrer todos os acessorios do carro e validar se alguma das descrições são iguais, para retornar o acessorios é unique
+
+    if (!findAcessory) {
+      throw new IdNotFound(`Acessory - ${idAcessory}`);
     }
     const result = await CarRepository.updateAcessory(idAcessory, Cars.acessorios);
-    return result
+    return result;
   }
-  async remove(id) { 
-    if(!await CarRepository.getById(id)) {
-      throw new idNotFound(`Car - ${id}`);
-    } 
+
+  async remove(id) {
+    if (!(await CarRepository.getById(id))) {
+      throw new IdNotFound(`Car - ${id}`);
+    }
 
     const result = await CarRepository.remove(id);
     return result;

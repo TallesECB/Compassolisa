@@ -1,11 +1,11 @@
-class withoutAccessory extends Error {
-    constructor(car) {
-        super();
-        this.statusCode = 400;
+class WithoutAccessory extends Error {
+  constructor(car) {
+    super();
+    this.statusCode = 409;
 
-        this.description = 'Bad Request'
-        this.name = `Car ${car} -> It is necessary to have at least one Accessory - Description!`;
-    }   
+    this.description = 'Conflict';
+    this.name = `Car ${car} -> It is necessary to have at least one Accessory - Description!`;
+  }
 }
 
-module.exports = withoutAccessory;
+module.exports = WithoutAccessory;

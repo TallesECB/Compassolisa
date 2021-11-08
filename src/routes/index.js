@@ -1,10 +1,10 @@
 const { Router } = require('express');
-const user = require('../routes/user.router');
-const car = require('../routes/car.router');
-const auth = require('../routes/auth.router');
-const rental = require('../routes/rental.router');
+const user = require('./user.router');
+const car = require('./car.router');
+const auth = require('./auth.router');
+const rental = require('./rental.router');
 
-module.exports = server => {
+module.exports = (server) => {
   server.use((req, res, next) => {
     user(server, new Router());
     car(server, new Router());
@@ -12,4 +12,4 @@ module.exports = server => {
     rental(server, new Router());
     next();
   });
-}
+};

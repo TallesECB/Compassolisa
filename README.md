@@ -5,10 +5,10 @@ This is an API of a luxury and semi-luxury car rental system
 
 
 ## Features
-
-- Cars Crud
 - Peoples Crud
 - Authentication User
+- Cars Crud
+- Rentals Crud
 - Pagination
 
 
@@ -29,7 +29,9 @@ This is an API of a luxury and semi-luxury car rental system
     mongoose": v.6.0.11,
     mongoose-paginate-v2: v.1.4.2,
     mongoose-unique-validator: v.3.0.0",
-    swagger-ui-express: v.4.1.6
+    swagger-ui-express: v.4.1.6,
+    axios: v.0.24.0,
+    nodemon: v.2.0.14
 
 ## Run Locally
 
@@ -57,76 +59,20 @@ Start the server
   npm run dev
 ```
 
+Start the node
+
+```bash
+  npm run start
+```
+
+Start the tests
+
+```bash
+  npm run tests
+```
+
 
 ## API Reference
-
-#### Get all Cars
-
-``` localhost:3000
-  GET /api/v1/car/?cor=Yellowa&offset=0&limit=30
-```
-| Parameter | Type     | Description                |
-| :-------- | :------- | :------------------------- |
-| `queryparam` | `string` | **Opcional**. QueryParms of Car to fetch |
-| `offset`  | `number` | **Opcional**. Your offset - Pagination  | - this default is 0
-| `limit`   | `number` | **Opcional**. Your limit - Pagination  | - this default is 1000
-
-#### Get Car
-
-``` localhost:3000
-  GET /api/v1/car/${idCar}
-```
-| Parameter | Type     | Description                       |
-| :-------- | :------- | :-------------------------------- |
-| `id`      | `objectId` | **Required**. Id of Car to fetch |
-
-
-
-#### Create Car
-
-``` localhost:3000
-  POST /api/v1/car/
-```
-| Body | Type  | Description                       |
-| :--------  | :------- | :-------------------------------- |
-| `modelo`   | `string` | **Required**. Modelo -> Car |
-| `cor`      | `string` | **Required**. Cor -> Car |
-| `ano`      | `number` | **Required**. Ano -> Car |
-| `acessorios [ { descricao: "" } ]`      | `array - object: string` | **Required**. Acessorios - Descricao -> Car |
-| `quantidadePassageiros`      | `number` | **Required**. Quantidade de Passageiros -> Car |
-
-
-
-
-#### Update Car
-
-``` localhost:3000
-  PUT /api/v1/car/${idCar}
-```
-| Parameter | Type     | Description                       |
-| :-------- | :------- | :-------------------------------- |
-| `id`      | `objectId` | **Required**. Id of Car to fetch for update a specific Car |
-
-| Body | Type  | Description                       |
-| :--------  | :------- | :-------------------------------- |
-| `modelo`   | `string` | **Required**. Modelo -> Car |
-| `cor`      | `string` | **Required**. Cor -> Car |
-| `ano`      | `number` | **Required**. Ano -> Car |
-| `acessorios [ { descricao: "" } ]`      | `array - object: string` | **Required**. Acessorios - Descricao -> Car |
-| `quantidadePassageiros`      | `number` | **Required**. Quantidade de Passageiros -> Car |
-
-
-
-#### Remove Car
-
-``` localhost:3000
-  DELETE /api/v1/car/${idCar}
-```
-| Parameter | Type     | Description                       |
-| :-------- | :------- | :-------------------------------- |
-| `id`      | `objectId` | **Required**. Id of Car to fetch for Delete |
-
-
 
 #### Get all Peoples
 
@@ -144,7 +90,7 @@ Start the server
 #### Get People
 
 ``` localhost:3000
-  GET /api/v1/people/${idPeople}
+  GET /api/v1/people/${id}
 ```
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
@@ -172,7 +118,7 @@ Start the server
 #### Update People
 
 ``` localhost:3000
-  PUT /api/v1/people/${idPeople}
+  PUT /api/v1/people/${id}
 ```
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
@@ -188,12 +134,10 @@ Start the server
 | `habilitado`      | `enum - ('Sim', 'Não')` | **Required**. Habilitação - CNH -> People |
 
 
-
-
 #### Remove People
 
 ``` localhost:3000
-  DELETE /api/v1/people/${idPeople}
+  DELETE /api/v1/people/${id}
 ```
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
@@ -209,6 +153,86 @@ Start the server
 | :--------  | :------- | :-------------------------------- |
 | `email`      | `string.email` | **Required**. Email de autenticação ->People |
 | `senha`      | `string` | **Required**. Senha de autenticação -> People |
+
+### To use the Car Route it is necessary to be authenticated.
+
+#### Get all Cars 
+
+``` localhost:3000
+  GET /api/v1/car/?cor=Yellowa&offset=0&limit=30
+```
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `queryparam` | `string` | **Opcional**. QueryParms of Car to fetch |
+| `offset`  | `number` | **Opcional**. Your offset - Pagination  | - this default is 0
+| `limit`   | `number` | **Opcional**. Your limit - Pagination  | - this default is 1000
+
+#### Get Car
+
+``` localhost:3000
+  GET /api/v1/car/${id}
+```
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `id`      | `objectId` | **Required**. Id of Car to fetch |
+
+
+
+#### Create Car
+
+``` localhost:3000
+  POST /api/v1/car/
+```
+| Body | Type  | Description                       |
+| :--------  | :------- | :-------------------------------- |
+| `modelo`   | `string` | **Required**. Modelo -> Car |
+| `cor`      | `string` | **Required**. Cor -> Car |
+| `ano`      | `number` | **Required**. Ano -> Car |
+| `acessorios [ { descricao: "" } ]`      | `array - object: string` | **Required**. Acessorios - Descricao -> Car |
+| `quantidadePassageiros`      | `number` | **Required**. Quantidade de Passageiros -> Car |
+
+
+#### Update Car
+
+``` localhost:3000
+  PUT /api/v1/car/${id}
+```
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `id`      | `objectId` | **Required**. Id of Car to fetch for update a specific Car |
+
+| Body | Type  | Description                       |
+| :--------  | :------- | :-------------------------------- |
+| `modelo`   | `string` | **Required**. Modelo -> Car |
+| `cor`      | `string` | **Required**. Cor -> Car |
+| `ano`      | `number` | **Required**. Ano -> Car |
+| `acessorios [ { descricao: "" } ]`      | `array - object: string` | **Required**. Acessorios - Descricao -> Car |
+| `quantidadePassageiros`      | `number` | **Required**. Quantidade de Passageiros -> Car |
+
+#### Update Car Acessory
+
+``` localhost:3000
+  PUT /api/v1/car/${id}/acessorios/${idAcessory}
+```
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `id`      | `objectId` | **Required**. Id of Car to fetch a specific Car |
+| `idAcessory`      | `objectId` | **Required**. Id of Acessory to fetch a specific Acessory in Car |
+
+| Body | Type  | Description                       |
+| :--------  | :------- | :-------------------------------- |
+| `descricao`   | `string` | **Required**. Descricao -> Car Acessory |
+
+
+#### Remove Car
+
+``` localhost:3000
+  DELETE /api/v1/car/${id}
+```
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `id`      | `objectId` | **Required**. Id of Car to fetch for Delete |
+
 
 
 ## Authors

@@ -60,7 +60,7 @@ class RentalController {
     try {
       const { id } = req.params;
       await RentalService.remove(id);
-      return res.status(204);
+      return res.status(204).end();
     } catch (erro) {
       const err = {
         description: erro.description,

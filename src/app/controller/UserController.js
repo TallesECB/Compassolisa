@@ -64,7 +64,7 @@ class UserController {
     try {
       const { id } = req.params;
       await UserService.remove(id);
-      return res.status(204);
+      return res.status(204).end();
     } catch (erro) {
       const err = {
         description: erro.description,

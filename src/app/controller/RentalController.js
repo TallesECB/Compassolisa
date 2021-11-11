@@ -24,6 +24,7 @@ class RentalController {
         description: erro.description,
         name: erro.name
       };
+      console.log(erro);
       return res.status(erro.statusCode).json(err);
     }
   }

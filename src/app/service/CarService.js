@@ -39,29 +39,23 @@ class CarService {
 
   async updateAcessory(idCar, idAcessory, payload) {
     let findAcessory = false;
-    if (!(await CarRepository.getById(idCar))) {
+
+    const cars = await CarRepository.getById(idCar);
+
+    if (!cars) {
       throw new IdNotFound(`Car - ${idCar}`);
     }
-
-    const Cars = await CarRepository.getById(idCar);
-
-    Cars.acessorios.forEach((object, i) => {
-      if (object._id === idAcessory && object.descricao === payload.descricao) {
-        Cars.acessorios[i].remove();
-        findAcessory = true;
-      }
-      if (object._id === idAcessory && object.descricao !== payload.descricao) {
-        object.descricao = payload.descricao;
+    cars.acessorios.forEach((object, i) => {
+      if (object._id.toString() === idAcessory.toString()) {
         findAcessory = true;
       }
     });
 
-    // fazer uma logica para percorrer todos os acessorios do carro e validar se alguma das descrições são iguais, para retornar o acessorios é unique
-
     if (!findAcessory) {
       throw new IdNotFound(`Acessory - ${idAcessory}`);
     }
-    const result = await CarRepository.updateAcessory(idAcessory, Cars.acessorios);
+    
+    const result = await CarRepository.updateAcessory(idAcessory, payload);
     return result;
   }
 

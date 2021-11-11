@@ -67,7 +67,6 @@ class CarController {
         description: erro.description,
         name: erro.name
       };
-      console.log(erro);
       return res.status(404).json(err);
     }
   }
@@ -76,7 +75,7 @@ class CarController {
     try {
       const { id } = req.params;
       await CarService.remove(id);
-      return res.status(204);
+      return res.status(204).end();
     } catch (erro) {
       const err = {
         description: erro.description,

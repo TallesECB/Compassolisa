@@ -6,7 +6,11 @@ class AuthController {
       const result = await AuthService.login(req.body);
       return res.status(201).json(result);
     } catch (error) {
-      return res.status(error.statusCode).send(error.message);
+      const err = {
+        description: error.description,
+        name: error.name
+      };
+      return res.status(error.statusCode).send(err);
     }
   }
 }

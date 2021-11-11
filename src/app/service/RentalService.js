@@ -10,7 +10,7 @@ const HaveOneMatrix = require('../errors/HaveOneMatrix');
 class RentalService {
   async create(payload) {
     let isFilial = 0;
-
+    
     await Promise.all(
       payload.endereco.map(async (object, i) => {
         const resultCep = await axios.get(`https://viacep.com.br/ws/${object.cep}/json/`);
@@ -21,11 +21,9 @@ class RentalService {
         payload.endereco[i].bairro = resultCep.data.bairro;
         payload.endereco[i].localidade = resultCep.data.localidade;
         payload.endereco[i].uf = resultCep.data.uf;
-
         if (payload.endereco[i].isFilial === false) {
           isFilial += 1;
         }
-
         return payload;
       })
     );
@@ -49,34 +47,16 @@ class RentalService {
   }
 
   async getAll({ offset, limit, ...payloadFind }) {
-    if (payloadFind.cep) {
-      payloadFind['endereco.cep'] = payloadFind.cep;
-      delete payloadFind.cep;
-    }
-    if (payloadFind.logradouro) {
-      payloadFind['endereco.logradouro'] = payloadFind.logradouro;
-      delete payloadFind.logradouro;
-    }
-    if (payloadFind.complemento) {
-      payloadFind['endereco.complemento'] = payloadFind.complemento;
-      delete payloadFind.complemento;
-    }
-    if (payloadFind.bairro) {
-      payloadFind['endereco.bairro'] = payloadFind.bairro;
-      delete payloadFind.bairro;
-    }
-    if (payloadFind.number) {
-      payloadFind['endereco.number'] = payloadFind.number;
-      delete payloadFind.number;
-    }
-    if (payloadFind.localidade) {
-      payloadFind['endereco.localidade'] = payloadFind.localidade;
-      delete payloadFind.localidade;
-    }
-    if (payloadFind.uf) {
-      payloadFind['endereco.uf'] = payloadFind.uf;
-      delete payloadFind.uf;
-    }
+    const arrayAddress = ['cep', 'logradouro', 'complemento', 'bairro', 'number', 'localidade', 'uf', 'isFilial'];
+
+    Object.keys(payloadFind).map((object) => {
+      if (arrayAddress.includes(object)) {
+        payloadFind[`endereco.${object}`] = payloadFind[object];
+        delete payloadFind[object];
+      }
+      return payloadFind;
+    });
+    
     const result = await RentalRepository.getAll(payloadFind, offset, limit);
     return result;
   }

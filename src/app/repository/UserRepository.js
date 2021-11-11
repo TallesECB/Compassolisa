@@ -5,7 +5,7 @@ class UserRepository {
     return UserSchema.create(payload);
   }
 
-  async getAll(payloadFind, offset = 1, limit = 100) {
+  async getAll(payloadFind, offset = 0, limit = 100) {
     return UserSchema.paginate(payloadFind, { offset, limit });
   }
 

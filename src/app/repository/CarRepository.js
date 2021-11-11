@@ -5,7 +5,7 @@ class CarRepository {
     return CarSchema.create(payload);
   }
 
-  async getAll(payloadFind, offset = 1, limit = 100) {
+  async getAll(payloadFind, offset = 0, limit = 100) {
     return CarSchema.paginate(payloadFind, { offset, limit });
   }
 
@@ -20,9 +20,10 @@ class CarRepository {
   async updateAcessory(idAcessory, payload) {
     const result = await CarSchema.findOneAndUpdate(
       { 'acessorios._id': idAcessory },
-      { acessorios: payload },
-      { returnOriginal: false }
+      { $set: {'acessorios.$.descricao' : payload.descricao} },
+      { new: true, safe: true, upsert: true }
     );
+
     return result;
   }
 

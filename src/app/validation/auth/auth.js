@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const authConfig = require('../../config/auth.json');
 
-module.exports = (req, res, next) => {
+module.exports = async (req, res, next) => {
   const authHeader = req.headers.authorization;
 
   if (!authHeader) {
@@ -13,7 +13,7 @@ module.exports = (req, res, next) => {
     return res.status(401).send({ error: 'Token Error' });
   }
 
-  const [scheme, token] = parts; // dentro da parts tem 'bearer' e 'token', a scheme vai atribuir o bearer e a token o token, pois e na ordem, 0 - 0, 1 - 1
+  const [scheme, token] = parts;
 
   if (!/^Bearer$/i.test(scheme)) {
     return res.status(401).send({ error: 'Token Invalid Format' });
@@ -25,6 +25,5 @@ module.exports = (req, res, next) => {
     req.email = decoded.email;
     return next();
   });
-
-  return res.status(500).json({ error: 'Error' });
+  return res.status();
 };

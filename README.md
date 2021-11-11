@@ -10,6 +10,7 @@ This is an API of a luxury and semi-luxury car rental system
 - Cars Crud
 - Rentals Crud
 - Pagination
+- Tests Jest
 
 
 ## Tech Stack
@@ -83,7 +84,7 @@ Start the tests
   npm run tests
 ```
 
-Executar os testes - Jest
+Run the tests - Jest
 
 ```bash
   npm run test /features/people.test.js
@@ -97,7 +98,7 @@ Executar os testes - Jest
   npm run test /features/rental.test.js
 ```
 
-Abrir utilizando o Swagger
+Open using Swagger - Browser Acess
 
 ```navegador
   http://localhost:3000/api-docs/

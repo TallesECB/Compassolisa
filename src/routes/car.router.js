@@ -6,7 +6,7 @@ const getAllValidation = require('../app/validation/car/getAll');
 const authMiddleware = require('../app/validation/auth/auth');
 
 module.exports = (server, routes, prefix = '/api/v1/car') => {
-  //routes.use(authMiddleware);
+  routes.use(authMiddleware);
 
   routes.post('/', createValidation, CarController.create);
   routes.get('/', getAllValidation, CarController.getAll);

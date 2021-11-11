@@ -87,15 +87,19 @@ Start the tests
 Run the tests - Jest
 
 ```bash
-  npm run test /features/people.test.js
+  npm run test __tests__/features/user.test.js
 ```
 
 ```bash
-  npm run test /features/car.test.js
+  npm run test __tests__/features/rental.test.js
 ```
 
 ```bash
-  npm run test /features/rental.test.js
+  npm run test __tests__/features/car.test.js
+```
+
+```bash
+  npm run test __tests__/features/authentication.test.js
 ```
 
 Open using Swagger - Browser Acess

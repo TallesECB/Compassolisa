@@ -70,7 +70,7 @@
             "schema": {
               "type": "integer"
             },
-            "description": "Número de deslocamento - Opcional Padrão é 1"
+            "description": "Número de deslocamento - Opcional Padrão é 0"
           },
           {
             "in": "query",
@@ -137,11 +137,11 @@
         }
       }
     },
-    "/api/v1/car/{idCar}": {
+    "/api/v1/car/{id}": {
       "parameters": [
         {
           "name": "id",
-          "in": "put",
+          "in": "path",
           "schema": {
             "type": "string"
           },
@@ -183,6 +183,7 @@
       "put": {
         "summary": "Atualizar um Carro",
         "tags": ["Carros"],
+
         "requestBody": {
           "content": {
             "application/json": {
@@ -198,7 +199,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/People"
+                  "$ref": "#/components/schemas/Car"
                 }
               }
             }
@@ -247,10 +248,72 @@
         }
       }
     },
+    "/api/v1/car/{id}/acessorios/{idAcessory}": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "schema": {
+            "type": "string"
+          },
+          "required": true
+        },
+        {
+          "name": "idAcessory",
+          "in": "path",
+          "schema": {
+            "type": "string"
+          },
+          "required": true
+        }
+      ],
+      "patch": {
+        "summary": "Atualizar o Acessorio de um Carro",
+        "tags": ["Carros"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Acessorio"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successo",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Car"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "idNotFound",
+            "content": {
+              "application/json": {
+                "example": "Carro/Acessorio não encontrado"
+              }
+            }
+          },
+          "400": {
+            "description": "Campo ou valor inválido ou invalidObjectId",
+            "content": {
+              "application/json": {
+                "example": "Campo ou valor inválido ou o ID de busca está inválido"
+              }
+            }
+          }
+        }
+      }
+    }, 
     "/api/v1/people": {
       "get": {
         "summary": "Pegar todos os Usuários ou Filtrar",
         "tags": ["Pessoas"],
+        "security": {"jwt": [] },
         "parameters": [
           {
             "in": "query",
@@ -333,6 +396,7 @@
       "post": {
         "summary": "Registrar um novo Usuário",
         "tags": ["Pessoas"],
+        "security": {"jwt": [] },
         "requestBody": {
           "content": {
             "application/json": {
@@ -362,14 +426,22 @@
               "example": "Campo inválido ou campo requirido não informado ou Usuário menor de idade!"
             }
           }
+        },
+        "409": {
+          "description": "Conflito",
+          "content": {
+            "application/json": {
+              "example": "Atributos CPF e Email devem ser unicos!"
+            }
+          }
         }
       }
     },
-    "/api/v1/people/{idPeople}": {
+    "/api/v1/people/{id}": {
       "parameters": [
         {
           "name": "id",
-          "in": "put",
+          "in": "path",
           "schema": {
             "type": "string"
           },
@@ -446,6 +518,14 @@
                 "example": "Campo ou Valor estão inválidos ou o ID inserido está inválido"
               }
             }
+          },
+          "409": {
+            "description": "Conflito",
+            "content": {
+              "application/json": {
+                "example": "Atributos CPF e Email devem ser unicos!"
+              }
+            }
           }
         }
       },
@@ -479,6 +559,7 @@
       "post": {
         "summary": "Autenticação de Usuários",
         "tags": ["Autenticação"],
+        "security": {"jwt": [] },
         "requestBody": {
           "content": {
             "application/json": {
@@ -518,7 +599,283 @@
           } 
         }
       }
-    }        
+    },
+    "/api/v1/rental": {
+      "get": {
+        "summary": "Pegar todos as Locadoras ou Filtrar",
+        "tags": ["Locadoras"],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "filtrar por Nome",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Nome - Locadora"
+          },
+          {
+            "in": "query",
+            "name": "filtrar por CNPJ",
+            "schema": {
+              "type": "string"
+            },
+            "description": "CNPJ - Locadora"
+          },
+          {
+            "in": "query",
+            "name": "filtrar por Atividades",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Atividades - Locadora"
+          },
+          {
+            "in": "query",
+            "name": "filtrar por Endereco - CEP",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Cep - Locadora"
+          },
+          {
+            "in": "query",
+            "name": "filtrar por Number - Locadora",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Number - Locadora"
+          },
+          {
+            "in": "query",
+            "name": "filtrar por isFilial - Locadora",
+            "schema": {
+              "type": "string"
+            },
+            "description": "isFilial - Locadora"
+          },
+          {
+            "in": "query",
+            "name": "filtrar por Logradouro - Locadora",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Logradouro - Locadora"
+          },
+          {
+            "in": "query",
+            "name": "filtrar por Localidade - Locadora",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Localidade - Locadora"
+          },
+          {
+            "in": "query",
+            "name": "filtrar por UF - Locadora",
+            "schema": {
+              "type": "string"
+            },
+            "description": "UF - Locadora"
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Número de deslocamento - Opcional Padrão é 0"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Limite de retorno dos Usuários - Opcional Padrão é 1000"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successo",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Rentals"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "limitMaxPagination",
+            "content": {
+              "application/json": {
+                "example": "O limite máximo da paginação é 1000, favor verificar"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Registrar uma nova Locadora",
+        "tags": ["Locadoras"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Rental"
+              }
+            }
+          }
+        },
+        "description": "Registrando uma nova Rental",
+        "responses": {
+          "201": {
+            "description": "Successo",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Rental"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Campo Inválido ou CEP Invalid",
+            "content": {
+              "application/json": {
+                "example": "Campo inválido ou campo requirido não informado ou CEP Inválido!"
+              }
+            }
+          },
+          "409": {
+            "description": "Conflito",
+            "content": {
+              "application/json": {
+                "example": "Atributos CNPJ e isFilial - False devem ser unico!"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/rental/{id}": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "schema": {
+            "type": "string"
+          },
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "Pegar uma Locadora por ID",
+        "tags": ["Locadoras"],
+        "responses": {
+          "200": {
+            "description": "Successo",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Rental"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "idNotFound",
+            "content": {
+              "application/json": {
+                "example": "Locadora não encontrado"
+              }
+            }
+          },
+          "400": {
+            "description": "invalidObjectId",
+            "content": {
+              "application/json": {
+                "example": "O formato do ID inserido está inválido, favor verificar"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Atualizar uma Locadora",
+        "tags": ["Locadoras"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Rental"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successo",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Rental"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "idNotFound",
+            "content": {
+              "application/json": {
+                "example": "Locadora não encontrado"
+              }
+            }
+          },
+          "400": {
+            "description": "Campo ou Valor inválido ou invalidObjectID",
+            "content": {
+              "application/json": {
+                "example": "Campo ou Valor estão inválidos ou o ID inserido está inválido"
+              }
+            }
+          },
+          "409": {
+            "description": "Conflito",
+            "content": {
+              "application/json": {
+                "example": "Atributo CNPJ deve ser unico!"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Deletar uma Locadora",
+        "tags": ["Locadoras"],
+        "responses": {
+          "204": {
+            "description": "Successo"
+          },
+          "404": {
+            "description": "idNotFound",
+            "content": {
+              "application/json": {
+                "example": "Locadora não encontrada"
+              }
+            }
+          },
+          "400": {
+            "description": "invalidObjectId",
+            "content": {
+              "application/json": {
+                "example": "ID inválido, favor verificar"
+              }
+            }
+          }
+        }
+      }
+    } 
   },
   "components": {
     "schemas": {
@@ -588,7 +945,66 @@
         "items": {
           "$ref": "#/components/schemas/Car"
         }
+      },
+      "Rental": {
+        "type": "object",
+        "properties": {
+          "nome": {
+            "type": "string"
+          },
+          "cnpj": {
+            "type": "string"
+          },
+          "atividades": {
+            "type": "string"
+          },
+          "endereco": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "cep": {
+                  "type": "string"
+                },
+                "complemento": {
+                  "type": "string"
+                },
+                "number": {
+                  "type": "string"
+                },
+                "isFilial": {
+                  "type": "boolean"
+                }
+              }
+            }  
+          }
+        }
+      },
+      "Rentals": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Rental"
+        }
+      },
+      "Acessorio": {
+        "type": "object",
+        "properties": {
+          "descricao": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "jwt": {
+        "type": "http",
+        "scheme": "bearer",
+        "in": "header",
+        "bearerFormat": "JWT"
       }
     }
-  }
+  },
+  "security": [{
+    "jwt": []
+  }]
 }

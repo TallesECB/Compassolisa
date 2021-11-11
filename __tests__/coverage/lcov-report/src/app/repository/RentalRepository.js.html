@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">42.85% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>3/7</span>
+                <span class='fraction'>7/7</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/2</span>
+                <span class='fraction'>2/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">20% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>1/5</span>
+                <span class='fraction'>5/5</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">42.85% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>3/7</span>
+                <span class='fraction'>7/7</span>
             </div>
         
             
@@ -55,7 +55,7 @@
             Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
         </p>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -86,23 +86,23 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">26x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">55x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">23x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -110,24 +110,24 @@
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const RentalSchema = require('../schema/RentalSchema');
 &nbsp;
 class RentalRepository {
-<span class="fstat-no" title="function not covered" >  as</span>ync create(payload) {
-<span class="cstat-no" title="statement not covered" >    return RentalSchema.create(payload);</span>
+  async create(payload) {
+    return RentalSchema.create(payload);
   }
 &nbsp;
-<span class="fstat-no" title="function not covered" >  as</span>ync getAll(payloadFind, offset = <span class="branch-0 cbranch-no" title="branch not covered" >0,</span> limit = <span class="branch-0 cbranch-no" title="branch not covered" >100)</span> {
-<span class="cstat-no" title="statement not covered" >    return RentalSchema.paginate(payloadFind, { offset, limit });</span>
+  async getAll(payloadFind, offset = 0, limit = 100) {
+    return RentalSchema.paginate(payloadFind, { offset, limit });
   }
 &nbsp;
   async getById(id) {
     return RentalSchema.findById(id);
   }
 &nbsp;
-<span class="fstat-no" title="function not covered" >  as</span>ync update(id, payload) {
-<span class="cstat-no" title="statement not covered" >    return RentalSchema.findByIdAndUpdate(id, payload, { new: true });</span>
+  async update(id, payload) {
+    return RentalSchema.findByIdAndUpdate(id, payload, { new: true });
   }
 &nbsp;
-<span class="fstat-no" title="function not covered" >  as</span>ync remove(id) {
-<span class="cstat-no" title="statement not covered" >    return RentalSchema.findByIdAndRemove(id);</span>
+  async remove(id) {
+    return RentalSchema.findByIdAndRemove(id);
   }
 }
 &nbsp;
@@ -139,7 +139,7 @@ module.exports = new RentalRepository();
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Thu Nov 11 2021 14:23:42 GMT-0300 (Horário Padrão de Brasília)
+                at Thu Nov 11 2021 16:16:31 GMT-0300 (Horário Padrão de Brasília)
             </div>
         </div>
         <script src="../../../prettify.js"></script>

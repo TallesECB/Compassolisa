@@ -22,9 +22,9 @@ describe('Users', () => {
   it('Should create a new User return status code 201', async () => {
     const user = {
         nome: "Talles ECB",
-        cpf: "012.345.789-11",
+        cpf: "012.777.789-11",
         data_nascimento: "01/05/2000",
-        email: "teduardo13@hotmail.com",
+        email: "teduardo777@hotmail.com",
         senha: "talles123456",
         habilitado: "sim"
     }
@@ -37,9 +37,9 @@ describe('Users', () => {
   it('Should create a new User and verify the return body with the request body ', async () => {
     const user = {
         nome: "Talles ECB",
-        cpf: "012.345.789-11",
+        cpf: "012.345.777-11",
         data_nascimento: "01/05/2000",
-        email: "teduardo13@hotmail.com",
+        email: "teduardo777@hotmail.com",
         senha: "talles123456",
         habilitado: "sim"
     }
@@ -57,9 +57,9 @@ describe('Users', () => {
   it('Should create a new User and validating the requests return type', async () => {
     const user = {
         nome: "Talles ECB",
-        cpf: "012.345.789-11",
+        cpf: "012.345.777-11",
         data_nascimento: "01/05/2000",
-        email: "teduardo13@hotmail.com",
+        email: "teduardo777@hotmail.com",
         senha: "talles123456",
         habilitado: "sim"
     }
@@ -76,9 +76,9 @@ describe('Users', () => {
   it('Should create a new User and check the return if it contains the _id property', async () => {
     const user = {
         nome: "Talles ECB",
-        cpf: "012.345.789-11",
+        cpf: "012.345.777-11",
         data_nascimento: "01/05/2000",
-        email: "teduardo13@hotmail.com",
+        email: "teduardo777@hotmail.com",
         senha: "talles123456",
         habilitado: "sim"
     }

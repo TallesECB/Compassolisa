@@ -22,16 +22,16 @@ describe('Authentication', () => {
   it('should receive JWT token when authenticated with valid credentials and status', async () => {
     const people = {
       nome: 'Talles ECB',
-      cpf: '013.391.972-33',
+      cpf: '987.654.321-99',
       data_nascimento: '01/05/2000',
-      email: 'teduardo13@hotmail.com.br',
-      senha: 'talles123456',
+      email: 'teduardo2099@hotmail.com.br',
+      senha: 'talles123456789',
       habilitado: 'sim'
     }
 
     await request(app).post('/api/v1/people/').send(people);
 
-    const response = await request(app).post('/api/v1/authenticate').send({
+    const response = await request(app).post('/api/v1/authenticate/').send({
       email: people.email,
       senha: people.senha
     });
@@ -50,10 +50,10 @@ describe('Authentication', () => {
   it('should reject receive JWT token when authenticated with credentials invalid and return error code 400', async () => {
     const people = {
       nome: 'Talles ECB',
-      cpf: '013.391.972-33',
+      cpf: '987.654.321-00',
       data_nascimento: '01/05/2000',
-      email: 'teduardo13@hotmail.com.br',
-      senha: 'talles123456',
+      email: 'teduardo2011@hotmail.com.br',
+      senha: 'talles123456789',
       habilitado: 'sim'
     }
 
@@ -70,10 +70,10 @@ describe('Authentication', () => {
   it('should reject receive JWT token when authenticated with credentials invalid and return error description and error name', async () => {
     const people = {
       nome: 'Talles ECB',
-      cpf: '013.391.972-33',
+      cpf: '987.654.321-22',
       data_nascimento: '01/05/2000',
-      email: 'teduardo13@hotmail.com.br',
-      senha: 'talles123456',
+      email: 'teduardo2012@hotmail.com.br',
+      senha: 'talles123456789',
       habilitado: 'sim'
     }
 
@@ -91,10 +91,10 @@ describe('Authentication', () => {
   it('should reject receive JWT token when authenticated with credentials invalid and validating the requests return type', async () => {
     const people = {
       nome: 'Talles ECB',
-      cpf: '013.391.972-33',
+      cpf: '987.654.321-33',
       data_nascimento: '01/05/2000',
-      email: 'teduardo13@hotmail.com.br',
-      senha: 'talles123456',
+      email: 'teduardo2013@hotmail.com.br',
+      senha: 'talles123456789',
       habilitado: 'sim'
     }
 

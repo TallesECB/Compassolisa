@@ -30,8 +30,20 @@ This is an API of a luxury and semi-luxury car rental system
     mongoose-paginate-v2: v.1.4.2,
     mongoose-unique-validator: v.3.0.0",
     swagger-ui-express: v.4.1.6,
-    axios: v.0.24.0,
-    nodemon: v.2.0.14
+    axios: v.0.24.0
+
+**Dev Dependencies:** 
+
+    @types/swagger-ui-express: v.4.1.3,
+    eslint: v.7.32.0,
+    eslint-config-airbnb-base: v.14.2.1,
+    eslint-config-plugin: v.1.0.11,
+    eslint-config-prettier": v.8.3.0,
+    eslint-plugin-import": v.2.25.2,
+    jest: v.27.3.1,
+    nodemon: v.2.0.14",
+    prettier: v.2.4.1,
+    supertest: v.6.1.6
 
 ## Run Locally
 
@@ -53,7 +65,7 @@ Install dependencies
   npm install
 ```
 
-Start the server
+Start the server - Modo de desenvolvimento
 
 ```bash
   npm run dev
@@ -71,13 +83,33 @@ Start the tests
   npm run tests
 ```
 
+Executar os testes - Jest
+
+```bash
+  npm run test /features/people.test.js
+```
+
+```bash
+  npm run test /features/car.test.js
+```
+
+```bash
+  npm run test /features/rental.test.js
+```
+
+Abrir utilizando o Swagger
+
+```navegador
+  http://localhost:3000/api-docs/
+```
+
 
 ## API Reference
 
 #### Get all Peoples
 
 ``` localhost:3000
-  GET /api/v1/people/?name=Talles Eduardo&offset=0&limit=10
+  GET /api/v1/people/?nome=Talles Eduardo&offset=0&limit=10
 ```
 | Parameter | Type     | Description                |
 | :-------- | :------- | :------------------------- |
@@ -106,9 +138,9 @@ Start the tests
 | Body | Type  | Description                       |
 | :--------  | :------- | :-------------------------------- |
 | `nome`   | `string` | **Required**. Nome -> People |
-| `cpf`      | `string` | **Required**. Cpf -> People |
+| `cpf`      | `string` | **Required - Unique**. Cpf -> People |
 | `data_nascimento`      | `date` | **Required**. Data de Nascimento -> People |
-| `email`      | `string.email` | **Required**. Email de autenticação -> People |
+| `email`      | `string.email` | **Required - Unique**. Email de autenticação -> People |
 | `senha`      | `string` | **Required**. Senha de autenticação -> People |
 | `habilitado`      | `enum - ('Sim', 'Não')` | **Required**. Habilitação - CNH -> People |
 
@@ -127,9 +159,9 @@ Start the tests
 | Body | Type  | Description                       |
 | :--------  | :------- | :-------------------------------- |
 | `nome`   | `string` | **Required**. Nome -> People |
-| `cpf`      | `string` | **Required**. Cpf -> People |
+| `cpf`      | `string` | **Required - Unique**. Cpf -> People |
 | `data_nascimento`      | `date` | **Required**. Data de Nascimento -> People |
-| `email`      | `string.email` | **Required**. Email de autenticação ->People |
+| `email`      | `string.email` | **Required - Unique**. Email de autenticação ->People |
 | `senha`      | `string` | **Required**. Senha de autenticação -> People |
 | `habilitado`      | `enum - ('Sim', 'Não')` | **Required**. Habilitação - CNH -> People |
 
@@ -233,6 +265,76 @@ Start the tests
 | :-------- | :------- | :-------------------------------- |
 | `id`      | `objectId` | **Required**. Id of Car to fetch for Delete |
 
+
+#### Get all Rentals
+
+``` localhost:3000
+  GET /api/v1/rental/?nome=Localiza Rent a Car&offset=0&limit=10
+```
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `queryparam` | `string` | **Opcional**. QueryParms of Rental to fetch |
+| `offset`  | `number` | **Opcional**. Your offset - Pagination  | - this default is 0
+| `limit`   | `number` | **Opcional**. Your limit - Pagination  | - this default is 1000
+
+
+
+#### Get Rental
+
+``` localhost:3000
+  GET /api/v1/people/${id}
+```
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `id`      | `objectId` | **Required**. Id of Rental to fetch |
+
+
+
+#### Create Rental
+
+``` localhost:3000
+  POST /api/v1/rental/
+```
+| Body | Type  | Description                       |
+| :--------  | :------- | :-------------------------------- |
+| `nome`   | `string` | **Required**. Nome -> Rental |
+| `cnpj`      | `string` | **Required - Unique**. CNPJ -> Rental |
+| `atividades`      | `string` | **Required**. Atividades -> Rental |
+| `endereco`      | `array` | **Required**. Endereco -> Rental |
+| `endereco.cep`      | `string` | **Required**. Endereco - CEP -> Rental |
+| `endereco.number`      | `string` | **Required**. Endereco - Number -> Rental |
+| `endereco.complemento`      | `string` | **Opcional**. Endereco - Complemento -> Rental |
+| `endereco.isFilial`      | `boolean` | **Required**. Endereco - isFilial -> Rental |
+
+#### Update Rental
+
+``` localhost:3000
+  PUT /api/v1/rental/${id}
+```
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `id`      | `objectId` | **Required**. Id of rental to fetch for update a specific Rental |
+
+| Body | Type  | Description                       |
+| :--------  | :------- | :-------------------------------- |
+| `nome`   | `string` | **Required**. Nome -> Rental |
+| `cnpj`      | `string` | **Required - Unique**. CNPJ -> Rental |
+| `atividades`      | `string` | **Required**. Atividades -> Rental |
+| `endereco`      | `array` | **Required**. Endereco -> Rental |
+| `endereco.cep`      | `string` | **Required**. Endereco - CEP -> Rental |
+| `endereco.number`      | `string` | **Required**. Endereco - Number -> Rental |
+| `endereco.complemento`      | `string` | **Opcional**. Endereco - Complemento -> Rental |
+| `endereco.isFilial`      | `boolean` | **Required**. Endereco - isFilial -> Rental |
+
+
+#### Remove Rental
+
+``` localhost:3000
+  DELETE /api/v1/rental/${id}
+```
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `id`      | `objectId` | **Required**. Id of Rental to fetch for Delete |
 
 
 ## Authors

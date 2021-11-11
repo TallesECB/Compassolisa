@@ -55,7 +55,7 @@ class CarService {
       throw new IdNotFound(`Acessory - ${idAcessory}`);
     }
     
-    const result = await CarRepository.updateAcessory(idAcessory, payload);
+    const result = await CarRepository.updateAcessory(idCar, idAcessory, payload);
     return result;
   }
 

@@ -19,7 +19,7 @@ afterAll(async () => {
 });
 
 describe('Authentication', () => {
-  it('should receive JWT token when authenticated with valid credentials and status', async () => {
+  it('should receive JWT token when authenticated with valid credentials and status code 201', async () => {
     const people = {
       nome: 'Talles ECB',
       cpf: '987.654.321-99',
@@ -27,7 +27,7 @@ describe('Authentication', () => {
       email: 'teduardo2099@hotmail.com.br',
       senha: 'talles123456789',
       habilitado: 'sim'
-    }
+    };
 
     await request(app).post('/api/v1/people/').send(people);
 
@@ -37,6 +37,25 @@ describe('Authentication', () => {
     });
 
     expect(response.status).toBe(201);
+  });
+
+  it('should receive JWT token when authenticated with valid credentials and return token type string in body', async () => {
+    const people = {
+      nome: 'Talles ECB',
+      cpf: '987.654.444-99',
+      data_nascimento: '01/05/2000',
+      email: 'teduardo2055@hotmail.com.br',
+      senha: 'talles123456789',
+      habilitado: 'sim'
+    };
+
+    await request(app).post('/api/v1/people/').send(people);
+
+    const response = await request(app).post('/api/v1/authenticate/').send({
+      email: people.email,
+      senha: people.senha
+    });
+
     expect(response.body.email).toBeUndefined();
     expect(response.body.habilitado).toBeUndefined();
     expect(response.body.nome).toBeUndefined();
@@ -53,13 +72,13 @@ describe('Authentication', () => {
       cpf: '987.654.321-00',
       data_nascimento: '01/05/2000',
       email: 'teduardo2011@hotmail.com.br',
-      senha: 'talles123456789',
+      senha: 'talles123456',
       habilitado: 'sim'
-    }
+    };
 
     await request(app).post('/api/v1/people/').send(people);
 
-    const response = await request(app).post('/api/v1/authenticate').send({
+    const response = await request(app).post('/api/v1/authenticate/').send({
       email: people.email,
       senha: '12345678'
     });
@@ -73,9 +92,9 @@ describe('Authentication', () => {
       cpf: '987.654.321-22',
       data_nascimento: '01/05/2000',
       email: 'teduardo2012@hotmail.com.br',
-      senha: 'talles123456789',
+      senha: 'talles1234567',
       habilitado: 'sim'
-    }
+    };
 
     await request(app).post('/api/v1/people/').send(people);
 
@@ -84,8 +103,8 @@ describe('Authentication', () => {
       senha: '12345678'
     });
 
-    expect(response.body).toHaveProperty('description')
-    expect(response.body).toHaveProperty('name')
+    expect(response.body).toHaveProperty('description');
+    expect(response.body).toHaveProperty('name');
   });
 
   it('should reject receive JWT token when authenticated with credentials invalid and validating the requests return type', async () => {
@@ -96,7 +115,7 @@ describe('Authentication', () => {
       email: 'teduardo2013@hotmail.com.br',
       senha: 'talles123456789',
       habilitado: 'sim'
-    }
+    };
 
     await request(app).post('/api/v1/people/').send(people);
 
@@ -105,8 +124,7 @@ describe('Authentication', () => {
       senha: '12345678'
     });
 
-    expect(typeof response.body.description).toBe('string')
-    expect(typeof response.body.name).toBe('string')
+    expect(typeof response.body.description).toBe('string');
+    expect(typeof response.body.name).toBe('string');
   });
 });
-

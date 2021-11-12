@@ -90,13 +90,13 @@ describe('Rentals', () => {
     expect(response.body.endereco[2].cep).toBe(rental.endereco[2].cep);
     expect(response.body.endereco[2].number).toBe(rental.endereco[2].number);
     expect(response.body.endereco[2].complemento).toBe(rental.endereco[2].complemento);
-    expect(response.body.endereco[2].isFilial).toBeUndefined()
-    expect(response.body.endereco[2]._id).toBeUndefined()
-    expect(response.body.endereco[0].complemento).toBeUndefined()
-    expect(response.body.endereco[0].isFilial).toBeUndefined()
-    expect(response.body.endereco[0]._id).toBeUndefined()
-    expect(response.body.endereco[1].isFilial).toBeUndefined()
-    expect(response.body.endereco[1]._id).toBeUndefined()
+    expect(response.body.endereco[2].isFilial).toBeUndefined();
+    expect(response.body.endereco[2]._id).toBeUndefined();
+    expect(response.body.endereco[0].complemento).toBeUndefined();
+    expect(response.body.endereco[0].isFilial).toBeUndefined();
+    expect(response.body.endereco[0]._id).toBeUndefined();
+    expect(response.body.endereco[1].isFilial).toBeUndefined();
+    expect(response.body.endereco[1]._id).toBeUndefined();
   });
 
   it('should check the type of attributes in the response when creating the rental company', async () => {
@@ -255,8 +255,8 @@ describe('Rentals', () => {
 
     const response = await request(app).post('/api/v1/rental/').send(rentalTwo);
 
-    expect(response.body).toHaveProperty("description");
-    expect(response.body).toHaveProperty("name");
+    expect(response.body).toHaveProperty('description');
+    expect(response.body).toHaveProperty('name');
   });
 
   it('Should reject the creation because cnpj is unique and verify an error description and error name typeof is string', async () => {
@@ -377,8 +377,8 @@ describe('Rentals', () => {
 
     const response = await request(app).post('/api/v1/rental/').send(rental);
 
-    expect(response.body).toHaveProperty("description");
-    expect(response.body).toHaveProperty("name");
+    expect(response.body).toHaveProperty('description');
+    expect(response.body).toHaveProperty('name');
   });
 
   it('Should reject create a rental company because need at least one matrix and verify an error description and error name typeof is string', async () => {
@@ -411,7 +411,6 @@ describe('Rentals', () => {
 
     expect(typeof response.body.description).toBe('string');
     expect(typeof response.body.name).toBe('string');
-
   });
 
   it('Should If one or more required rental company attributes are missing, reject the creation and verify the status is 400', async () => {
@@ -470,10 +469,10 @@ describe('Rentals', () => {
     const response = await request(app).post('/api/v1/rental/').send(rental);
 
     expect(response.status).toBe(400);
-    expect(response.body[0]).toHaveProperty('description')
-    expect(response.body[0]).toHaveProperty('name')
-    expect(response.body[1]).toHaveProperty('description')
-    expect(response.body[1]).toHaveProperty('name')
+    expect(response.body[0]).toHaveProperty('description');
+    expect(response.body[0]).toHaveProperty('name');
+    expect(response.body[1]).toHaveProperty('description');
+    expect(response.body[1]).toHaveProperty('name');
   });
 
   it('Should If one or more required rental company attributes are missing, reject the creation and verify request body return type', async () => {
@@ -578,8 +577,8 @@ describe('Rentals', () => {
 
     const response = await request(app).post('/api/v1/rental/').send(rentalTest);
 
-    expect(response.body).toHaveProperty('description')
-    expect(response.body).toHaveProperty('name')
+    expect(response.body).toHaveProperty('description');
+    expect(response.body).toHaveProperty('name');
   });
 
   it('reject a creating a rental company with duplicate CNPJ and verify request body return type', async () => {
@@ -615,8 +614,8 @@ describe('Rentals', () => {
 
     const response = await request(app).post('/api/v1/rental/').send(rentalTest);
 
-    expect(typeof response.body.description).toBe('string')
-    expect(typeof response.body.name).toBe('string')
+    expect(typeof response.body.description).toBe('string');
+    expect(typeof response.body.name).toBe('string');
   });
 
   it('Should remove the Rental Company by your ID and return status code 204', async () => {
@@ -664,12 +663,12 @@ describe('Rentals', () => {
 
     const response = await request(app).delete(`/api/v1/rental/${getUniqueRentalInBD.body.rentals[0].id}`);
 
-    expect(response.body.name).toBeUndefined()
-    expect(response.body.cnpj).toBeUndefined()
-    expect(response.body.atividades).toBeUndefined()
-    expect(response.body.endereco).toBeUndefined()
-    expect(response.body.description).toBeUndefined()
-    expect(response.body.name).toBeUndefined()
+    expect(response.body.name).toBeUndefined();
+    expect(response.body.cnpj).toBeUndefined();
+    expect(response.body.atividades).toBeUndefined();
+    expect(response.body.endereco).toBeUndefined();
+    expect(response.body.description).toBeUndefined();
+    expect(response.body.name).toBeUndefined();
   });
 
   it('Dont remove a Rental Company and return error code 404, for an ID that has already been deleted or because the ID was not found', async () => {
@@ -722,8 +721,8 @@ describe('Rentals', () => {
     const response = await request(app).delete(`/api/v1/rental/${getUniqueRentalInBD.body.rentals[0].id}`);
 
     expect(response.status).toBe(404);
-    expect(response.body).toHaveProperty('description')
-    expect(response.body).toHaveProperty('name')
+    expect(response.body).toHaveProperty('description');
+    expect(response.body).toHaveProperty('name');
   });
 
   it('Dont remove a Rental Company and verify request body return type, for an ID that has already been deleted or because the ID was not found', async () => {
@@ -770,8 +769,8 @@ describe('Rentals', () => {
 
     const response = await request(app).get(`/api/v1/rental/${rental._id}`);
 
-    expect(response.body[0]).toHaveProperty('description')
-    expect(response.body[0]).toHaveProperty('name')
+    expect(response.body[0]).toHaveProperty('description');
+    expect(response.body[0]).toHaveProperty('name');
   });
 
   it('Should reject get by ID for invalid format and verify request body return type', async () => {
@@ -780,7 +779,7 @@ describe('Rentals', () => {
     };
 
     const response = await request(app).get(`/api/v1/rental/${rental._id}`);
-    
+
     expect(typeof response.body[0].description).toBe('string');
     expect(typeof response.body[0].name).toBe('string');
   });
@@ -803,8 +802,8 @@ describe('Rentals', () => {
     const response = await request(app).get(`/api/v1/rental/${rental._id}`);
 
     expect(response.status).toBe(404);
-    expect(response.body).toHaveProperty('description')
-    expect(response.body).toHaveProperty('name')
+    expect(response.body).toHaveProperty('description');
+    expect(response.body).toHaveProperty('name');
   });
 
   it('Should reject get by ID for Not Found and verify request body return type', async () => {
@@ -885,21 +884,21 @@ describe('Rentals', () => {
 
     const response = await request(app).get(`/api/v1/rental/${getIdUniqueRentalInBD.body.rentals[0].id}`);
 
-    expect(response.body.nome).toBe(rental.nome)
-    expect(response.body.cnpj).toBe(rental.cnpj)
-    expect(response.body.atividades).toBe(rental.atividades)
-    expect(response.body.endereco[0].cep).toBe(rental.endereco[0].cep)
-    expect(response.body.endereco[0].number).toBe(rental.endereco[0].number)
-    expect(response.body.endereco[0].complemento).toBeUndefined()
-    expect(response.body.endereco[0].isFilial).toBeUndefined()
-    expect(response.body.endereco[1].cep).toBe(rental.endereco[1].cep)
-    expect(response.body.endereco[1].number).toBe(rental.endereco[1].number)
-    expect(response.body.endereco[1].complemento).toBe(rental.endereco[1].complemento)
-    expect(response.body.endereco[1].isFilial).toBeUndefined()
-    expect(response.body.endereco[2].cep).toBe(rental.endereco[2].cep)
-    expect(response.body.endereco[2].number).toBe(rental.endereco[2].number)
-    expect(response.body.endereco[2].complemento).toBe(rental.endereco[2].complemento)
-    expect(response.body.endereco[2].isFilial).toBeUndefined()
+    expect(response.body.nome).toBe(rental.nome);
+    expect(response.body.cnpj).toBe(rental.cnpj);
+    expect(response.body.atividades).toBe(rental.atividades);
+    expect(response.body.endereco[0].cep).toBe(rental.endereco[0].cep);
+    expect(response.body.endereco[0].number).toBe(rental.endereco[0].number);
+    expect(response.body.endereco[0].complemento).toBeUndefined();
+    expect(response.body.endereco[0].isFilial).toBeUndefined();
+    expect(response.body.endereco[1].cep).toBe(rental.endereco[1].cep);
+    expect(response.body.endereco[1].number).toBe(rental.endereco[1].number);
+    expect(response.body.endereco[1].complemento).toBe(rental.endereco[1].complemento);
+    expect(response.body.endereco[1].isFilial).toBeUndefined();
+    expect(response.body.endereco[2].cep).toBe(rental.endereco[2].cep);
+    expect(response.body.endereco[2].number).toBe(rental.endereco[2].number);
+    expect(response.body.endereco[2].complemento).toBe(rental.endereco[2].complemento);
+    expect(response.body.endereco[2].isFilial).toBeUndefined();
   });
 
   it('Should get by ID and validating the requests return type', async () => {
@@ -1010,7 +1009,7 @@ describe('Rentals', () => {
 
     expect(response.status).toBe(200);
   });
-  
+
   it('Should update a rental company by ID and validating if the return matches the rentals data', async () => {
     const rental = {
       nome: 'Localiza Rent a Car',
@@ -1082,13 +1081,13 @@ describe('Rentals', () => {
     expect(response.body.endereco[2].cep).toBe(rentalUpdate.endereco[2].cep);
     expect(response.body.endereco[2].number).toBe(rentalUpdate.endereco[2].number);
     expect(response.body.endereco[2].complemento).toBe(rentalUpdate.endereco[2].complemento);
-    expect(response.body.endereco[0].complemento).toBeUndefined()
-    expect(response.body.endereco[0].isFilial).toBeUndefined()
-    expect(response.body.endereco[0]._id).toBeUndefined()
-    expect(response.body.endereco[1].isFilial).toBeUndefined()
-    expect(response.body.endereco[1]._id).toBeUndefined()
-    expect(response.body.endereco[2].isFilial).toBeUndefined()
-    expect(response.body.endereco[2]._id).toBeUndefined()
+    expect(response.body.endereco[0].complemento).toBeUndefined();
+    expect(response.body.endereco[0].isFilial).toBeUndefined();
+    expect(response.body.endereco[0]._id).toBeUndefined();
+    expect(response.body.endereco[1].isFilial).toBeUndefined();
+    expect(response.body.endereco[1]._id).toBeUndefined();
+    expect(response.body.endereco[2].isFilial).toBeUndefined();
+    expect(response.body.endereco[2]._id).toBeUndefined();
   });
 
   it('Should update a rental company by ID and validating the requests return type', async () => {
@@ -1233,8 +1232,8 @@ describe('Rentals', () => {
     const response = await request(app).put(`/api/v1/rental/${rental._id}`).send(rentalUpdate);
 
     expect(response.status).toBe(404);
-    expect(response.body).toHaveProperty('description')
-    expect( response.body).toHaveProperty('name')
+    expect(response.body).toHaveProperty('description');
+    expect(response.body).toHaveProperty('name');
   });
 
   it('Should reject update a rental company by ID and validating the requests return type, because ID Not Found', async () => {
@@ -1343,8 +1342,8 @@ describe('Rentals', () => {
     const response = await request(app).put(`/api/v1/rental/${rental._id}`).send(rentalUpdate);
 
     expect(response.status).toBe(400);
-    expect(response.body[0]).toHaveProperty('description')
-    expect(response.body[0]).toHaveProperty('name')
+    expect(response.body[0]).toHaveProperty('description');
+    expect(response.body[0]).toHaveProperty('name');
   });
 
   it('Should reject update a rental company by ID and validating the requests return type, because ID Invalid Format', async () => {
@@ -1501,10 +1500,10 @@ describe('Rentals', () => {
       .put(`/api/v1/rental/${getIdUniqueRentalInBD.body.rentals[0].id}`)
       .send(rentalUpdate);
 
-    expect(response.body[0]).toHaveProperty('description')
-    expect(response.body[0]).toHaveProperty('name')
-    expect(response.body[1]).toHaveProperty('description')
-    expect(response.body[1]).toHaveProperty('name')
+    expect(response.body[0]).toHaveProperty('description');
+    expect(response.body[0]).toHaveProperty('name');
+    expect(response.body[1]).toHaveProperty('description');
+    expect(response.body[1]).toHaveProperty('name');
   });
 
   it('Should reject update a rental company by ID and and validating the requests return type, because one or more requireds attributes are missing', async () => {
@@ -1691,8 +1690,8 @@ describe('Rentals', () => {
       .put(`/api/v1/rental/${getIdUniqueRentalInBD.body.rentals[0].id}`)
       .send(rentalUpdate);
 
-    expect(response.body).toHaveProperty('description')
-    expect(response.body).toHaveProperty('name')
+    expect(response.body).toHaveProperty('description');
+    expect(response.body).toHaveProperty('name');
   });
 
   it('Should reject update a rental company by ID and and validating the requests return type, because CEP Invalid', async () => {

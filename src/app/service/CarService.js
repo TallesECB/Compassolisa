@@ -45,7 +45,7 @@ class CarService {
     if (!cars) {
       throw new IdNotFound(`Car - ${idCar}`);
     }
-    cars.acessorios.forEach((object, i) => {
+    cars.acessorios.forEach((object) => {
       if (object._id.toString() === idAcessory.toString()) {
         findAcessory = true;
       }
@@ -54,7 +54,7 @@ class CarService {
     if (!findAcessory) {
       throw new IdNotFound(`Acessory - ${idAcessory}`);
     }
-    
+
     const result = await CarRepository.updateAcessory(idCar, idAcessory, payload);
     return result;
   }

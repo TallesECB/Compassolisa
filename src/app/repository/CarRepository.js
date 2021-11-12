@@ -20,7 +20,7 @@ class CarRepository {
   async updateAcessory(idCar, idAcessory, payload) {
     const result = await CarSchema.findOneAndUpdate(
       { 'acessorios._id': idAcessory, _id: idCar },
-      { $set: {'acessorios.$.descricao' : payload.descricao} },
+      { $set: { 'acessorios.$.descricao': payload.descricao } },
       { new: true, safe: true, upsert: true }
     );
 

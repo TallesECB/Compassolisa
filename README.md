@@ -102,6 +102,12 @@ Run the tests - Jest
   npm run test __tests__/features/authentication.test.js
 ```
 
+Run the all tests - Jest
+
+```bash
+  npm run test --runInBand
+```
+
 Open using Swagger - Browser Acess
 
 ```navegador

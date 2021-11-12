@@ -10,7 +10,7 @@ const HaveOneMatrix = require('../errors/HaveOneMatrix');
 class RentalService {
   async create(payload) {
     let isFilial = 0;
-    
+
     await Promise.all(
       payload.endereco.map(async (object, i) => {
         const resultCep = await axios.get(`https://viacep.com.br/ws/${object.cep}/json/`);
@@ -56,7 +56,7 @@ class RentalService {
       }
       return payloadFind;
     });
-    
+
     const result = await RentalRepository.getAll(payloadFind, offset, limit);
     return result;
   }

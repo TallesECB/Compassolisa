@@ -417,21 +417,21 @@
                 }
               }
             }
-          }
-        },
-        "400": {
-          "description": "Campo Inválido ou ungerAge",
-          "content": {
-            "application/json": {
-              "example": "Campo inválido ou campo requirido não informado ou Usuário menor de idade!"
+          },
+          "400": {
+            "description": "Campo Inválido ou ungerAge",
+            "content": {
+              "application/json": {
+                "example": "Campo inválido ou campo requirido não informado ou Usuário menor de idade!"
+              }
             }
-          }
-        },
-        "409": {
-          "description": "Conflito",
-          "content": {
-            "application/json": {
-              "example": "Atributos CPF e Email devem ser unicos!"
+          },
+          "409": {
+            "description": "Conflito",
+            "content": {
+              "application/json": {
+                "example": "Atributos CPF e Email devem ser unicos!"
+              }
             }
           }
         }

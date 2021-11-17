@@ -3,8 +3,8 @@ const UserRepository = require('../repository/UserRepository');
 
 const IdNotFound = require('../errors/IdNotFound');
 const UnderAge = require('../errors/UnderAge');
-const EmailUnique = require('../errors/EmailUnique');
-const CpfUnique = require('../errors/CpfUnique');
+
+const Conflicts = require('../errors/Conflicts');
 
 class UserService {
   async create(payload) {
@@ -14,20 +14,14 @@ class UserService {
       throw new UnderAge(payload.nome);
     }
 
-    const validationCpf = {
-      cpf: payload.cpf
-    };
-    const validCpf = await UserRepository.getAll(validationCpf);
+    const validCpf = await UserRepository.getAll({ cpf: payload.cpf });
     if (validCpf.docs.length > 0) {
-      throw new CpfUnique(validationCpf.cpf);
+      throw new Conflicts(payload.cpf);
     }
 
-    const validationEmail = {
-      email: payload.email
-    };
-    const validEmail = await UserRepository.getAll(validationEmail);
+    const validEmail = await UserRepository.getAll({ email: payload.email });
     if (validEmail.docs.length > 0) {
-      throw new EmailUnique(validationEmail.email);
+      throw new Conflicts(payload.email);
     }
 
     const result = await UserRepository.create(payload);
@@ -55,30 +49,24 @@ class UserService {
     const minAge = 18;
     const years = moment().diff(moment(payload.data_nascimento, 'DD-MM-YYYY'), 'years', true);
 
-    if (!years >= minAge) {
+    if (years < minAge) {
       throw new UnderAge(payload.nome);
     }
 
-    const validationCpf = {
-      cpf: payload.cpf
-    };
-    const validCpf = await UserRepository.getAll(validationCpf);
+    const validCpf = await UserRepository.getAll({ cpf: payload.cpf });
     if (validCpf.docs.length > 0) {
       for (let i = 0; i < validCpf.docs.length; i++) {
         if (validCpf.docs[i].id !== id) {
-          throw new CpfUnique(validationCpf.cpf);
+          throw new Conflicts(payload.cpf);
         }
       }
     }
 
-    const validationEmail = {
-      email: payload.email
-    };
-    const validEmail = await UserRepository.getAll(validationEmail);
+    const validEmail = await UserRepository.getAll({ email: payload.email });
     if (validEmail.docs.length > 0) {
       for (let i = 0; i < validEmail.docs.length; i++) {
         if (validEmail.docs[i].id !== id) {
-          throw new EmailUnique(validationEmail.email);
+          throw new Conflicts(payload.email);
         }
       }
     }

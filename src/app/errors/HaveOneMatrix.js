@@ -1,9 +1,9 @@
 class HaveOneMatrix extends Error {
   constructor(cnpj) {
     super();
-    this.statusCode = 409;
+    this.statusCode = 400;
 
-    this.description = 'Conflict';
+    this.description = 'Bad Request';
     this.name = `CNPJ ${cnpj} -> It is necessary to have a one Matrix!`;
   }
 }

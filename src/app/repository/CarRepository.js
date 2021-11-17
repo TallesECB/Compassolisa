@@ -6,6 +6,11 @@ class CarRepository {
   }
 
   async getAll(payloadFind, offset = 0, limit = 100) {
+    if (payloadFind.descricao) {
+      payloadFind['acessorios.descricao'] = payloadFind.descricao;
+      delete payloadFind.descricao;
+    }
+
     return CarSchema.paginate(payloadFind, { offset, limit });
   }
 
@@ -18,12 +23,11 @@ class CarRepository {
   }
 
   async updateAcessory(idCar, idAcessory, payload) {
-    const result = await CarSchema.findOneAndUpdate(
-      { 'acessorios._id': idAcessory, _id: idCar },
+    const result = CarSchema.findOneAndUpdate(
+      { _id: idCar, 'acessorios._id': idAcessory },
       { $set: { 'acessorios.$.descricao': payload.descricao } },
       { new: true, safe: true, upsert: true }
     );
-
     return result;
   }
 

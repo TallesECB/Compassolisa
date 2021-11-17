@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">77.77% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>14/18</span>
+                <span class='fraction'>18/18</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>4/8</span>
+                <span class='fraction'>8/8</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">82.35% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>14/17</span>
+                <span class='fraction'>17/17</span>
             </div>
         
             
@@ -55,7 +55,7 @@
             Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
         </p>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -86,34 +86,34 @@
 <a name='L27'></a><a href='#L27'>27</a>
 <a name='L28'></a><a href='#L28'>28</a>
 <a name='L29'></a><a href='#L29'>29</a>
-<a name='L30'></a><a href='#L30'>30</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
+<a name='L30'></a><a href='#L30'>30</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-yes">16x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">76x</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-yes">147x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">76x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">76x</span>
-<span class="cline-any cline-yes">76x</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">147x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">76x</span>
+<span class="cline-any cline-yes">144x</span>
+<span class="cline-any cline-yes">144x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">76x</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">141x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">141x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">76x</span>
-<span class="cline-any cline-yes">76x</span>
+<span class="cline-any cline-yes">138x</span>
+<span class="cline-any cline-yes">138x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">76x</span>
-<span class="cline-any cline-yes">76x</span>
+<span class="cline-any cline-yes">135x</span>
+<span class="cline-any cline-yes">135x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">76x</span>
+<span class="cline-any cline-yes">138x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const jwt = require('jsonwebtoken');
 const authConfig = require('../../config/auth.json');
@@ -121,23 +121,23 @@ const authConfig = require('../../config/auth.json');
 module.exports = async (req, res, next) =&gt; {
   const authHeader = req.headers.authorization;
 &nbsp;
-  <span class="missing-if-branch" title="if path not taken" >I</span>if (!authHeader) {
-<span class="cstat-no" title="statement not covered" >    return res.status(401).send({ error: 'No Token Provided' });</span>
+  if (!authHeader) {
+    return res.status(401).send({ description: 'No Token Provided', name: 'Unauthorized' });
   }
 &nbsp;
   const parts = authHeader.split(' ');
-  <span class="missing-if-branch" title="if path not taken" >I</span>if (!parts.length === 2) {
-<span class="cstat-no" title="statement not covered" >    return res.status(401).send({ error: 'Token Error' });</span>
+  if (parts.length !== 2) {
+    return res.status(401).send({ description: 'Token Error', name: 'Unauthorized' });
   }
 &nbsp;
   const [scheme, token] = parts;
 &nbsp;
-  <span class="missing-if-branch" title="if path not taken" >I</span>if (!/^Bearer$/i.test(scheme)) {
-<span class="cstat-no" title="statement not covered" >    return res.status(401).send({ error: 'Token Invalid Format' });</span>
+  if (!/^Bearer$/i.test(scheme)) {
+    return res.status(401).send({ description: 'Token Invalid Format', name: 'Unauthorized' });
   }
 &nbsp;
   jwt.verify(token, authConfig.secret, (err, decoded) =&gt; {
-    <span class="missing-if-branch" title="if path not taken" >I</span>if (err) <span class="cstat-no" title="statement not covered" >return res.status(401).send({ error: 'Token Invalid' });</span>
+    if (err) return res.status(401).send({ description: 'Token Invalid', name: 'Unauthorized' });
 &nbsp;
     req.email = decoded.email;
     return next();
@@ -151,7 +151,7 @@ module.exports = async (req, res, next) =&gt; {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Fri Nov 12 2021 18:23:18 GMT-0300 (Horário Padrão de Brasília)
+                at Wed Nov 17 2021 17:51:53 GMT-0300 (Horário Padrão de Brasília)
             </div>
         </div>
         <script src="../../../../prettify.js"></script>

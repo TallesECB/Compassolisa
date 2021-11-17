@@ -1,7 +1,5 @@
 const express = require('express');
-const swaggerUi = require('swagger-ui-express');
 const router = require('./routes');
-const swaggerDocs = require('../Swagger.json');
 
 require('./infra/database/mongo');
 
@@ -14,7 +12,6 @@ class App {
 
   middlewares() {
     this.server.use(express.json());
-    this.server.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
   }
 
   routes() {

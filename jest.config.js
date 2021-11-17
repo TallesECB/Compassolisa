@@ -26,10 +26,7 @@ module.exports = {
   coverageDirectory: '__tests__/coverage',
 
   // An array of regexp pattern strings used to skip coverage collection
-  // coveragePathIgnorePatterns: [
-  //   "\\\\node_modules\\\\"
-  // ],
-
+  coveragePathIgnorePatterns: ['/node_modules/', '/src/server.js', 'src/app/config/config.js'],
   // Indicates which provider should be used to instrument code for coverage
   // coverageProvider: "babel",
 
@@ -128,7 +125,7 @@ module.exports = {
   // setupFiles: [],
 
   // A list of paths to modules that run some code to configure or set up the testing framework before each test
-  // setupFilesAfterEnv: [],
+  setupFilesAfterEnv: ['./__tests__/setup.features.js'],
 
   // The number of seconds after which a test is considered as slow and reported as such in the results.
   // slowTestThreshold: 5,
@@ -137,7 +134,7 @@ module.exports = {
   // snapshotSerializers: [],
 
   // The test environment that will be used for testing
-  testEnvironment: 'node',
+  //testEnvironment: 'node',
 
   // Options that will be passed to the testEnvironment
   // testEnvironmentOptions: {},

@@ -6,12 +6,18 @@ module.exports = async (req, res, next) => {
       nome: Joi.string().trim().min(4).required(),
       cnpj: Joi.string()
         .required()
-        .regex(/^\d{2}.\d{3}.\d{3}\/\d{4}-\d{2}$/),
+        .regex(/^\d{2}.\d{3}.\d{3}\/\d{4}-\d{2}$/)
+        .messages({
+          'string.pattern.base': `{#label} with value {:[.]} fails to match the required pattern format: xx.xxx.xxx/xxxx-xx`
+        }),
       atividades: Joi.string().trim().required(),
       endereco: Joi.array()
         .items({
           cep: Joi.string()
             .regex(/[0-9]{5}-[0-9]{3}$/)
+            .messages({
+              'string.pattern.base': `{#label} with value {:[.]} fails to match the required format: xxxxx-xxx`
+            })
             .trim()
             .required(),
           complemento: Joi.string().trim(),

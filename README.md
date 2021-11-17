@@ -29,13 +29,11 @@ This is an API of a luxury and semi-luxury car rental system
     moment": v.2.29.1,
     mongoose": v.6.0.11,
     mongoose-paginate-v2: v.1.4.2,
-    mongoose-unique-validator: v.3.0.0",
     swagger-ui-express: v.4.1.6,
     axios: v.0.24.0
 
 **Dev Dependencies:** 
 
-    @types/swagger-ui-express: v.4.1.3,
     eslint: v.7.32.0,
     eslint-config-airbnb-base: v.14.2.1,
     eslint-config-plugin: v.1.0.11,
@@ -64,6 +62,17 @@ Install dependencies
 
 ```bash
   npm install
+```
+
+Create an .env for development and an .env.test for running the tests
+
+```arquivo
+  DB_HOST= 127.0.0.1
+  DB_USER=
+  DB_PASS=
+  DB_NAME= 
+  DB_PORT= 3000
+  DB_COLLECTION = 
 ```
 
 Start the server - Modo de desenvolvimento

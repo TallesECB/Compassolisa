@@ -6,7 +6,13 @@ module.exports = async (req, res, next) => {
       modelo: Joi.string().trim().required(),
       cor: Joi.string().trim().required(),
       ano: Joi.number().min(1950).max(2022).required(),
-      acessorios: Joi.array().items({ descricao: Joi.string().trim().lowercase().required() }).required().unique(),
+      acessorios: Joi.array()
+        .items({ descricao: Joi.string().trim().lowercase().required() })
+        .required()
+        .unique()
+        .messages({
+          'array.unique': `Acessorios contains a duplicate value`
+        }),
       quantidadePassageiros: Joi.number().required()
     });
 
@@ -18,7 +24,6 @@ module.exports = async (req, res, next) => {
   } catch (error) {
     const handlingErrors = error.details;
     const result = [];
-
     handlingErrors.forEach((object) => {
       result.push({
         description: object.path[0],

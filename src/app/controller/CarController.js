@@ -1,5 +1,6 @@
 const CarService = require('../service/CarService');
 const { paginateSerialize, serialize } = require('../serialize/carSerialize');
+const { serializeErrors } = require('../serialize/errorSerialize');
 
 class CarController {
   async create(req, res) {
@@ -7,11 +8,7 @@ class CarController {
       const result = await CarService.create(req.body);
       return res.status(201).send(serialize(result));
     } catch (erro) {
-      const err = {
-        description: erro.description,
-        name: erro.name
-      };
-      return res.status(erro.statusCode).json(err);
+      return res.status(erro.statusCode).json(serializeErrors(erro));
     }
   }
 
@@ -20,11 +17,7 @@ class CarController {
       const result = await CarService.getAll(req.query);
       return res.status(200).json(paginateSerialize(result));
     } catch (erro) {
-      const err = {
-        description: erro.description,
-        name: erro.name
-      };
-      return res.status(erro.statusCode).json(err);
+      return res.status(erro.statusCode).json(serializeErrors(erro));
     }
   }
 
@@ -34,11 +27,7 @@ class CarController {
       const result = await CarService.getById(id);
       return res.status(200).json(serialize(result));
     } catch (erro) {
-      const err = {
-        description: erro.description,
-        name: erro.name
-      };
-      return res.status(erro.statusCode).json(err);
+      return res.status(erro.statusCode).json(serializeErrors(erro));
     }
   }
 
@@ -48,11 +37,7 @@ class CarController {
       const result = await CarService.update(id, req.body);
       return res.status(200).json(serialize(result));
     } catch (erro) {
-      const err = {
-        description: erro.description,
-        name: erro.name
-      };
-      return res.status(erro.statusCode).json(err);
+      return res.status(erro.statusCode).json(serializeErrors(erro));
     }
   }
 
@@ -63,11 +48,8 @@ class CarController {
       const result = await CarService.updateAcessory(idCar, idAcessory, req.body);
       return res.status(200).json(serialize(result));
     } catch (erro) {
-      const err = {
-        description: erro.description,
-        name: erro.name
-      };
-      return res.status(404).json(err);
+      const err = { name: 'Bad Request', description: erro.message };
+      return res.status(erro.statusCode || 404).json(serializeErrors(err));
     }
   }
 
@@ -77,11 +59,7 @@ class CarController {
       await CarService.remove(id);
       return res.status(204).end();
     } catch (erro) {
-      const err = {
-        description: erro.description,
-        name: erro.name
-      };
-      return res.status(erro.statusCode).json(err);
+      return res.status(erro.statusCode).json(serializeErrors(erro));
     }
   }
 }

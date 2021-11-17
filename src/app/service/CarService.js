@@ -13,10 +13,6 @@ class CarService {
   }
 
   async getAll({ offset, limit, ...payloadFind }) {
-    if (payloadFind.descricao) {
-      payloadFind['acessorios.descricao'] = payloadFind.descricao;
-      delete payloadFind.descricao;
-    }
     const result = await CarRepository.getAll(payloadFind, offset, limit);
     return result;
   }
@@ -38,23 +34,6 @@ class CarService {
   }
 
   async updateAcessory(idCar, idAcessory, payload) {
-    let findAcessory = false;
-
-    const cars = await CarRepository.getById(idCar);
-
-    if (!cars) {
-      throw new IdNotFound(`Car - ${idCar}`);
-    }
-    cars.acessorios.forEach((object) => {
-      if (object._id.toString() === idAcessory.toString()) {
-        findAcessory = true;
-      }
-    });
-
-    if (!findAcessory) {
-      throw new IdNotFound(`Acessory - ${idAcessory}`);
-    }
-
     const result = await CarRepository.updateAcessory(idCar, idAcessory, payload);
     return result;
   }

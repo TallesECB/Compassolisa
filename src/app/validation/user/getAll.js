@@ -9,8 +9,13 @@ module.exports = async (req, res, next) => {
       cpf: Joi.string()
         .regex(/^\d{3}.\d{3}.\d{3}-\d{2}$/)
         .min(14)
-        .max(14),
-      data_nascimento: Joi.date().format('DD/MM/YYYY'),
+        .max(14)
+        .messages({
+          'CPF Format': `cpf must have the xxx.xxx.xxx-xx format`
+        }),
+      data_nascimento: Joi.date().format('DD/MM/YYYY').messages({
+        'date.format': `{#label} with value {:[.]} fails to match the required format: DD/MM/YYYY`
+      }),
       email: Joi.string().email(),
       habilitado: Joi.string().valid('sim', 'não')
     });

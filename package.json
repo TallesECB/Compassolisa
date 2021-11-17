@@ -1,18 +1,17 @@
 {
   "name": "projeto---final",
   "version": "1.0.0",
-  "description": "",
+  "description": "This is an API of a luxury and semi-luxury car rental system",
   "main": "index.js",
   "scripts": {
-    "test": "jest --runInBand",
+    "test": "jest --runInBand --forceExit",
     "dev": "nodemon src/server.js --ignore __tests__",
     "start": "node src/server.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Talles Eduardo Carpes Balardin",
   "license": "ISC",
   "devDependencies": {
-    "@types/swagger-ui-express": "^4.1.3",
     "eslint": "^7.32.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-config-plugin": "^1.0.11",
@@ -33,7 +32,6 @@
     "moment": "^2.29.1",
     "mongoose": "^6.0.11",
     "mongoose-paginate-v2": "^1.4.2",
-    "mongoose-unique-validator": "^3.0.0",
     "swagger-ui-express": "^4.1.6"
   }
 }

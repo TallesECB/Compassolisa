@@ -1,22 +1,5 @@
 const request = require('supertest');
-const app = require('../../src/app');
-const Database = require('../../src/infra/database/mongo/index');
-const UserSchema = require('../../src/app/schema/UserSchema');
-
-Database.connect();
-
-beforeAll(async () => {
-  await UserSchema.deleteMany();
-});
-
-beforeEach(async () => {
-  await UserSchema.deleteMany();
-});
-
-afterAll(async () => {
-  await UserSchema.deleteMany();
-  Database.disconnect();
-});
+const app = require('../../../src/app');
 
 describe('Authentication', () => {
   it('should receive JWT token when authenticated with valid credentials and status code 201', async () => {

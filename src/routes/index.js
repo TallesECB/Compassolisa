@@ -1,10 +1,14 @@
 const { Router } = require('express');
+const swaggerUi = require('swagger-ui-express');
 const user = require('./user.router');
 const car = require('./car.router');
 const auth = require('./auth.router');
 const rental = require('./rental.router');
+const swaggerDocs = require('../../Swagger.json');
 
 module.exports = (server) => {
+  server.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+
   server.use((req, res, next) => {
     user(server, new Router());
     car(server, new Router());

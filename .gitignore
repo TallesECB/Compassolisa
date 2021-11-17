@@ -1,7 +1,7 @@
 node_modules
 
-__testes__/coverage
+__test__/coverage/*
+coverage
 
 .env
-
 .env.test

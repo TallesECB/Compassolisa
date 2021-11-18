@@ -90,19 +90,19 @@ Start the node
 Run the tests - Jest
 
 ```bash
-  npm run test __tests__/features/user.test.js
+  npm run test __tests__/features/user/
 ```
 
 ```bash
-  npm run test __tests__/features/rental.test.js
+  npm run test __tests__/features/rental/
 ```
 
 ```bash
-  npm run test __tests__/features/car.test.js
+  npm run test __tests__/features/car/
 ```
 
 ```bash
-  npm run test __tests__/features/authentication.test.js
+  npm run test __tests__/features/authentication/
 ```
 
 Run the all tests - Jest

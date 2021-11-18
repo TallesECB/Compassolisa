@@ -22,10 +22,6 @@ beforeAll(async () => {
   token = response.body.token;
 });
 
-afterAll((done) => {
-  done();
-});
-
 describe('Cars', () => {
   it('Should Update a Car by ID and return status code 200', async () => {
     const car = {

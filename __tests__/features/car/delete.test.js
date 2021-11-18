@@ -22,10 +22,6 @@ beforeAll(async () => {
   token = response.body.token;
 });
 
-afterAll((done) => {
-  done();
-});
-
 describe('Cars', () => {
   it('Should delete Car and return status code 204', async () => {
     const car = {

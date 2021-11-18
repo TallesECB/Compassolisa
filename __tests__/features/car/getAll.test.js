@@ -22,10 +22,6 @@ beforeAll(async () => {
   token = response.body.token;
 });
 
-afterAll((done) => {
-  done();
-});
-
 describe('Cars', () => {
   it('Should reject Get by Query param and return status code 400, because must be greater than or equal to 1950', async () => {
     const car = {

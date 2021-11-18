@@ -64,15 +64,27 @@ Install dependencies
   npm install
 ```
 
-Create an .env for development and an .env.test for running the tests
+Create an .env for development - Example
 
 ```arquivo
   DB_HOST= 127.0.0.1
   DB_USER=
   DB_PASS=
-  DB_NAME= 
+  DB_NAME= DataBaseName
   DB_PORT= 3000
-  DB_COLLECTION = 
+  DB_COLLECTION = NomeDaCollection 
+  MONGO_URL=mongodb://localhost:27017/CollectionName
+```
+Create an .env.test for running the tests - Example 
+
+```arquivo
+  DB_HOST= 127.0.0.1
+  DB_USER=
+  DB_PASS=
+  DB_NAME= DataBaseName_test
+  DB_PORT= 3000
+  DB_COLLECTION = NomeDaCollection_test 
+  MONGO_URL=mongodb://localhost:27017/CollectionName_test
 ```
 
 Start the server - Modo de desenvolvimento
@@ -117,6 +129,11 @@ Open using Swagger - Browser Acess
   http://localhost:3000/api-docs/
 ```
 
+Open using Heroku - Browser Acess
+
+```navegador
+  https://compassolisa02.herokuapp.com/api-docs/#/
+```
 
 ## API Reference
 

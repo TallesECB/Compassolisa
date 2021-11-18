@@ -72,7 +72,7 @@ Create an .env for development - Example
   DB_PASS=
   DB_NAME= DataBaseName
   DB_PORT= 3000
-  DB_COLLECTION = NomeDaCollection 
+  DB_COLLECTION = CollectionName 
   MONGO_URL=mongodb://localhost:27017/CollectionName
 ```
 Create an .env.test for running the tests - Example 
@@ -83,7 +83,7 @@ Create an .env.test for running the tests - Example
   DB_PASS=
   DB_NAME= DataBaseName_test
   DB_PORT= 3000
-  DB_COLLECTION = NomeDaCollection_test 
+  DB_COLLECTION = CollectionName_test 
   MONGO_URL=mongodb://localhost:27017/CollectionName_test
 ```
 

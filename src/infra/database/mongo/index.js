@@ -7,7 +7,7 @@ class Database {
   }
 
   connect() {
-    return mongoose.connect(`mongodb://${config.database.host}/${config.database.collection}`);
+    return mongoose.connect(process.env.MONGO_URL);
   }
 
   disconnect() {

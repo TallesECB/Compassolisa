@@ -215,12 +215,11 @@ describe('Cars', () => {
     });
   });
 
-  /*
-  it('Should reject Get by Query param and return status code 400, because year must be greater or than 1950', async () => {
+  it('Should reject Get by Query param and return status code 404, because Query Not Found', async () => {
     const car = {
       modelo: 'Fusca',
       cor: 'Cinza',
-      ano: 2021,
+      ano: 1951,
       acessorios: [
         {
           descricao: 'Ar Condicionado'
@@ -237,19 +236,16 @@ describe('Cars', () => {
 
     await request(app).post('/api/v1/car/').send(car).set('Authorization', `Bearer ${token}`);
 
-    const response = await request(app)
-      .get(
-        '/api/v1/car/?ano=2021'
-      );
+    const response = await request(app).get(`/api/v1/car/?modelo=fusqueta`).set('Authorization', `Bearer ${token}`);
 
-    expect(response.status).toBe(400);
+    expect(response.status).toBe(404);
   });
 
-  it('Should reject Get by Query param and verify that the content of the return is the same as the content sent in the car creation request, because year must be greater or than 1950 ', async () => {
+  it('Should reject Get by Query param and return error description and error name, because Query Not Found', async () => {
     const car = {
       modelo: 'Fusca',
       cor: 'Cinza',
-      ano: 2021,
+      ano: 1951,
       acessorios: [
         {
           descricao: 'Ar Condicionado'
@@ -264,22 +260,19 @@ describe('Cars', () => {
       quantidadePassageiros: 5
     };
 
-    await request(app).post('/api/v1/car/').send(car);
+    await request(app).post('/api/v1/car/').send(car).set('Authorization', `Bearer ${token}`);
 
-    const response = await request(app)
-      .get(
-        '/api/v1/car/?ano=2021'
-      );
+    const response = await request(app).get(`/api/v1/car/?modelo=fusqueta`).set('Authorization', `Bearer ${token}`);
 
-    expect(response.body).toHaveProperty('description')
-    expect(response.body).toHaveProperty('string');
+    expect(response.body).toHaveProperty('description');
+    expect(response.body).toHaveProperty('name');
   });
 
-  it('Should reject Get by Query param and validating the requests return type, because year must be greater or than 1950 ', async () => {
+  it('Should reject Get by Query param and validating the requests return type, because Query Not Found', async () => {
     const car = {
       modelo: 'Fusca',
       cor: 'Cinza',
-      ano: 2021,
+      ano: 1951,
       acessorios: [
         {
           descricao: 'Ar Condicionado'
@@ -294,15 +287,13 @@ describe('Cars', () => {
       quantidadePassageiros: 5
     };
 
-    await request(app).post('/api/v1/car/').send(car);
+    await request(app).post('/api/v1/car/').send(car).set('Authorization', `Bearer ${token}`);
 
-    const response = await request(app)
-      .get(
-        '/api/v1/car/?ano=2021'
-      );
+    const response = await request(app).get(`/api/v1/car/?modelo=fusqueta`).set('Authorization', `Bearer ${token}`);
 
-    expect(typeof response.body.description).toBe('string');
-    expect(typeof response.body.name).toBe('string');
+    expect(response.body).toEqual({
+      description: expect.any(String),
+      name: expect.any(String)
+    });
   });
-  */
 });

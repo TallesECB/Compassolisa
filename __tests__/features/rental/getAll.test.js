@@ -268,4 +268,107 @@ describe('Rentals', () => {
       ]
     });
   });
+
+  it('Should reject Get by Query param and return status code 400, because Query Not Found', async () => {
+    const rental = {
+      nome: 'Localiza Rent a Car',
+      cnpj: '20.630.035/1001-51',
+      atividades: 'Aluguel de Carros E Gestão de Frotas',
+      endereco: [
+        {
+          cep: '96065-110',
+          number: '4090',
+          isFilial: false
+        },
+        {
+          cep: '96065-760',
+          number: '371',
+          complemento: 'AP 12',
+          isFilial: true
+        },
+        {
+          cep: '96065-760',
+          number: '371',
+          complemento: 'AP 11',
+          isFilial: true
+        }
+      ]
+    };
+
+    await request(app).post('/api/v1/rental/').send(rental);
+
+    const response = await request(app).get(`/api/v1/rental/?nome=nomenotfound`);
+
+    expect(response.status).toBe(404);
+  });
+
+  it('Should reject Get by Query param and return error description and error name, because Query Not Found', async () => {
+    const rental = {
+      nome: 'Localiza Rent a Car',
+      cnpj: '20.630.035/1001-51',
+      atividades: 'Aluguel de Carros E Gestão de Frotas',
+      endereco: [
+        {
+          cep: '96065-110',
+          number: '4090',
+          isFilial: false
+        },
+        {
+          cep: '96065-760',
+          number: '371',
+          complemento: 'AP 12',
+          isFilial: true
+        },
+        {
+          cep: '96065-760',
+          number: '371',
+          complemento: 'AP 11',
+          isFilial: true
+        }
+      ]
+    };
+
+    await request(app).post('/api/v1/rental/').send(rental);
+
+    const response = await request(app).get(`/api/v1/rental/?nome=nomenotfound`);
+
+    expect(response.body).toHaveProperty('description');
+    expect(response.body).toHaveProperty('name');
+  });
+
+  it('Should reject Get by Query param and validating the requests return type, because Query Not Found', async () => {
+    const rental = {
+      nome: 'Localiza Rent a Car',
+      cnpj: '20.630.035/1001-51',
+      atividades: 'Aluguel de Carros E Gestão de Frotas',
+      endereco: [
+        {
+          cep: '96065-110',
+          number: '4090',
+          isFilial: false
+        },
+        {
+          cep: '96065-760',
+          number: '371',
+          complemento: 'AP 12',
+          isFilial: true
+        },
+        {
+          cep: '96065-760',
+          number: '371',
+          complemento: 'AP 11',
+          isFilial: true
+        }
+      ]
+    };
+
+    await request(app).post('/api/v1/rental/').send(rental);
+
+    const response = await request(app).get(`/api/v1/rental/?nome=nomenotfound`);
+
+    expect(response.body).toEqual({
+      description: expect.any(String),
+      name: expect.any(String)
+    });
+  });
 });

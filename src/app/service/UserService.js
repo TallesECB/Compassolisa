@@ -1,10 +1,11 @@
 const moment = require('moment');
 const UserRepository = require('../repository/UserRepository');
 
-const IdNotFound = require('../errors/IdNotFound');
+const NotFound = require('../errors/NotFound');
 const UnderAge = require('../errors/UnderAge');
 
-const Conflicts = require('../errors/Conflicts');
+const CPFValid = require('../helpers/users/CpfValid');
+const EmailValid = require('../helpers/users/EmailValid');
 
 class UserService {
   async create(payload) {
@@ -14,15 +15,8 @@ class UserService {
       throw new UnderAge(payload.nome);
     }
 
-    const validCpf = await UserRepository.getAll({ cpf: payload.cpf });
-    if (validCpf.docs.length > 0) {
-      throw new Conflicts(payload.cpf);
-    }
-
-    const validEmail = await UserRepository.getAll({ email: payload.email });
-    if (validEmail.docs.length > 0) {
-      throw new Conflicts(payload.email);
-    }
+    await CPFValid.createCPF(payload)
+    await EmailValid.createEmail(payload)
 
     const result = await UserRepository.create(payload);
     return result;
@@ -30,20 +24,23 @@ class UserService {
 
   async getAll({ offset, limit, ...payloadFind }) {
     const result = await UserRepository.getAll(payloadFind, offset, limit);
+    if(result.docs.length === 0) {
+      throw new NotFound(`Query ${Object.keys(payloadFind)} = ${Object.values(payloadFind)}`)
+    }
     return result;
   }
 
   async getById(id) {
     const result = await UserRepository.getById(id);
     if (!result) {
-      throw new IdNotFound(`User - ${id}`);
+      throw new NotFound(`User - ${id}`);
     }
     return result;
   }
 
   async update(id, payload) {
     if (!(await UserRepository.getById(id))) {
-      throw new IdNotFound(`User - ${id}`);
+      throw new NotFound(`User - ${id}`);
     }
 
     const minAge = 18;
@@ -53,23 +50,8 @@ class UserService {
       throw new UnderAge(payload.nome);
     }
 
-    const validCpf = await UserRepository.getAll({ cpf: payload.cpf });
-    if (validCpf.docs.length > 0) {
-      for (let i = 0; i < validCpf.docs.length; i++) {
-        if (validCpf.docs[i].id !== id) {
-          throw new Conflicts(payload.cpf);
-        }
-      }
-    }
-
-    const validEmail = await UserRepository.getAll({ email: payload.email });
-    if (validEmail.docs.length > 0) {
-      for (let i = 0; i < validEmail.docs.length; i++) {
-        if (validEmail.docs[i].id !== id) {
-          throw new Conflicts(payload.email);
-        }
-      }
-    }
+    await CPFValid.updateCPF(payload, id)
+    await EmailValid.updateEmail(payload, id)
 
     const result = await UserRepository.update(id, payload);
     return result;
@@ -77,7 +59,7 @@ class UserService {
 
   async remove(id) {
     if (!(await UserRepository.getById(id))) {
-      throw new IdNotFound(`User - ${id}`);
+      throw new NotFound(`User - ${id}`);
     }
 
     const result = await UserRepository.remove(id);

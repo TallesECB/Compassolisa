@@ -1,4 +1,7 @@
 const Joi = require('joi').extend(require('@joi/date'));
+const { CnpjRegex } = require('../utils/regex')
+const { CepRegex } = require('../utils/regex')
+const serialize = require('../../serialize/handlingErrorsValidation');
 
 module.exports = async (req, res, next) => {
   try {
@@ -6,7 +9,7 @@ module.exports = async (req, res, next) => {
       nome: Joi.string().trim().min(4).required(),
       cnpj: Joi.string()
         .required()
-        .regex(/^\d{2}.\d{3}.\d{3}\/\d{4}-\d{2}$/)
+        .regex(CnpjRegex)
         .messages({
           'string.pattern.base': `{#label} with value {:[.]} fails to match the required pattern format: xx.xxx.xxx/xxxx-xx`
         }),
@@ -14,7 +17,7 @@ module.exports = async (req, res, next) => {
       endereco: Joi.array()
         .items({
           cep: Joi.string()
-            .regex(/[0-9]{5}-[0-9]{3}$/)
+            .regex(CepRegex)
             .messages({
               'string.pattern.base': `{#label} with value {:[.]} fails to match the required format: xxxxx-xxx`
             })
@@ -34,15 +37,7 @@ module.exports = async (req, res, next) => {
 
     return next();
   } catch (error) {
-    const handlingErrors = error.details;
-    const result = [];
-
-    handlingErrors.forEach((object) => {
-      result.push({
-        description: object.path[0],
-        name: object.message
-      });
-    });
+    const result = await serialize.serializeErrors(error)
     return res.status(400).json(result);
   }
 };

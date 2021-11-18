@@ -48,8 +48,7 @@ class CarController {
       const result = await CarService.updateAcessory(idCar, idAcessory, req.body);
       return res.status(200).json(serialize(result));
     } catch (erro) {
-      const err = { name: 'Bad Request', description: erro.message };
-      return res.status(erro.statusCode || 404).json(serializeErrors(err));
+      return res.status(erro.statusCode).json(serializeErrors(erro));
     }
   }
 

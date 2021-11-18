@@ -1,4 +1,6 @@
 const Joi = require('joi').extend(require('@joi/date'));
+const { CpfRegex } = require('../utils/regex')
+const serialize = require('../../serialize/handlingErrorsValidation');
 
 module.exports = async (req, res, next) => {
   try {
@@ -7,7 +9,7 @@ module.exports = async (req, res, next) => {
       limit: Joi.string().min(0).max(1000),
       nome: Joi.string().trim(),
       cpf: Joi.string()
-        .regex(/^\d{3}.\d{3}.\d{3}-\d{2}$/)
+        .regex(CpfRegex)
         .min(14)
         .max(14)
         .messages({
@@ -26,15 +28,7 @@ module.exports = async (req, res, next) => {
 
     return next(error);
   } catch (error) {
-    const handlingErrors = error.details;
-    const result = [];
-
-    handlingErrors.forEach((object) => {
-      result.push({
-        description: object.path[0],
-        name: object.message
-      });
-    });
+    const result = await serialize.serializeErrors(error)
     return res.status(400).json(result);
   }
 };

@@ -1,4 +1,7 @@
 const Joi = require('joi').extend(require('@joi/date'));
+const { CnpjRegex } = require('../utils/regex')
+const { CepRegex } = require('../utils/regex')
+const serialize = require('../../serialize/handlingErrorsValidation');
 
 module.exports = async (req, res, next) => {
   try {
@@ -6,10 +9,10 @@ module.exports = async (req, res, next) => {
       offset: Joi.number().min(0).default(1),
       limit: Joi.number().min(0).max(1000),
       nome: Joi.string().trim().min(4),
-      cnpj: Joi.string().regex(/^\d{2}.\d{3}.\d{3}\/\d{4}-\d{2}$/),
+      cnpj: Joi.string().regex(CnpjRegex),
       atividades: Joi.string().trim(),
       cep: Joi.string()
-        .regex(/[0-9]{5}-[0-9]{3}$/)
+        .regex(CepRegex)
         .trim(),
       complemento: Joi.string().trim(),
       bairro: Joi.string().trim(),
@@ -26,15 +29,7 @@ module.exports = async (req, res, next) => {
 
     return next(error);
   } catch (error) {
-    const handlingErrors = error.details;
-    const result = [];
-
-    handlingErrors.forEach((object) => {
-      result.push({
-        description: object.path[0],
-        name: object.message
-      });
-    });
+    const result = await serialize.serializeErrors(error)
     return res.status(400).json(result);
   }
 };

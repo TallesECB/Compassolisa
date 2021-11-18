@@ -1,11 +1,14 @@
 const Joi = require('joi').extend(require('@joi/date'));
+const { CpfRegex } = require('../utils/regex')
+const { SenhaRegex } = require('../utils/regex')
+const serialize = require('../../serialize/handlingErrorsValidation');
 
 module.exports = async (req, res, next) => {
   try {
     const schema = Joi.object({
       nome: Joi.string().trim().required(),
       cpf: Joi.string()
-        .regex(/^\d{3}.\d{3}.\d{3}-\d{2}$/)
+        .regex(CpfRegex)
         .messages({
           'string.pattern.base': `{#label} with value {:[.]} fails to match the required pattern format: xxx.xxx.xxx-xx`
         })
@@ -20,7 +23,7 @@ module.exports = async (req, res, next) => {
         .required(),
       email: Joi.string().trim().email().required(),
       senha: Joi.string()
-        .regex(/^[a-zA-Z0-9]{8,30}$/)
+        .regex(SenhaRegex)
         .required(),
       habilitado: Joi.string().valid('sim', 'não').required()
     });
@@ -31,15 +34,7 @@ module.exports = async (req, res, next) => {
 
     return next(error);
   } catch (error) {
-    const handlingErrors = error.details;
-    const result = [];
-
-    handlingErrors.forEach((object) => {
-      result.push({
-        description: object.path[0],
-        name: object.message
-      });
-    });
+    const result = await serialize.serializeErrors(error)
     return res.status(400).json(result);
   }
 };

@@ -23,7 +23,7 @@ module.exports = async (req, res, next) => {
 
     return next();
   } catch (error) {
-    const result = await serialize.serializeErrors(error)
+    const result = await serialize.serializeErrors(error);
     return res.status(400).json(result);
   }
 };

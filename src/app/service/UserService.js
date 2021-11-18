@@ -15,8 +15,8 @@ class UserService {
       throw new UnderAge(payload.nome);
     }
 
-    await CPFValid.createCPF(payload)
-    await EmailValid.createEmail(payload)
+    await CPFValid.createCPF(payload);
+    await EmailValid.createEmail(payload);
 
     const result = await UserRepository.create(payload);
     return result;
@@ -24,8 +24,8 @@ class UserService {
 
   async getAll({ offset, limit, ...payloadFind }) {
     const result = await UserRepository.getAll(payloadFind, offset, limit);
-    if(result.docs.length === 0) {
-      throw new NotFound(`Query ${Object.keys(payloadFind)} = ${Object.values(payloadFind)}`)
+    if (result.docs.length === 0) {
+      throw new NotFound(`Query ${Object.keys(payloadFind)} = ${Object.values(payloadFind)}`);
     }
     return result;
   }
@@ -50,8 +50,8 @@ class UserService {
       throw new UnderAge(payload.nome);
     }
 
-    await CPFValid.updateCPF(payload, id)
-    await EmailValid.updateEmail(payload, id)
+    await CPFValid.updateCPF(payload, id);
+    await EmailValid.updateEmail(payload, id);
 
     const result = await UserRepository.update(id, payload);
     return result;

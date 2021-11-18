@@ -15,8 +15,8 @@ class CarService {
 
   async getAll({ offset, limit, ...payloadFind }) {
     const result = await CarRepository.getAll(payloadFind, offset, limit);
-    if(result.docs.length === 0) {
-      throw new NotFound(`Query ${Object.keys(payloadFind)} = ${Object.values(payloadFind)}`)
+    if (result.docs.length === 0) {
+      throw new NotFound(`Query ${Object.keys(payloadFind)} = ${Object.values(payloadFind)}`);
     }
     return result;
   }
@@ -42,8 +42,8 @@ class CarService {
     if (!cars) {
       throw new NotFound(`Car - ${idCar}`);
     }
-    
-    await AcessoryValid.findAcessory(cars, idAcessory)
+
+    await AcessoryValid.findAcessory(cars, idAcessory);
 
     const result = await CarRepository.updateAcessory(idCar, idAcessory, payload);
     return result;

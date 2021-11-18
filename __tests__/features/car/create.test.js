@@ -22,9 +22,9 @@ beforeAll(async () => {
   token = response.body.token;
 });
 
-afterAll(done => {
+afterAll((done) => {
   done();
-})
+});
 
 describe('Cars', () => {
   it('Should create a new Car return status code 201', async () => {
@@ -84,7 +84,6 @@ describe('Cars', () => {
       ],
       quantidadePassageiros: car.quantidadePassageiros
     });
-
   });
 
   it('Should create a new Car and check the requests return type', async () => {
@@ -120,7 +119,6 @@ describe('Cars', () => {
       ],
       quantidadePassageiros: expect.any(Number)
     });
-
   });
 
   it('Should reject create a new Car and return error status code 400 because one or more requireds attributes are missing', async () => {
@@ -143,7 +141,6 @@ describe('Cars', () => {
     const response = await request(app).post('/api/v1/car/').set('Authorization', `Bearer ${token}`).send(car);
 
     expect(response.status).toBe(400);
-
   });
 
   it('Should reject create a new Car and return error description and name because one or more requireds attributes are missing', async () => {
@@ -169,7 +166,6 @@ describe('Cars', () => {
     expect(response.body[0]).toHaveProperty('name');
     expect(response.body[1]).toHaveProperty('description');
     expect(response.body[1]).toHaveProperty('name');
-
   });
 
   it('Should reject create a new Car and validating the requests return type, because one or more requireds attributes are missing', async () => {
@@ -201,7 +197,6 @@ describe('Cars', () => {
         name: expect.any(String)
       }
     ]);
-
   });
 
   it('Should reject create a new Car and return error status code 400, because It is necessary to have at least one Accessory', async () => {
@@ -216,7 +211,6 @@ describe('Cars', () => {
     const response = await request(app).post('/api/v1/car/').set('Authorization', `Bearer ${token}`).send(car);
 
     expect(response.status).toBe(400);
-
   });
 
   it('Should reject create a new Car and return error description and name, because It is necessary to have at least one Accessory', async () => {
@@ -232,7 +226,6 @@ describe('Cars', () => {
 
     expect(response.body).toHaveProperty('description');
     expect(response.body).toHaveProperty('name');
-
   });
 
   it('Should reject create a new Car and validating the requests return type, because It is necessary to have at least one Accessory', async () => {

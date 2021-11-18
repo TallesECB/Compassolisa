@@ -8,6 +8,7 @@ class CpfValid {
       throw new Conflicts(`CPF ${payload.cpf}`);
     }
   }
+
   async updateCPF(payload, id) {
     const validCpf = await UserRepository.getAll({ cpf: payload.cpf });
     if (validCpf.docs.length > 0) {

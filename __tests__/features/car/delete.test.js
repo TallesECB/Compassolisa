@@ -22,9 +22,9 @@ beforeAll(async () => {
   token = response.body.token;
 });
 
-afterAll(done => {
+afterAll((done) => {
   done();
-})
+});
 
 describe('Cars', () => {
   it('Should delete Car and return status code 204', async () => {
@@ -198,5 +198,5 @@ describe('Cars', () => {
       description: expect.any(String),
       name: expect.any(String)
     });
-  })
+  });
 });

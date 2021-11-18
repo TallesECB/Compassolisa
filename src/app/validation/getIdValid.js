@@ -16,7 +16,7 @@ module.exports = async (req, res, next) => {
     if (error) throw error;
     return next(error);
   } catch (error) {
-    const result = await serialize.serializeErrors(error)
+    const result = await serialize.serializeErrors(error);
     return res.status(400).json(result);
   }
 };

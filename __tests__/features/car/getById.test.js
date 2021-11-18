@@ -1,7 +1,6 @@
 const request = require('supertest');
 const app = require('../../../src/app');
 
-
 let token;
 
 beforeAll(async () => {
@@ -23,9 +22,9 @@ beforeAll(async () => {
   token = response.body.token;
 });
 
-afterAll(done => {
+afterAll((done) => {
   done();
-})
+});
 
 describe('Cars', () => {
   it('Should Car Get By Id and return status code 200', async () => {

@@ -1,6 +1,6 @@
 const Joi = require('joi').extend(require('@joi/date'));
-const { CpfRegex } = require('../utils/regex')
-const { SenhaRegex } = require('../utils/regex')
+const { CpfRegex } = require('../utils/regex');
+const { SenhaRegex } = require('../utils/regex');
 const serialize = require('../../serialize/handlingErrorsValidation');
 
 module.exports = async (req, res, next) => {
@@ -22,9 +22,7 @@ module.exports = async (req, res, next) => {
         })
         .required(),
       email: Joi.string().trim().email().required(),
-      senha: Joi.string()
-        .regex(SenhaRegex)
-        .required(),
+      senha: Joi.string().regex(SenhaRegex).required(),
       habilitado: Joi.string().valid('sim', 'não').required()
     });
 
@@ -34,7 +32,7 @@ module.exports = async (req, res, next) => {
 
     return next(error);
   } catch (error) {
-    const result = await serialize.serializeErrors(error)
+    const result = await serialize.serializeErrors(error);
     return res.status(400).json(result);
   }
 };

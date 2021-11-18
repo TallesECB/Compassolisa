@@ -10,8 +10,8 @@ class RentalService {
   async create(payload) {
     const adressRental = await GenerateAdress.getAdress(payload);
 
-    await CNPJValid.createCNPJ(payload)
-    await MatrixValid.filialCheck(adressRental, payload)
+    await CNPJValid.createCNPJ(payload);
+    await MatrixValid.filialCheck(adressRental, payload);
 
     const result = await RentalRepository.create(adressRental.payload);
     return result;
@@ -19,8 +19,8 @@ class RentalService {
 
   async getAll({ offset, limit, ...payloadFind }) {
     const result = await RentalRepository.getAll(payloadFind, offset, limit);
-    if(result.docs.length === 0) {
-      throw new NotFound(`Query ${Object.keys(payloadFind)} = ${Object.values(payloadFind)}`)
+    if (result.docs.length === 0) {
+      throw new NotFound(`Query ${Object.keys(payloadFind)} = ${Object.values(payloadFind)}`);
     }
     return result;
   }
@@ -40,8 +40,8 @@ class RentalService {
 
     const adressRental = await GenerateAdress.getAdress(payload);
 
-    await CNPJValid.updateCNPJ(payload, id)
-    await MatrixValid.filialCheck(adressRental, payload)
+    await CNPJValid.updateCNPJ(payload, id);
+    await MatrixValid.filialCheck(adressRental, payload);
 
     const result = await RentalRepository.update(id, adressRental.payload);
     return result;

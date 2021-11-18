@@ -8,6 +8,7 @@ class EmailValid {
       throw new Conflicts(`Email ${payload.email}`);
     }
   }
+
   async updateEmail(payload, id) {
     const validEmail = await UserRepository.getAll({ email: payload.email });
     if (validEmail.docs.length > 0) {

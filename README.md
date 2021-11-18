@@ -87,12 +87,6 @@ Start the node
   npm run start
 ```
 
-Start the tests
-
-```bash
-  npm run tests
-```
-
 Run the tests - Jest
 
 ```bash

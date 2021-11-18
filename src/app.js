@@ -1,5 +1,6 @@
 const express = require('express');
 const router = require('./routes');
+const cors = require('cors');
 
 require('./infra/database/mongo');
 
@@ -12,6 +13,8 @@ class App {
 
   middlewares() {
     this.server.use(express.json());
+    this.server.use(cors());
+    this.express.options('*', cors());
   }
 
   routes() {

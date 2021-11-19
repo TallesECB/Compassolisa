@@ -1,13 +1,13 @@
 const CarRepository = require('../repository/CarRepository');
 
 const NotFound = require('../errors/NotFound');
-const WithoutAccessory = require('../errors/WithoutAccessory');
+const BadRequest = require('../errors/BadRequest');
 const AcessoryValid = require('../helpers/cars/AcessoryValid');
 
 class CarService {
   async create(payload) {
     if (payload.acessorios.length === 0 || payload.acessorios.descricao === '') {
-      throw new WithoutAccessory(payload.modelo);
+      throw new BadRequest(`Car ${payload.modelo} -> It is necessary to have at least one Accessory - Description!`);
     }
     const result = await CarRepository.create(payload);
     return result;

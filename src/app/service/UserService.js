@@ -2,7 +2,7 @@ const moment = require('moment');
 const UserRepository = require('../repository/UserRepository');
 
 const NotFound = require('../errors/NotFound');
-const UnderAge = require('../errors/UnderAge');
+const BadRequest = require('../errors/BadRequest');
 
 const CPFValid = require('../helpers/users/CpfValid');
 const EmailValid = require('../helpers/users/EmailValid');
@@ -12,7 +12,7 @@ class UserService {
     const minAge = 18;
     const years = moment().diff(moment(payload.data_nascimento, 'DD/MM/YYYY'), 'years', true);
     if (years < minAge) {
-      throw new UnderAge(payload.nome);
+      throw new BadRequest(`User ${payload.nome} -> Underage must be over 18-Years!`);
     }
 
     await CPFValid.createCPF(payload);
@@ -47,7 +47,7 @@ class UserService {
     const years = moment().diff(moment(payload.data_nascimento, 'DD-MM-YYYY'), 'years', true);
 
     if (years < minAge) {
-      throw new UnderAge(payload.nome);
+      throw new BadRequest(`User ${payload.nome} -> Underage must be over 18-Years!`);
     }
 
     await CPFValid.updateCPF(payload, id);

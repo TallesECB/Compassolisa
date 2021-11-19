@@ -1,4 +1,4 @@
-const HaveOneMatrix = require('../../errors/HaveOneMatrix');
+const BadRequest = require('../../errors/BadRequest');
 const Conflicts = require('../../errors/Conflicts');
 
 class MatrixValid {
@@ -7,7 +7,7 @@ class MatrixValid {
       throw new Conflicts(`${payload.cnpj} - Matrix`);
     }
     if (adressRental.isFilial === 0) {
-      throw new HaveOneMatrix(payload.cnpj);
+      throw new BadRequest(`CNPJ ${payload.cnpj} -> It is necessary to have a one Matrix!`);
     }
   }
 }

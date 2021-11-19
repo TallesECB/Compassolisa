@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const AuthRepository = require('../repository/AuthRepository');
 const authConfig = require('../config/auth.json');
-const AuthInvalid = require('../errors/AuthInvalid');
+const BadRequest = require('../errors/BadRequest');
 
 class AuthService {
   async generateToken({ email, habilitado }) {
@@ -14,7 +14,7 @@ class AuthService {
     const user = await AuthRepository.login(credentials);
 
     if (!user) {
-      throw new AuthInvalid();
+      throw new BadRequest(`Email or PassWord -> Invalid!`);
     }
 
     user.senha = undefined;

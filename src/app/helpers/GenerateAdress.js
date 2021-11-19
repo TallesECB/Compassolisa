@@ -1,5 +1,5 @@
 const axios = require('axios').default;
-const CepInvalid = require('../errors/CepInvalid');
+const BadRequest = require('../errors/BadRequest');
 
 class GenerateAdress {
   async getAdress(payload) {
@@ -9,7 +9,7 @@ class GenerateAdress {
         const resultCep = await axios.get(`https://viacep.com.br/ws/${object.cep}/json/`);
 
         if (resultCep.data.erro === true) {
-          throw new CepInvalid(object.cep);
+          throw new BadRequest(`CEP ${object.cep} -> Invalid!`);
         }
 
         payload.endereco[i].logradouro = resultCep.data.logradouro;

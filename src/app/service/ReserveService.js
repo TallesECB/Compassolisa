@@ -28,7 +28,7 @@ class FleetService {
     if (!(await ReserveRepository.getById(id))) {
       throw new NotFound(`Reserve - ${id}`);
     }
-  
+
     const result = await ReserveRepository.update(id, payload);
     return result;
   }
@@ -37,7 +37,7 @@ class FleetService {
     if (!(await ReserveRepository.getById(id))) {
       throw new NotFound(`Reserve - ${id}`);
     }
-  
+
     const result = await ReserveRepository.remove(id);
     return result;
   }

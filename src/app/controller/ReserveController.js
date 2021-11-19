@@ -8,7 +8,7 @@ class RentalController {
       const result = await ReserveService.create(req.body);
       return res.status(201).json(serialize(result));
     } catch (erro) {
-      console.log(erro)
+      console.log(erro);
       return res.status(erro.statusCode).json(serializeErrors(erro));
     }
   }

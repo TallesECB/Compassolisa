@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const router = require('./routes');
 
-require('./infra/database/mongo');
+const mongoose = require('./infra/database/mongo');
 
 class App {
   constructor() {

@@ -4,8 +4,8 @@ const authConfig = require('../config/auth.json');
 const BadRequest = require('../errors/BadRequest');
 
 class AuthService {
-  async generateToken({ email, habilitado }) {
-    return jwt.sign({ email, habilitado }, authConfig.secret, {
+  async generateToken({ email, habilitado, _id }) {
+    return jwt.sign({ email, habilitado, _id }, authConfig.secret, {
       expiresIn: 86400
     });
   }
@@ -21,8 +21,9 @@ class AuthService {
 
     const { habilitado } = user;
     const { email } = user;
+    const { _id } = user;
 
-    const result = { token: await this.generateToken({ email, habilitado }) };
+    const result = { token: await this.generateToken({ email, habilitado, _id }) };
 
     return result;
   }

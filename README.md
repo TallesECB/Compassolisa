@@ -313,7 +313,7 @@ Open using Heroku - Browser Acess
 #### Get Rental
 
 ``` localhost:3000
-  GET /api/v1/people/${id}
+  GET /api/v1/rental/${id}
 ```
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
@@ -366,6 +366,151 @@ Open using Heroku - Browser Acess
 | Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
 | `id`      | `objectId` | **Required**. Id of Rental to fetch for Delete |
+
+
+
+#### Get all Fleet
+
+``` localhost:3000
+  GET /api/v1/rental/${idRental}/fleet/
+```
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `id`      | `objectId` | **Required**. Id of Rental to fetch for Fleet |
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `queryparam` | `string` | **Opcional**. QueryParms of Rental to fetch |
+| `offset`  | `number` | **Opcional**. Your offset - Pagination  | - this default is 0
+| `limit`   | `number` | **Opcional**. Your limit - Pagination  | - this default is 1000
+
+
+#### Get Fleet
+
+``` localhost:3000
+  GET /api/v1/rental/${id}/fleet/${id}
+```
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `id`      | `objectId` | **Required**. Id of Rental to Locate a Fleet for rental |
+| `id`      | `objectId` | **Required**. Id of Fleet to fetch |
+
+
+#### Create Fleet
+
+``` localhost:3000
+  POST /api/v1/rental/${id}/fleet/
+```
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `id`      | `objectId` | **Required**. Id of Rental to Locate a Fleet for rental |
+
+| Body | Type  | Description                       |
+| :--------  | :------- | :-------------------------------- |
+| `id_carro`   | `string` | **Required**. id_carro -> ID Carro ref Car |
+| `status`      | `string` | **Required**. Status -> Fleet |
+| `valor_diaria`      | `number` | **Required**. Valor Diaria -> Fleet |
+| `placa`      | `string` | **Required**. Placa -> Fleet |
+
+#### Update Fleet
+
+``` localhost:3000
+  PUT /api/v1/rental/${id}/fleet/${id}
+```
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `id`      | `objectId` | **Required**. Id of Rental to Locate a Fleet for rental |
+| `id`      | `objectId` | **Required**. Id of Fleet to fetch for update a specific Fleet |
+
+| Body | Type  | Description                       |
+| :--------  | :------- | :-------------------------------- |
+| `id_carro`   | `string` | **Required**. id_carro -> ID Carro ref Car |
+| `status`      | `string` | **Required**. Status -> Fleet |
+| `valor_diaria`      | `number` | **Required**. Valor Diaria -> Fleet |
+| `placa`      | `string` | **Required**. Placa -> Fleet |
+
+
+#### Remove Fleet
+
+``` localhost:3000
+  DELETE /api/v1/rental/${id}/fleet/${id}
+```
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `id`      | `objectId` | **Required**. Id of Rental to Locate a Fleet for rental |
+| `id`      | `objectId` | **Required**. Id of Reserve and Reserve to fetch for Delete |
+
+
+
+#### Get all Reserve
+
+``` localhost:3000
+  GET /api/v1/rental/${id}/reserve/
+```
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `id`      | `objectId` | **Required**. Id of Rental to Locate a Reserve for rental |
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `queryparam` | `string` | **Opcional**. QueryParms of Reserve to fetch |
+| `offset`  | `number` | **Opcional**. Your offset - Pagination  | - this default is 0
+| `limit`   | `number` | **Opcional**. Your limit - Pagination  | - this default is 1000
+
+
+#### Get Reserve
+
+``` localhost:3000
+  GET /api/v1/rental/${id}/reserve/${id}
+```
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `id`      | `objectId` | **Required**. Id of Rental to Locate a Reserve for rental |
+| `id`      | `objectId` | **Required**. Id of Reserve to fetch |
+
+
+#### Create Reserve
+
+``` localhost:3000
+  POST /api/v1/rental/${id}/reserve/
+```
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `id`      | `objectId` | **Required**. Id of Rental to Locate a Reserve for rental |
+
+| Body | Type  | Description                       |
+| :--------  | :------- | :-------------------------------- |
+| `data_inicio`      | `string` | **Required**. Data Inicio -> Reserve |
+| `data_fim`      | `number` | **Required**. Data Fim -> Reserve |
+| `id_carro`   | `string` | **Required**. id_carro -> ID Carro ref Car |
+
+
+#### Update Reserve
+
+``` localhost:3000
+  PUT /api/v1/rental/${id}/reserve/${id}
+```
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `id`      | `objectId` | **Required**. Id of Rental to Locate a Reserve for rental |
+| `id`      | `objectId` | **Required**. Id of Reserve to fetch for update a specific Reserve |
+
+| Body | Type  | Description                       |
+| :--------  | :------- | :-------------------------------- |
+| `data_inicio`      | `string` | **Required**. Data Inicio -> Reserve |
+| `data_fim`      | `number` | **Required**. Data Fim -> Reserve |
+| `id_carro`   | `string` | **Required**. id_carro -> ID Carro ref Car |
+
+
+#### Remove Reserve
+
+``` localhost:3000
+  DELETE /api/v1/rental/${id}/reserve/${id}
+```
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `id`      | `objectId` | **Required**. Id of Rental to Locate a Reserve for rental |
+| `id`      | `objectId` | **Required**. Id of Reserve and Reserve to fetch for Delete |
 
 
 ## Authors

@@ -1,11 +1,11 @@
-const serialize = ({ _id, nome, cpf, data_nascimento, email, habilitado }, tokenId) => ({
+const serialize = ({ _id, nome, cpf, data_nascimento, email, habilitado }, token) => ({
   _id,
   nome,
   cpf,
   data_nascimento,
   email,
   habilitado,
-  token: tokenId
+  token
 });
 
 const paginateSerialize = ({ docs, limit, totalDocs, pagingCounter, totalPages }) => ({

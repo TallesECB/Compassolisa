@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const Database = require('../../src/infra/database/mongo/index');
+require('../../src/infra/database/mongo/index');
 
 const cleanDatabase = async () => {
   const collecttions = Object.keys(mongoose.connection.collections);

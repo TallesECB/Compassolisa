@@ -17,11 +17,11 @@ module.exports = async (req, res, next) => {
         .min(24)
         .max(24),
       status: Joi.string().trim(),
-      valor_diaria: Joi.string().trim(),
+      valor_diaria: Joi.number(),
       placa: Joi.string().trim()
     });
 
-    const { error } = await schema.validate(req.body, { abortEarly: false });
+    const { error } = await schema.validate(req.query, { abortEarly: false });
 
     if (error) throw error;
 

@@ -17,7 +17,7 @@ const FleetSchema = mongoose.Schema({
     required: true
   },
   valor_diaria: {
-    type: String,
+    type: Number,
     required: true
   },
   placa: {

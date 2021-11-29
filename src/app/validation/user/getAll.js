@@ -15,7 +15,7 @@ module.exports = async (req, res, next) => {
         'date.format': `{#label} with value {:[.]} fails to match the required format: DD/MM/YYYY`
       }),
       email: Joi.string().email(),
-      habilitado: Joi.string().valid('sim', 'não')
+      habilitado: Joi.string().valid('sim', 'nao')
     });
 
     const { error } = await schema.validate(req.query, { abortEarly: false });

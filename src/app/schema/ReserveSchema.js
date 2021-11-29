@@ -26,7 +26,7 @@ const ReserveSchema = mongoose.Schema({
     required: true
   },
   valor_final: {
-    type: String,
+    type: Number,
     required: true
   }
 });

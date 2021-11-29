@@ -1,6 +1,7 @@
 /*
+const BadRequest = require('../errors/BadRequest')
 module.exports = async () => {
-  validCpf((cpf) => {
+  VerifyCPF((cpf) => {
     if (
       !cpf ||
       cpf.length != 11 ||
@@ -15,21 +16,21 @@ module.exports = async () => {
       cpf == '88888888888' ||
       cpf == '99999999999'
     )
-      return false;
+      throw new BadRequest(`CPF - ${CPF} -> Invalid`);
     let soma = 0;
     let resto;
     for (var i = 1; i <= 9; i++) soma += parseInt(cpf.substring(i - 1, i)) * (11 - i);
     resto = (soma * 10) % 11;
     if (resto == 10 || resto == 11) resto = 0;
-    if (resto != parseInt(cpf.substring(9, 10))) return false;
+    if (resto != parseInt(cpf.substring(9, 10))) throw new BadRequest(`CPF - ${CPF} -> Invalid`);
     soma = 0;
     for (var i = 1; i <= 10; i++) soma += parseInt(cpf.substring(i - 1, i)) * (12 - i);
     resto = (soma * 10) % 11;
     if (resto == 10 || resto == 11) resto = 0;
-    if (resto != parseInt(cpf.substring(10, 11))) return false;
+    if (resto != parseInt(cpf.substring(10, 11))) throw new BadRequest(`CPF - ${CPF} -> Invalid`);
     return true;
   });
-  validCnpj((cnpj) => {
+  VerifyCNPJ((cnpj) => {
     if (
       !cnpj ||
       cnpj.length != 14 ||
@@ -44,7 +45,7 @@ module.exports = async () => {
       cnpj == '88888888888888' ||
       cnpj == '99999999999999'
     )
-      return false;
+      throw new BadRequest(`CNPJ - ${CNPJ} -> Invalid`);
     let tamanho = cnpj.length - 2;
     let numeros = cnpj.substring(0, tamanho);
     const digitos = cnpj.substring(tamanho);
@@ -55,7 +56,7 @@ module.exports = async () => {
       if (pos < 2) pos = 9;
     }
     let resultado = soma % 11 < 2 ? 0 : 11 - (soma % 11);
-    if (resultado != digitos.charAt(0)) return false;
+    if (resultado != digitos.charAt(0)) throw new BadRequest(`CNPJ - ${CNPJ} -> Invalid`);
     tamanho += 1;
     numeros = cnpj.substring(0, tamanho);
     soma = 0;
@@ -65,7 +66,7 @@ module.exports = async () => {
       if (pos < 2) pos = 9;
     }
     resultado = soma % 11 < 2 ? 0 : 11 - (soma % 11);
-    if (resultado != digitos.charAt(1)) return false;
+    if (resultado != digitos.charAt(1)) throw new BadRequest(`CNPJ - ${CNPJ} -> Invalid`);
     return true;
   });
 };

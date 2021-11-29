@@ -29,7 +29,7 @@ module.exports = async (req, res, next) => {
       valor_final: Joi.string().trim()
     });
 
-    const { error } = await schema.validate(req.body, { abortEarly: false });
+    const { error } = await schema.validate(req.query, { abortEarly: false });
 
     if (error) throw error;
 

@@ -4,11 +4,6 @@ const serialize = require('../../serialize/handlingErrorsValidation');
 module.exports = async (req, res, next) => {
   try {
     const schema = Joi.object({
-      id_user: Joi.string()
-        .required()
-        .regex(/^[0-9A-Fa-f\d]/)
-        .min(24)
-        .max(24),
       data_inicio: Joi.date()
         .format('DD/MM/YYYY')
         .messages({
@@ -25,13 +20,7 @@ module.exports = async (req, res, next) => {
         .required()
         .regex(/^[0-9A-Fa-f\d]/)
         .min(24)
-        .max(24),
-      id_locadora: Joi.string()
-        .required()
-        .regex(/^[0-9A-Fa-f\d]/)
-        .min(24)
-        .max(24),
-      valor_final: Joi.string().trim().required()
+        .max(24)
     });
 
     const { error } = await schema.validate(req.body, { abortEarly: false });

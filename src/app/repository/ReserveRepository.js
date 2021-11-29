@@ -9,16 +9,16 @@ class ReserveRepository {
     return ReserveSchema.paginate(payloadFind, { offset, limit });
   }
 
-  async getById(id) {
-    return ReserveSchema.findById(id);
+  async getById(id, rentalID) {
+    return ReserveSchema.findById({ _id: id, id_locadora: rentalID });
   }
 
-  async update(id, payload) {
-    return ReserveSchema.findByIdAndUpdate(id, payload, { new: true });
+  async update(id, rentalID, payload) {
+    return ReserveSchema.findByIdAndUpdate({ _id: id, id_locadora: rentalID }, payload, { new: true });
   }
 
-  async remove(id) {
-    return ReserveSchema.findByIdAndRemove(id);
+  async remove(id, rentalID) {
+    return ReserveSchema.findByIdAndRemove({ _id: id, id_locadora: rentalID });
   }
 }
 

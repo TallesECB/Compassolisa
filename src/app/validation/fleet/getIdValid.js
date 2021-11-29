@@ -4,21 +4,21 @@ const serialize = require('../../serialize/handlingErrorsValidation');
 module.exports = async (req, res, next) => {
   try {
     const schema = Joi.object({
-      id_carro: Joi.string()
-        .required()
+      id: Joi.string()
         .regex(/^[0-9A-Fa-f\d]/)
         .min(24)
         .max(24),
-      status: Joi.string().trim().required(),
-      valor_diaria: Joi.number().min(0).required(),
-      placa: Joi.string().trim().required()
+      rentalID: Joi.string()
+        .required()
+        .regex(/^[0-9A-Fa-f\d]/)
+        .min(24)
+        .max(24)
     });
 
-    const { error } = await schema.validate(req.body, { abortEarly: false });
+    const { error } = await schema.validate(req.params, { abortEarly: false });
 
     if (error) throw error;
-
-    return next();
+    return next(error);
   } catch (error) {
     const result = await serialize.serializeErrors(error);
     return res.status(400).json(result);

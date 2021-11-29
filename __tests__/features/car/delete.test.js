@@ -42,16 +42,9 @@ describe('Cars', () => {
       quantidadePassageiros: 5
     };
 
-    await request(app)
-      .post('/api/v1/car/')
-      .set('Authorization', `Bearer ${token}`)
-      .send(car)
-      .set('Authorization', `Bearer ${token}`);
+    await request(app).post('/api/v1/car/').send(car).set('Authorization', `Bearer ${token}`);
 
-    const getIdUniqueCarInBD = await request(app)
-      .get('/api/v1/car/')
-      .set('Authorization', `Bearer ${token}`)
-      .set('Authorization', `Bearer ${token}`);
+    const getIdUniqueCarInBD = await request(app).get('/api/v1/car/').set('Authorization', `Bearer ${token}`);
 
     const response = await request(app)
       .delete(`/api/v1/car/${getIdUniqueCarInBD.body.veiculos[0]._id}`)

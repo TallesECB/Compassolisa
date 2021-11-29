@@ -9,16 +9,16 @@ class FleetRepository {
     return FleetSchema.paginate(payloadFind, { offset, limit });
   }
 
-  async getById(id) {
-    return FleetSchema.findById(id);
+  async getById(id, rentalID) {
+    return FleetSchema.findOne({ _id: id, id_locadora: rentalID });
   }
 
-  async update(id, payload) {
-    return FleetSchema.findByIdAndUpdate(id, payload, { new: true });
+  async update(id, rentalID, payload) {
+    return FleetSchema.findByIdAndUpdate({ _id: id, id_locadora: rentalID }, payload, { new: true });
   }
 
-  async remove(id) {
-    return FleetSchema.findByIdAndRemove(id);
+  async remove(id, rentalID) {
+    return FleetSchema.findByIdAndRemove({ _id: id, id_locadora: rentalID });
   }
 }
 

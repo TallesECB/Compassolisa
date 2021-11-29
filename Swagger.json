@@ -183,7 +183,6 @@
       "put": {
         "summary": "Atualizar um Carro",
         "tags": ["Carros"],
-
         "requestBody": {
           "content": {
             "application/json": {
@@ -875,6 +874,562 @@
           }
         }
       }
+    },
+    "/api/v1/rental/${id}/fleet": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "schema": {
+            "type": "string"
+          },
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "Pegar todos as Frotas ou Filtrar",
+        "tags": ["Frotas"],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "filtrar por ID Carro",
+            "schema": {
+              "type": "string"
+            },
+            "description": "id_carro - Frota, referenciando o id do carro"
+          },
+          {
+            "in": "query",
+            "name": "filtrar por ID Locadora",
+            "schema": {
+              "type": "string"
+            },
+            "description": "id_locadora - Frota, referenciando o id da locadora"
+          },
+          {
+            "in": "query",
+            "name": "filtrar por Status",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Status - Frota"
+          },
+          {
+            "in": "query",
+            "name": "filtrar por Valor Diaria - Frota",
+            "schema": {
+              "type": "number"
+            },
+            "description": "Valor Diaria - Frota"
+          },
+          {
+            "in": "query",
+            "name": "filtrar por Placa - Frota",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Placa - Frota"
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Número de deslocamento - Opcional Padrão é 0"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Limite de retorno dos Usuários - Opcional Padrão é 1000"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successo",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Fleets"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "limitMaxPagination",
+            "content": {
+              "application/json": {
+                "example": "O limite máximo da paginação é 1000, favor verificar"
+              }
+            }
+          },
+          "404": {
+            "description": "Query Not Found",
+            "content": {
+              "application/json": {
+                "example": "Não foi encontrada Frota com está query"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Registrar uma nova Frota",
+        "tags": ["Frotas"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Fleet"
+              }
+            }
+          }
+        },
+        "description": "Registrando uma nova Frota",
+        "responses": {
+          "201": {
+            "description": "Successo",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Fleet"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Campo Inválido",
+            "content": {
+              "application/json": {
+                "example": "Campo inválido ou campo requirido não informado!"
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "example": "ID Rental ou ID Carro não encontrado,"
+              }
+            }
+          },
+          "409": {
+            "description": "Conflito",
+            "content": {
+              "application/json": {
+                "example": "Atributos duplicados!"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/rental/{id}/fleet/{idFleet}": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "schema": {
+            "type": "string"
+          },
+          "required": true
+        },
+        {
+          "name": "idFleet",
+          "in": "path",
+          "schema": {
+            "type": "string"
+          },
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "Pegar uma Frota por ID",
+        "tags": ["Frotas"],
+        "responses": {
+          "200": {
+            "description": "Successo",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Fleet"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "idNotFound",
+            "content": {
+              "application/json": {
+                "example": "Frota ou Locadora não encontrado"
+              }
+            }
+          },
+          "400": {
+            "description": "invalidObjectId",
+            "content": {
+              "application/json": {
+                "example": "O formato do ID inserido está inválido, favor verificar"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Atualizar uma Frota",
+        "tags": ["Frotas"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Fleet"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successo",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Fleet"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "idNotFound",
+            "content": {
+              "application/json": {
+                "example": "Frota ou Locadora ou Carro não encontrado"
+              }
+            }
+          },
+          "400": {
+            "description": "Campo ou Valor inválido ou invalidObjectID",
+            "content": {
+              "application/json": {
+                "example": "Campo ou Valor estão inválidos ou o ID inserido está inválido"
+              }
+            }
+          },
+          "409": {
+            "description": "Conflito",
+            "content": {
+              "application/json": {
+                "example": "Atributo Placa deve ser unico!"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Deletar uma Frota",
+        "tags": ["Frotas"],
+        "responses": {
+          "204": {
+            "description": "Successo"
+          },
+          "404": {
+            "description": "idNotFound",
+            "content": {
+              "application/json": {
+                "example": "Frota ou Locadora não encontrada"
+              }
+            }
+          },
+          "400": {
+            "description": "invalidObjectId",
+            "content": {
+              "application/json": {
+                "example": "ID inválido, favor verificar"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/rental/${id}/reserve": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "schema": {
+            "type": "string"
+          },
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "Pegar todos as Reservas ou Filtrar",
+        "tags": ["Reservas"],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "filtrar por ID User",
+            "schema": {
+              "type": "string"
+            },
+            "description": "id_user - Reserva, referenciando o id do usuário que está autenticado no sistema"
+          },
+          {
+            "in": "query",
+            "name": "filtrar por Data Inicio",
+            "schema": {
+              "type": "string"
+            },
+            "description": "data_inicio - Reserva"
+          },
+          {
+            "in": "query",
+            "name": "filtrar por Data Fim",
+            "schema": {
+              "type": "string"
+            },
+            "description": "data_fim - Reserva"
+          },
+          {
+            "in": "query",
+            "name": "filtrar por ID Carro ",
+            "schema": {
+              "type": "string"
+            },
+            "description": "id_carro - Reserva, referenciando o id da frota."
+          },
+          {
+            "in": "query",
+            "name": "filtrar por ID Locadora",
+            "schema": {
+              "type": "string"
+            },
+            "description": "id_locadora - Reserva, referenciando o id da locadora"
+          },
+          {
+            "in": "query",
+            "name": "filtrar por Valor Final ",
+            "schema": {
+              "type": "number"
+            },
+            "description": "valor_final - Reserva"
+          },
+          {
+            "in": "query",
+            "name": "offset",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Número de deslocamento - Opcional Padrão é 0"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Limite de retorno dos Usuários - Opcional Padrão é 1000"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successo",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Reserves"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "limitMaxPagination",
+            "content": {
+              "application/json": {
+                "example": "O limite máximo da paginação é 1000, favor verificar"
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "example": "Query Não Encontrada"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Registrar uma nova Reserva",
+        "tags": ["Reservas"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Reserve"
+              }
+            }
+          }
+        },
+        "description": "Registrando uma nova Reserva",
+        "responses": {
+          "201": {
+            "description": "Successo",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Reserve"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Campo Inválido",
+            "content": {
+              "application/json": {
+                "example": "Campo inválido ou campo requirido não informado!"
+              }
+            }
+          },
+          "409": {
+            "description": "Conflito",
+            "content": {
+              "application/json": {
+                "example": "Data de reserva está em conflito"
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/rental/{id}/reserve/{idReserva}": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "schema": {
+            "type": "string"
+          },
+          "required": true
+        },
+        {
+          "name": "idReserva",
+          "in": "path",
+          "schema": {
+            "type": "string"
+          },
+          "required": true
+        }
+      ],
+      "get": {
+        "summary": "Pegar uma Reserva por ID",
+        "tags": ["Reservas"],
+        "responses": {
+          "200": {
+            "description": "Successo",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Reserva"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "idNotFound",
+            "content": {
+              "application/json": {
+                "example": "Reserva ou Locadora ou Carro não encontrada"
+              }
+            }
+          },
+          "400": {
+            "description": "invalidObjectId",
+            "content": {
+              "application/json": {
+                "example": "O formato do ID inserido está inválido, favor verificar"
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Atualizar uma Reserva",
+        "tags": ["Reservas"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Reserva"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successo",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Reserva"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "idNotFound",
+            "content": {
+              "application/json": {
+                "example": "Reserva ou Locadora ou Carro não encontrada"
+              }
+            }
+          },
+          "400": {
+            "description": "Campo ou Valor inválido",
+            "content": {
+              "application/json": {
+                "example": "Campo ou Valor estão inválidos ou o ID inserido está inválido"
+              }
+            }
+          },
+          "409": {
+            "description": "Conflito",
+            "content": {
+              "application/json": {
+                "example": "Data de reserva está em conflito!"
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Deletar uma Reserva",
+        "tags": ["Reservas"],
+        "responses": {
+          "204": {
+            "description": "Successo"
+          },
+          "404": {
+            "description": "idNotFound",
+            "content": {
+              "application/json": {
+                "example": "Reserva ou Locadora não encontrada"
+              }
+            }
+          },
+          "400": {
+            "description": "invalidObjectId",
+            "content": {
+              "application/json": {
+                "example": "ID inválido, favor verificar"
+              }
+            }
+          }
+        }
+      }
     } 
   },
   "components": {
@@ -984,6 +1539,49 @@
         "type": "array",
         "items": {
           "$ref": "#/components/schemas/Rental"
+        }
+      },
+      "Fleet": {
+        "type": "object",
+        "properties": {
+          "id_carro": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "valor_diaria": {
+            "type": "number"
+          },
+          "placa": {
+            "type": "string"
+          }
+        }
+      },
+      "Fleets": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Fleet"
+        }
+      },
+      "Reserve": {
+        "type": "object",
+        "properties": {
+          "data_inicio": {
+            "type": "string"
+          },
+          "data_fim": {
+            "type": "string"
+          },
+          "id_carro": {
+            "type": "string"
+          }
+        }
+      },
+      "Reserves": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Reserves"
         }
       },
       "Acessorio": {

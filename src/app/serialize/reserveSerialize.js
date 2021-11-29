@@ -9,7 +9,7 @@ const serialize = ({ _id, id_user, data_inicio, data_fim, id_carro, id_locadora,
 });
 
 const paginateSerialize = ({ docs, limit, totalDocs, pagingCounter, totalPages }) => ({
-  rentals: docs.map(serialize),
+  reservas: docs.map(serialize),
   limit,
   total: totalDocs,
   offset: pagingCounter,

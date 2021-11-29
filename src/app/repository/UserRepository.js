@@ -1,24 +1,13 @@
 const UserSchema = require('../schema/UserSchema');
+const Repository = require('./GenericRepository');
 
-class UserRepository {
-  async create(payload) {
-    return UserSchema.create(payload);
+class UserRepository extends Repository {
+  constructor() {
+    super(UserSchema);
   }
 
   async getAll(payloadFind, offset = 0, limit = 100) {
     return UserSchema.paginate(payloadFind, { offset, limit });
-  }
-
-  async getById(id) {
-    return UserSchema.findById(id);
-  }
-
-  async update(id, payload) {
-    return UserSchema.findByIdAndUpdate(id, payload, { new: true });
-  }
-
-  async remove(id) {
-    return UserSchema.findByIdAndRemove(id);
   }
 }
 

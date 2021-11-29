@@ -23,7 +23,7 @@ module.exports = async (req, res, next) => {
         .required(),
       email: Joi.string().trim().email().required(),
       senha: Joi.string().regex(SenhaRegex).required(),
-      habilitado: Joi.string().valid('sim', 'não').required()
+      habilitado: Joi.string().valid('sim', 'nao').required()
     });
 
     const { error } = await schema.validate(req.body, { abortEarly: false });

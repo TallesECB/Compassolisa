@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-const config = require('../../../app/config/config');
+
+require('../../../app/config/config');
 
 class Database {
   constructor() {

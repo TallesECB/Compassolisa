@@ -132,7 +132,7 @@ Open using Swagger - Browser Acess
 Open using Heroku - Browser Acess
 
 ```navegador
-  https://compassolisa02.herokuapp.com/api-docs/#/
+  https://compassolisa02.herokuapp.com/
 ```
 
 ## API Reference

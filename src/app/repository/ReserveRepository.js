@@ -1,12 +1,9 @@
 const ReserveSchema = require('../schema/ReserveSchema');
+const Repository = require('./GenericRepository');
 
-class ReserveRepository {
-  async create(payload) {
-    return ReserveSchema.create(payload);
-  }
-
-  async getAll(payloadFind, offset = 0, limit = 100) {
-    return ReserveSchema.paginate(payloadFind, { offset, limit });
+class ReserveRepository extends Repository {
+  constructor() {
+    super(ReserveSchema);
   }
 
   async getById(id, rentalID) {

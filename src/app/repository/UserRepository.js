@@ -5,10 +5,6 @@ class UserRepository extends Repository {
   constructor() {
     super(UserSchema);
   }
-
-  async getAll(payloadFind, offset = 0, limit = 100) {
-    return UserSchema.paginate(payloadFind, { offset, limit });
-  }
 }
 
 module.exports = new UserRepository();

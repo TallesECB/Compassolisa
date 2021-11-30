@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
-const authConfig = require('../../config/auth.json');
 
 module.exports = async (req, res, next) => {
+  const authConfig = process.env.SECRET;
   const authHeader = req.headers.authorization;
 
   if (!authHeader) {
@@ -19,7 +19,7 @@ module.exports = async (req, res, next) => {
     return res.status(401).send({ description: 'Token Invalid Format', name: 'Unauthorized' });
   }
 
-  jwt.verify(token, authConfig.secret, (err, decoded) => {
+  jwt.verify(token, authConfig, (err, decoded) => {
     if (err) return res.status(401).send({ description: 'Token Invalid', name: 'Unauthorized' });
 
     req.email = decoded.email;

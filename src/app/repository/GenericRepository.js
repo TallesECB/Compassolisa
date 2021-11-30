@@ -7,6 +7,10 @@ class Repository {
     return this.schema.create(payload);
   }
 
+  async getAll(payloadFind, offset = 0, limit = 100) {
+    return this.schema.paginate(payloadFind, { offset, limit });
+  }
+
   async getById(id) {
     return this.schema.findById(id);
   }

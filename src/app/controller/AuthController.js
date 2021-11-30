@@ -7,6 +7,7 @@ class AuthController {
       const result = await AuthService.login(req.body);
       return res.status(201).json(result);
     } catch (erro) {
+      console.log(erro)
       return res.status(erro.statusCode).send(serializeErrors(erro));
     }
   }

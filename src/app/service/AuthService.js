@@ -1,11 +1,12 @@
 const jwt = require('jsonwebtoken');
 const AuthRepository = require('../repository/AuthRepository');
-const authConfig = require('../config/auth.json');
 const BadRequest = require('../errors/BadRequest');
+let authConfig
 
 class AuthService {
   async generateToken({ email, habilitado, _id }) {
-    return jwt.sign({ email, habilitado, _id }, authConfig.secret, {
+    authConfig = process.env.SECRET
+    return jwt.sign({ email, habilitado, _id }, authConfig, {
       expiresIn: 86400
     });
   }

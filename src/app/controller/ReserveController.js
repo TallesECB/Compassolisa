@@ -23,8 +23,7 @@ class ReserveController {
 
   async getById(req, res) {
     try {
-      const { id } = req.params;
-      const { rentalID } = req.params;
+      const { id, rentalID } = req.params;
       const result = await ReserveService.getById(id, rentalID);
       return res.status(200).json(serialize(result));
     } catch (erro) {
@@ -34,8 +33,7 @@ class ReserveController {
 
   async update(req, res) {
     try {
-      const { id } = req.params;
-      const { rentalID } = req.params;
+      const { id, rentalID } = req.params;
       const result = await ReserveService.update(id, rentalID, req.body, req.headers);
       return res.status(200).json(serialize(result));
     } catch (erro) {
@@ -45,8 +43,7 @@ class ReserveController {
 
   async remove(req, res) {
     try {
-      const { id } = req.params;
-      const { rentalID } = req.params;
+      const { id, rentalID } = req.params;
       await ReserveService.remove(id, rentalID);
       return res.status(204).end();
     } catch (erro) {

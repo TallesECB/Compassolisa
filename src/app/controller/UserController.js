@@ -7,9 +7,7 @@ class UserController {
   async create(req, res) {
     try {
       const result = await UserService.create(req.body);
-      const { email } = result;
-      const { habilitado } = result;
-      const { _id } = result;
+      const { email, habilitado, _id } = result;
       const token = await AuthService.generateToken({ email, habilitado, _id });
       return res.status(201).json(serialize(result, token));
     } catch (erro) {

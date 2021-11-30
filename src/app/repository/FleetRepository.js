@@ -1,12 +1,9 @@
 const FleetSchema = require('../schema/FleetSchema');
+const Repository = require('./GenericRepository');
 
-class FleetRepository {
-  async create(payload) {
-    return FleetSchema.create(payload);
-  }
-
-  async getAll(payloadFind, offset = 0, limit = 100) {
-    return FleetSchema.paginate(payloadFind, { offset, limit });
+class FleetRepository extends Repository {
+  constructor() {
+    super(FleetSchema);
   }
 
   async getById(id, rentalID) {
